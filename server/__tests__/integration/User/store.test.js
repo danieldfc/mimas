@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import app from '../../../src/app';
 import factory from '../../factories';
-import truncate from '../../util/truncate';
+import truncate from '../../utils/truncate';
 
 describe('User store', () => {
   beforeEach(async () => {
@@ -30,11 +30,13 @@ describe('User store', () => {
   });
 
   it('should not be able register a new user already existing', async () => {
-    const user = await factory.attrs('User');
+    await factory.create('User', {
+      email: 'test@test.com',
+    });
 
-    await request(app)
-      .post('/users')
-      .send(user);
+    const user = await factory.attrs('User', {
+      email: 'test@test.com',
+    });
 
     const response = await request(app)
       .post('/users')

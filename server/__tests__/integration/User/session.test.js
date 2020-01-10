@@ -2,21 +2,17 @@ import request from 'supertest';
 
 import app from '../../../src/app';
 import factory from '../../factories';
-import truncate from '../../util/truncate';
+import truncate from '../../utils/truncate';
 
 describe('User sessions', () => {
   beforeEach(async () => {
     await truncate();
   });
 
-  it('should authenticate with valid credentials', async () => {
-    const user = await factory.attrs('User', {
+  it('should authenticate with valid credentials return jwt token when authenticate', async () => {
+    const user = await factory.create('User', {
       password: '123123',
     });
-
-    await request(app)
-      .post('/users')
-      .send(user);
 
     const response = await request(app)
       .post('/sessions')
@@ -26,6 +22,7 @@ describe('User sessions', () => {
       });
 
     expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('token');
   });
 
   it('should authenticate without credentials', async () => {
@@ -37,7 +34,7 @@ describe('User sessions', () => {
     });
   });
 
-  it('should authenticate with credentials but not found user', async () => {
+  it('should authenticate with credentials but user not found', async () => {
     const response = await request(app)
       .post('/sessions')
       .send({
@@ -64,20 +61,8 @@ describe('User sessions', () => {
       });
 
     expect(response.status).toBe(401);
-  });
-
-  it('should return jwt token when authenticated', async () => {
-    const user = await factory.create('User', {
-      password: '123123',
+    expect(response.body).toMatchObject({
+      error: { message: 'Password does not match' },
     });
-
-    const response = await request(app)
-      .post('/sessions')
-      .send({
-        email: user.email,
-        password: '123123',
-      });
-
-    expect(response.body).toHaveProperty('token');
   });
 });
