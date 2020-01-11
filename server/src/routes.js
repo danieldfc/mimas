@@ -17,6 +17,10 @@ import validationUserStore from './app/validators/User/Store';
 
 const routes = Router();
 
+routes.get('/', (req, res) => {
+  return res.json({ message: 'Seja bem vindo a DACIA BORDADOS' });
+});
+
 routes.post('/users', validationUserStore, UserController.store);
 routes.post('/sessions', validationSessionStore, SessionController.store);
 
