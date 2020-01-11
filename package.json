@@ -8,8 +8,7 @@
     "url": "https://github.com/danieldfc/projeto-costura.git"
   },
   "scripts": {
-    "api": "cd server && yarn && yarn start",
-    "web": "cd web && yarn && yarn start"
+    "api": "cd server && yarn && yarn start"
   },
   "license": "MIT",
   "husky": {
