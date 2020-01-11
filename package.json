@@ -38,6 +38,7 @@
     }
   },
   "dependencies": {
-    "sucrase": "^3.12.0"
+    "sucrase": "^3.12.0",
+    "sequelize-cli": "^5.5.1"
   }
 }
