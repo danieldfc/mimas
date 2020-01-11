@@ -12,10 +12,6 @@
     "posttest": "NODE_ENV=test sequelize db:migrate:undo:all",
     "build": "yarn && sucrase ./src -d ./dist --transforms imports"
   },
-  "engines": {
-    "node": "12.14.1",
-    "npm": "6.13.4"
-  },
   "dependencies": {
     "@sentry/node": "5.11.0",
     "@types/jest": "^24.0.25",

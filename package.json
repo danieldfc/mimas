@@ -10,6 +10,10 @@
   "scripts": {
     "start": "cd server && yarn start"
   },
+  "engines": {
+    "node": "12.14.1",
+    "npm": "6.13.4"
+  },
   "license": "MIT",
   "husky": {
     "hooks": {
@@ -27,5 +31,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "sucrase": "^3.12.0"
   }
 }
