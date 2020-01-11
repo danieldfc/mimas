@@ -28,7 +28,9 @@
     "commitizen": "^4.0.3",
     "husky": "^3.1.0",
     "pg": "^7.17.0",
-    "sequelize": "^5.21.3"
+    "sequelize": "^5.21.3",
+    "sequelize-cli": "^5.5.1",
+    "sucrase": "^3.12.0"
   },
   "config": {
     "commitizen": {
@@ -36,6 +38,5 @@
     }
   },
   "dependencies": {
-    "sucrase": "^3.12.0"
   }
 }
