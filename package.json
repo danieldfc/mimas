@@ -36,5 +36,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "sucrase": "^3.12.0"
   }
 }
