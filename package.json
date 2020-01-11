@@ -7,6 +7,9 @@
     "type": "github",
     "url": "https://github.com/danieldfc/projeto-costura.git"
   },
+  "scripts": {
+    "start": "cd server && yarn start"
+  },
   "license": "MIT",
   "husky": {
     "hooks": {
