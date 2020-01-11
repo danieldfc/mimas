@@ -10,9 +10,13 @@ describe('User sessions', () => {
   });
 
   it('should authenticate with valid credentials return jwt token when authenticate', async () => {
-    const user = await factory.create('User', {
+    const user = await factory.attrs('User', {
       password: '123123',
     });
+
+    await request(app)
+      .post('/users')
+      .send(user);
 
     const response = await request(app)
       .post('/sessions')
@@ -29,9 +33,6 @@ describe('User sessions', () => {
     const response = await request(app).post('/sessions');
 
     expect(response.status).toBe(403);
-    expect(response.body).toMatchObject({
-      error: { message: 'Validation failure' },
-    });
   });
 
   it('should authenticate with credentials but user not found', async () => {
@@ -60,7 +61,7 @@ describe('User sessions', () => {
         password: '123456',
       });
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(400);
     expect(response.body).toMatchObject({
       error: { message: 'Password does not match' },
     });

@@ -24,19 +24,16 @@ describe('User store', () => {
     const response = await request(app).post('/users');
 
     expect(response.status).toBe(403);
-    expect(response.body).toMatchObject({
-      error: { message: 'Validation failure' },
-    });
   });
 
   it('should not be able register a new user already existing', async () => {
-    await factory.create('User', {
-      email: 'test@test.com',
-    });
-
     const user = await factory.attrs('User', {
       email: 'test@test.com',
     });
+
+    await request(app)
+      .post('/users')
+      .send(user);
 
     const response = await request(app)
       .post('/users')

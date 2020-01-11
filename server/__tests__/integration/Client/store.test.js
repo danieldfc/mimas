@@ -23,7 +23,7 @@ describe('Client store', () => {
     expect(response.body).toHaveProperty('id');
   });
 
-  it('should not be able register a new client with duplicated', async () => {
+  it('should not be able register a new client with duplicated email', async () => {
     const user = await factory.create('User');
 
     const client = await factory.attrs('Client');
@@ -52,9 +52,6 @@ describe('Client store', () => {
       .set('Authorization', `Bearer ${user.generateToken()}`);
 
     expect(response.status).toBe(403);
-    expect(response.body).toMatchObject({
-      error: { message: 'Validation failure' },
-    });
   });
 
   it('should be able register a new client but without authorization token', async () => {
