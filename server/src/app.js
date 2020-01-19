@@ -28,7 +28,12 @@ class App {
 
   middlewares() {
     this.server.use(Sentry.Handlers.errorHandler());
-    this.server.use(cors({ origin: process.env.FRONT_URL }));
+    this.server.use(
+      cors({
+        origin: process.env.FRONT_URL,
+        allowedHeaders: 'Accept: application/vnd.heroku+json; version=3',
+      })
+    );
     this.server.use(morgan('dev'));
     this.server.use(express.json());
   }
