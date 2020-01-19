@@ -1,7 +1,7 @@
 module.exports = {
   primary: '#7159c1',
-  secundary: '#222',
   blue: '#0099e5',
+  blueDark: '#3b3b98',
   green: '#34bf49',
   red: '#ff4c4c',
   orange: '#f47721',

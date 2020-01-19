@@ -19,7 +19,7 @@ export function* signIn({ payload: { email, password } }) {
 
     yield put(signInSuccess(user, token));
 
-    history.push('/dashboard/students');
+    history.push('/dashboard');
   } catch (err) {
     toast.error('Authentication failure, verify data.');
     yield put(signFailure());

@@ -5,7 +5,7 @@ import { lighten, darken } from 'polished';
 import colors from '~/styles/colors';
 
 export const Container = styled.div`
-  background: #fff;
+  background: ${colors.white};
   padding: 20px 30px;
   border-radius: 8px;
 
@@ -27,7 +27,7 @@ export const Container = styled.div`
       font-size: 14px;
     }
     input {
-      background: #fff;
+      background: ${colors.white};
       border: 1px solid #ccc;
       border-radius: 4px;
       height: 44px;
@@ -47,7 +47,7 @@ export const Container = styled.div`
       }
     }
     span {
-      color: #3b3b98;
+      color: ${colors.blueDark};
       align-self: flex-start;
       margin: 0 0 10px;
       font-weight: bold;
@@ -55,18 +55,18 @@ export const Container = styled.div`
     button {
       margin: 5px 0 0;
       height: 44px;
-      background: #7159c1;
+      background: ${colors.primary};
       font-weight: bold;
-      color: #fff;
+      color: ${colors.white};
       border: 0;
       border-radius: 4px;
       font-size: 16px;
       transition: background 0.3s;
       &:hover {
-        background: ${lighten(0.03, '#7159c1')};
+        background: ${lighten(0.03, `${colors.primary}`)};
       }
       &:disabled {
-        background: #7159c1;
+        background: ${colors.primary};
         transition: none;
         color: rgba(255, 255, 255, 0.5);
         cursor: not-allowed;
@@ -75,11 +75,11 @@ export const Container = styled.div`
     div {
       margin-top: 20px;
       font-weight: 550;
-      color: #333;
+      color: ${colors.darkGray};
 
       a {
         margin-left: 3px;
-        color: #7159c1;
+        color: ${colors.primary};
         margin-top: 15px;
         font-size: 14px;
         opacity: 0.8;
