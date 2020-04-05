@@ -1,6 +1,6 @@
 import { object, string } from 'yup';
 
-export default async (req, res, next) => {
+export async function validatorCompanyStore(req, res, next) {
   try {
     const schema = object().shape({
       name: string()
@@ -26,4 +26,4 @@ export default async (req, res, next) => {
       error: { message: 'Validation failure' },
     });
   }
-};
+}

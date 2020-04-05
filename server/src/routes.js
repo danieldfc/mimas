@@ -8,12 +8,14 @@ import UserController from './app/controllers/UserController';
 
 import authMiddleware from './app/middlewares/auth';
 
-import validationClientStore from './app/validators/Client/Store';
-import validationCompanyStore from './app/validators/Company/Store';
-import validationProductStore from './app/validators/Product/Store';
-import validationProductUpdate from './app/validators/Product/Update';
-import validationSessionStore from './app/validators/Session/Store';
-import validationUserStore from './app/validators/User/Store';
+import { validatorClientStore } from './app/validators/client';
+import { validatorCompanyStore } from './app/validators/company';
+import {
+  validatorProductStore,
+  validatorProductUpdate,
+} from './app/validators/product';
+import { validatorSessionStore } from './app/validators/session';
+import { validatorUserStore } from './app/validators/user';
 
 const routes = Router();
 
@@ -21,20 +23,20 @@ routes.get('/', (req, res) => {
   return res.json({ message: 'Seja bem vindo a DACIA BORDADOS' });
 });
 
-routes.post('/users', validationUserStore, UserController.store);
-routes.post('/sessions', validationSessionStore, SessionController.store);
+routes.post('/users', validatorUserStore, UserController.store);
+routes.post('/sessions', validatorSessionStore, SessionController.store);
 
 routes.use(authMiddleware);
 
 // client
 routes.get('/clients', ClientController.index);
-routes.post('/clients', validationClientStore, ClientController.store);
+routes.post('/clients', validatorClientStore, ClientController.store);
 
 // product
 routes.get('/companies/:company_id/products', ProductController.index);
 routes.post(
   '/companies/:company_id/products',
-  validationProductStore,
+  validatorProductStore,
   ProductController.store
 );
 routes.delete(
@@ -43,11 +45,11 @@ routes.delete(
 );
 routes.put(
   '/companies/:company_id/products/:name_product',
-  validationProductUpdate,
+  validatorProductUpdate,
   ProductController.update
 );
 
 // company
-routes.post('/companies', validationCompanyStore, CompanyController.store);
+routes.post('/companies', validatorCompanyStore, CompanyController.store);
 
 export default routes;

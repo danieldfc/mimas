@@ -1,13 +1,20 @@
 import { object, string } from 'yup';
 
-export default async (req, res, next) => {
+export async function validatorClientStore(req, res, next) {
   try {
     const schema = object().shape({
+      name: string()
+        .strict(true)
+        .required(),
       email: string()
         .strict(true)
         .email()
         .required(),
-      password: string()
+      phone: string()
+        .strict(true)
+        .min(9)
+        .required(),
+      address: string()
         .strict(true)
         .required(),
     });
@@ -20,4 +27,4 @@ export default async (req, res, next) => {
       error: { message: 'Validation failure' },
     });
   }
-};
+}

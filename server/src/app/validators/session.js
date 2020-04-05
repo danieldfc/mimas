@@ -1,18 +1,14 @@
 import { object, string } from 'yup';
 
-export default async (req, res, next) => {
+export async function validatorSessionStore(req, res, next) {
   try {
     const schema = object().shape({
-      name: string()
-        .strict(true)
-        .required(),
       email: string()
         .strict(true)
         .email()
         .required(),
       password: string()
         .strict(true)
-        .min(6)
         .required(),
     });
 
@@ -24,4 +20,4 @@ export default async (req, res, next) => {
       error: { message: 'Validation failure' },
     });
   }
-};
+}

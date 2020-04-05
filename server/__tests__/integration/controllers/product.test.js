@@ -264,7 +264,7 @@ describe('Product Update', () => {
 
     const response = await request(app)
       .put(`/companies/${company.id}/products/${product.name}`)
-      .set('Authorization', `Bearer ${user.generateToken()}`)
+      .set('Authorization', `Bearer ${user.generateToken()}`);
 
     expect(response.status).toBe(200);
   });
