@@ -20,7 +20,7 @@ class Product extends Model {
     this.belongsToMany(models.Company, {
       foreignKey: 'product_id',
       through: 'product_companies',
-      as: 'products',
+      as: 'companies',
     });
   }
 }

@@ -8,7 +8,7 @@
     "prestart": "yarn build",
     "start": "sequelize db:migrate && node dist/server.js",
     "pretest": "NODE_ENV=test sequelize db:migrate",
-    "test": "NODE_ENV=test jest",
+    "test": "NODE_ENV=test jest --forceExit --runInBand",
     "posttest": "NODE_ENV=test sequelize db:migrate:undo:all",
     "build": "sucrase ./src -d ./dist --transforms imports"
   },

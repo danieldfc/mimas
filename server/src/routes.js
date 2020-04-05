@@ -7,11 +7,11 @@ import SessionController from './app/controllers/SessionController';
 import UserController from './app/controllers/UserController';
 
 import authMiddleware from './app/middlewares/auth';
-import checkCompanyMiddleware from './app/middlewares/checkCompany';
 
 import validationClientStore from './app/validators/Client/Store';
 import validationCompanyStore from './app/validators/Company/Store';
 import validationProductStore from './app/validators/Product/Store';
+import validationProductUpdate from './app/validators/Product/Update';
 import validationSessionStore from './app/validators/Session/Store';
 import validationUserStore from './app/validators/User/Store';
 
@@ -27,19 +27,24 @@ routes.post('/sessions', validationSessionStore, SessionController.store);
 routes.use(authMiddleware);
 
 // client
+routes.get('/clients', ClientController.index);
 routes.post('/clients', validationClientStore, ClientController.store);
 
 // product
+routes.get('/companies/:company_id/products', ProductController.index);
 routes.post(
   '/companies/:company_id/products',
-  checkCompanyMiddleware,
   validationProductStore,
   ProductController.store
 );
 routes.delete(
-  '/companies/:company_id/products/:name',
-  checkCompanyMiddleware,
+  '/companies/:company_id/products/:name_product',
   ProductController.delete
+);
+routes.put(
+  '/companies/:company_id/products/:name_product',
+  validationProductUpdate,
+  ProductController.update
 );
 
 // company

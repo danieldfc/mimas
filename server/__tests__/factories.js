@@ -13,14 +13,14 @@ factory.define('User', User, {
 });
 
 factory.define('Client', Client, {
-  name: faker.name.findName(),
+  name: faker.name.firstName(),
   email: faker.internet.email(),
   phone: faker.phone.phoneNumberFormat(1),
   address: faker.address.streetAddress('###'),
 });
 
 factory.define('Company', Company, {
-  name: faker.name.findName(),
+  name: faker.name.firstName(),
   email: faker.internet.email(),
   address: faker.address.streetAddress('###'),
   phone: faker.phone.phoneNumberFormat(1),

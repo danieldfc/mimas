@@ -4,7 +4,6 @@ import express from 'express';
 
 import * as Sentry from '@sentry/node';
 import cors from 'cors';
-import morgan from 'morgan';
 import Youch from 'youch';
 
 import sentryConfig from './config/sentry';
@@ -29,7 +28,6 @@ class App {
   middlewares() {
     this.server.use(Sentry.Handlers.errorHandler());
     this.server.use(cors()); // não recomendado
-    this.server.use(morgan('dev'));
     this.server.use(express.json());
   }
 

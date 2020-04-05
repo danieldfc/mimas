@@ -2,16 +2,15 @@ import request from 'supertest';
 
 import app from '../../../src/app';
 import factory from '../../factories';
-import truncate from '../../utils/truncate';
+import truncate from '../../util/truncate';
 
-describe('Client store', () => {
+describe('Client Store', () => {
   beforeEach(async () => {
     await truncate();
   });
 
   it('should be able register a new client', async () => {
     const user = await factory.create('User');
-
     const client = await factory.attrs('Client');
 
     const response = await request(app)
@@ -25,7 +24,6 @@ describe('Client store', () => {
 
   it('should not be able register a new client with duplicated email', async () => {
     const user = await factory.create('User');
-
     const client = await factory.attrs('Client');
 
     await request(app)
@@ -52,32 +50,50 @@ describe('Client store', () => {
       .set('Authorization', `Bearer ${user.generateToken()}`);
 
     expect(response.status).toBe(403);
+    expect(response.body).toMatchObject({
+      error: expect.objectContaining({
+        message: expect.stringContaining('Validation failure'),
+      }),
+    });
+  });
+});
+
+describe('Client Index', () => {
+  beforeEach(async () => {
+    await truncate();
   });
 
-  it('should be able register a new client but without authorization token', async () => {
-    const client = await factory.attrs('Client');
+  it('should be able list clients', async () => {
+    const user = await factory.create('User');
+    const client = await factory.create('Client');
 
     const response = await request(app)
-      .post('/clients')
-      .send(client);
+      .get('/clients')
+      .set('Authorization', `Bearer ${user.generateToken()}`);
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(200);
+    expect(response.body[0].id).toEqual(client.id);
+  });
+
+  it('should not be able if not exists JWT token', async () => {
+    const response = await request(app).get('/clients');
+
     expect(response.body).toMatchObject({
-      error: { message: 'TOKEN not provided' },
+      error: expect.objectContaining({
+        message: expect.stringContaining('TOKEN not provided'),
+      }),
     });
   });
 
-  it('should be able register a new client but with invalid authorization token', async () => {
-    const client = await factory.attrs('Client');
-
+  it('should not be able if JWT token invalid', async () => {
     const response = await request(app)
-      .post('/clients')
-      .set('Authorization', 'Bearer 123')
-      .send(client);
+      .get('/clients')
+      .set('Authorization', 'Bearer 123456');
 
-    expect(response.status).toBe(401);
     expect(response.body).toMatchObject({
-      error: { message: 'TOKEN invalid' },
+      error: expect.objectContaining({
+        message: expect.stringContaining('TOKEN invalid'),
+      }),
     });
   });
 });
