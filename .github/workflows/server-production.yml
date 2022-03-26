@@ -20,5 +20,8 @@ jobs:
         with:
           node-version: 14.x
 
+      - name: Install dependencies
+        run: yarn
+
       - name: Run Tests
         run: yarn test:server
