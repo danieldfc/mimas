@@ -5,7 +5,7 @@
   "author": "Daniel Felizardo <daniel.david772@gmail.com>",
   "scripts": {
     "prepare": "husky install",
-    "test": "jest",
+    "test": "jest --no-cache",
     "test:web": "cd packages/web && yarn test",
     "test:server": "cd packages/server && yarn test"
   },

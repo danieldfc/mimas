@@ -4,9 +4,11 @@
     "module": "commonjs",
     "noEmit": true,
     "strict": true,
+    "allowJs": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "removeComments": true,
     "forceConsistentCasingInFileNames": true
   }
 }

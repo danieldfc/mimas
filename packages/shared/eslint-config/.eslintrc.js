@@ -41,17 +41,9 @@ module.exports = {
     'prettier/prettier': 'error',
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
-    'import/no-unresolved': 'error',
+    'import/no-unresolved': 'off',
     'react/jsx-filename-extension': [ 1, {'extensions': ['.tsx']} ],
     'import/prefer-default-export': 'off',
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        'ts': 'never',
-        'tsx': 'never'
-      }
-    ]
   },
   settings: {
     'import/resolver': {
