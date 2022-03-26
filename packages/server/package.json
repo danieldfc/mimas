@@ -9,6 +9,9 @@
     "dev": "tsnd -r tsconfig-paths/register --respawn --exit-child --transpile-only --ignore-watch node_modules src/index.ts",
     "test": "jest --no-cache"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "dependencies": {
     "@prisma/client": "^3.11.1",
     "express": "^4.17.3",
