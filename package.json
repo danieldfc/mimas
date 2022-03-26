@@ -5,7 +5,7 @@
   "author": "Daniel Felizardo <daniel.david772@gmail.com>",
   "scripts": {
     "prepare": "husky install",
-    "test": "echo 'ola'"
+    "test": "jest"
   },
   "engines": {
     "node": "^14.18.0"
@@ -23,7 +23,11 @@
   "license": "MIT",
   "devDependencies": {
     "@mimas/eslint-config": "*",
+    "@types/jest": "^27.4.1",
     "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
   }
 }
