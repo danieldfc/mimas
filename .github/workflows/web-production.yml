@@ -1,4 +1,4 @@
-name: Build & Deploy (Production Web)
+name: Build & Deploy Web
 
 on:
   push:
