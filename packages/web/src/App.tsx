@@ -1,5 +1,5 @@
 function App() {
-  return <h1>Você é meu tudão, minha vida, meu amor!!!! MR</h1>;
+  return <h1>Projeto Audácia! (development)</h1>;
 }
 
 export default App
