@@ -7,33 +7,5 @@
     "type": "github",
     "url": "https://github.com/danieldfc/projeto-costura.git"
   },
-  "scripts": {
-    "api": "cd server && yarn && yarn start"
-  },
-  "license": "MIT",
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
-    }
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^8.3.4",
-    "@commitlint/config-conventional": "^8.3.4",
-    "commitizen": "^4.0.3",
-    "husky": "^3.1.0",
-    "sequelize": "^5.21.3",
-    "sequelize-cli": "^5.5.1",
-    "sucrase": "^3.12.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "dependencies": {
-    "pg": "^7.17.1",
-    "sequelize-cli": "^5.5.1",
-    "sucrase": "^3.12.0"
-  }
+  "license": "MIT"
 }
