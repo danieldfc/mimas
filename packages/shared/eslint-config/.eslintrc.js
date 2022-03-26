@@ -44,6 +44,10 @@ module.exports = {
     'import/no-unresolved': 'off',
     'react/jsx-filename-extension': [ 1, {'extensions': ['.tsx']} ],
     'import/prefer-default-export': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', {
+      "argsIgnorePattern": '_'
+    }]
   },
   settings: {
     'import/resolver': {

@@ -6,15 +6,18 @@
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "start": "yarn build && node dist/index.js",
-    "dev": "tsnd -r tsconfig-paths/register --respawn --exit-child --transpile-only --ignore-watch node_modules src/index.ts",
-    "test": "jest --no-cache"
+    "dev": "npx tsnd -r tsconfig-paths/register --respawn --exit-child --transpile-only --ignore-watch node_modules src/index.ts",
+    "test": "npx jest --no-cache"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^3.11.1",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "express-async-errors": "^3.1.1",
     "pg": "^8.7.3",
     "pino": "^7.9.2",
     "pino-pretty": "^7.6.0"
@@ -25,6 +28,7 @@
     "@babel/node": "^7.16.8",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
     "babel-plugin-module-resolver": "^4.1.0",
     "prisma": "^3.11.1",

@@ -4,6 +4,7 @@ CREATE TABLE "users" (
     "admin" BOOLEAN NOT NULL DEFAULT false,
     "name" TEXT,
     "nick" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
