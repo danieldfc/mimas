@@ -15,11 +15,13 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/*",
+      "packages/shared/*"
     ]
   },
   "license": "MIT",
   "devDependencies": {
+    "@mimas/eslint-config": "*",
     "typescript": "^4.6.3"
   }
 }
