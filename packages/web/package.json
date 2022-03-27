@@ -9,13 +9,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mimas/axios-config": "*",
+    "@unform/core": "^2.1.6",
+    "@unform/web": "^2.1.6",
+    "polished": "^4.1.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "@mimas/axios-config": "*"
+    "react-icons": "^4.3.1",
+    "react-router-dom": "^5.2.0",
+    "react-spring": "^8.0.27",
+    "styled-components": "^5.3.5",
+    "uuidv4": "^6.2.13",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/styled-components": "^5.1.24",
     "@vitejs/plugin-react": "^1.0.7",
     "vite": "^2.8.0"
   }
