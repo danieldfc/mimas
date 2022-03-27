@@ -1,5 +1,6 @@
-export * from '../config/logger'
-export * from '../config/env'
+export * from './logger'
+export * from './env'
+export * from './auth'
 
 export default {
   host: process.env.HOST || 'http://localhost',

@@ -15,14 +15,17 @@
     "seed:run": "npx tsnd -r tsconfig-paths/register ../../node_modules/typeorm-seeding/dist/cli.js seed",
     "schema:drop": "npx tsnd -r tsconfig-paths/register ../../node_modules/typeorm/cli.js schema:drop",
     "schema:sync": "npx tsnd -r tsconfig-paths/register ../../node_modules/typeorm/cli.js schema:sync",
-    "test": "cross-env NODE_ENV=test npx jest --no-cache"
+    "test": "cross-env NODE_ENV=test npx jest --no-cache",
+    "test:dev": "cross-env NODE_ENV=test npx jest --no-cache --watchAll"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "celebrate": "^15.0.1",
     "class-transformer": "^0.5.1",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
     "pino": "^7.9.2",
     "pino-pretty": "^7.6.0",
@@ -43,6 +46,7 @@
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
     "@types/faker": "^6.6.9",
+    "@types/jsonwebtoken": "^8.5.8",
     "babel-plugin-module-resolver": "^4.1.0",
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "cross-env": "^7.0.3",
