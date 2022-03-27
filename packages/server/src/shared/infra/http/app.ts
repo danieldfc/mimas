@@ -23,7 +23,7 @@ app.use(async (err: Error, req: Request, res: Response, _: NextFunction) => {
       .json({ message: err.message, status: 'error' })
   }
 
-  logger.error(`${err.name}: ${err.stack}`)
+  logger.error(err.message)
 
   return res.status(500).json({ error: 'Internal server error' })
 })
