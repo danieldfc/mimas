@@ -47,7 +47,8 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-unused-vars': ['error', {
       "argsIgnorePattern": '_'
-    }]
+    }],
+    'no-useless-constructor': 'off',
   },
   settings: {
     'import/resolver': {

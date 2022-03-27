@@ -1,40 +1,40 @@
-import { User } from '@prisma/client'
+import { inject, injectable } from 'tsyringe'
 import { hash } from 'bcrypt'
-import { prismaClient } from '@database/index'
-import { AppError } from 'src/infra/errors/AppError'
 
-interface IRequest {
-  name?: string
-  nick: string
-  password: string
-  email: string
-}
+import { AppError } from '@shared/errors/AppError'
+import { User } from '@modules/users/infra/typeorm/entities/User'
 
+import IUsersRepository from '@modules/users/infra/typeorm/repositories/IUsersRepository'
+import { ICreateUserDTO } from '@modules/users/dtos'
+
+@injectable()
 export class CreateUserService {
-  async execute(data: IRequest): Promise<User> {
-    if (!data.password || data.password.length < 6) {
-      throw new AppError('Is necessary to your security a password high!')
-    }
+  constructor(
+    @inject('UsersRepository')
+    private userRepository: IUsersRepository
+  ) {}
 
-    if (!data.email) {
-      throw new AppError('Add email to your account!')
-    }
-
-    const userExist = await prismaClient.user.findFirst({
-      where: { email: data.email }
-    })
+  async execute({
+    email,
+    password,
+    nick,
+    name
+  }: ICreateUserDTO): Promise<User> {
+    const userExist = await this.userRepository.findByEmail(email)
 
     if (userExist) {
       throw new AppError('User already exists')
     }
 
-    const hashPasssword = await hash(data.password, 10)
+    const hashPassword = await hash(password, 10)
 
-    return prismaClient.user.create({
-      data: {
-        ...data,
-        password: hashPasssword
-      }
+    const user = await this.userRepository.create({
+      email,
+      nick,
+      name,
+      password: hashPassword
     })
+
+    return user
   }
 }

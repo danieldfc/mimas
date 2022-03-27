@@ -5,17 +5,17 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "rootDir": ".",
-    "lib": ["esnext"],
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "typeRoots": [
       "../../node_modules/@types",
       "./src/@types"
     ],
+    "strictNullChecks": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "paths": {
       "@config/*": ["./src/config/*"],
       "@modules/*": ["./src/modules/*"],
-      "@database/*": ["./src/database/*"]
+      "@shared/*": ["src/shared/*"]
     }
   },
   "include": ["src/**/*"]
