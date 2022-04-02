@@ -12,12 +12,12 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   background-color: #fff;
-  width: 50vw;
-  height: 40vh;
-  max-width: 400px;
+  width: 23vw;
+  height: 45vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0px 30px;
 
   border-radius: 0.9rem;
 
