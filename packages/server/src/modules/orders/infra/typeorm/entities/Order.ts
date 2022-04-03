@@ -28,6 +28,6 @@ export class Order {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date
 
-  @OneToMany(() => ProductOrder, postToCategory => postToCategory.order)
-  postToProducts!: ProductOrder[]
+  @OneToMany(() => ProductOrder, orderProducts => orderProducts.order)
+  orderProducts: ProductOrder[]
 }

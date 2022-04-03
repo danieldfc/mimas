@@ -7,5 +7,5 @@ export default interface ICreateOrderDTO {
   title: string
   description: string
   workmanship: number
-  products: ICreateOrderInProduct[]
+  priceProducts: number
 }

@@ -18,7 +18,7 @@ export default class ProductsRepository implements IProductsRepository {
     const product = this.ormRepository.create({
       title,
       description,
-      price
+      price: price.toString()
     })
 
     await this.save(product)
@@ -26,8 +26,8 @@ export default class ProductsRepository implements IProductsRepository {
     return product
   }
 
-  public findById(id: string): Promise<Product | undefined> {
-    return this.ormRepository.findOne(id)
+  public findByIds(id: string[]): Promise<Product[]> {
+    return this.ormRepository.findByIds(id)
   }
 
   async save(product: Product): Promise<void> {
