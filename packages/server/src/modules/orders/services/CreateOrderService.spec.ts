@@ -1,26 +1,40 @@
-import { AppError } from '@shared/errors/AppError'
-
 import FakeOrdersRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeOrdersRepository'
+import { AppError } from '@shared/errors/AppError'
+import FakeProductsOrdersRepository from '../infra/typeorm/repositories/fakes/FakeProductsOrdersRepository'
+import FakeProductsRepository from '../infra/typeorm/repositories/fakes/FakeProductsRepository'
 import { CreateOrderService } from './CreateOrderService'
-import { randomUUID } from 'crypto'
 
 let fakeOrdersRepository: FakeOrdersRepository
+let fakeProductsRepository: FakeProductsRepository
+let fakeProductsOrdersRepository: FakeProductsOrdersRepository
 let createOrderService: CreateOrderService
 
 describe('CreateOrder', () => {
   beforeEach(() => {
     fakeOrdersRepository = new FakeOrdersRepository()
-    createOrderService = new CreateOrderService(fakeOrdersRepository)
+    fakeProductsRepository = new FakeProductsRepository()
+    fakeProductsOrdersRepository = new FakeProductsOrdersRepository()
+    createOrderService = new CreateOrderService(
+      fakeOrdersRepository,
+      fakeProductsRepository,
+      fakeProductsOrdersRepository
+    )
   })
 
   it('should be able to create a new order', async () => {
+    const product = await fakeProductsRepository.create({
+      title: 'meu novo produto',
+      description: 'Meu item incrível',
+      price: 200
+    })
+
     const order = await createOrderService.execute({
       workmanship: 200,
       title: 'Meu novo pedido',
       description: 'Minha descrição de pedido',
       products: [
         {
-          productId: randomUUID(),
+          productId: product.id,
           qtd: 12
         }
       ]

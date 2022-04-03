@@ -17,7 +17,7 @@ export default class FakeProductsRepository implements IProductsRepository {
       id: randomUUID(),
       title,
       description,
-      price
+      price: `$${price}`
     })
 
     this.products.push(product)
@@ -25,8 +25,11 @@ export default class FakeProductsRepository implements IProductsRepository {
     return product
   }
 
-  public async findById(id: string): Promise<Product | undefined> {
-    return this.products.find(product => product.id === id)
+  public async findByIds(ids: string[]): Promise<Product[]> {
+    return this.products.reduce((acc, product) => {
+      if (ids.includes(product.id)) acc.push(product)
+      return acc
+    }, [] as Product[])
   }
 
   async save(product: Product): Promise<void> {
