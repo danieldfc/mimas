@@ -1,11 +1,11 @@
 import { getRepository, Repository } from 'typeorm'
 
-import ICustomersRepository from '@modules/users/infra/typeorm/repositories/IUsersRepository'
+import IUsersRepository from '@modules/users/infra/typeorm/repositories/IUsersRepository'
 import { ICreateUserDTO } from '@modules/users/dtos'
 
 import { User } from '../entities/User'
 
-export default class UserRepository implements ICustomersRepository {
+export default class UserRepository implements IUsersRepository {
   private ormRepository: Repository<User>
 
   constructor() {
