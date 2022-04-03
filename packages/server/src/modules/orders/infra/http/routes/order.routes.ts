@@ -12,7 +12,7 @@ orderRoute.post(
     [Segments.BODY]: {
       title: Joi.string().required(),
       description: Joi.string().required(),
-      workmanship: Joi.number().required(),
+      workmanship: Joi.number().min(0).required(),
       products: Joi.array()
         .items({
           productId: Joi.string().uuid().required(),
