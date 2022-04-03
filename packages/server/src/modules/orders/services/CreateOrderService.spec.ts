@@ -50,4 +50,15 @@ describe('CreateOrder', () => {
       })
     ).rejects.toBeInstanceOf(AppError)
   })
+
+  it('should not be able to create a new order with workmanship < 0', async () => {
+    await expect(
+      createOrderService.execute({
+        workmanship: -1,
+        title: 'Meu novo pedido',
+        description: 'Minha descrição de pedido',
+        products: []
+      })
+    ).rejects.toBeInstanceOf(AppError)
+  })
 })
