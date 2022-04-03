@@ -3,6 +3,6 @@ import { Product } from '../entities/Product'
 
 export default interface IProductsRepository {
   create(data: ICreateProductDTO): Promise<Product>
-  findById(id: string): Promise<Product | undefined>
+  findByIds(id: string[]): Promise<Product[]>
   save(product: Product): Promise<void>
 }

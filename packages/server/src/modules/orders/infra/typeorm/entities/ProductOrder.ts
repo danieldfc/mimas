@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn
@@ -15,13 +16,7 @@ export class ProductOrder {
   id: string
 
   @Column({ name: 'qtd_product' })
-  qtdProduct!: number
-
-  @Column({ name: 'product_id' })
-  productId!: number
-
-  @Column({ name: 'order_id' })
-  orderId!: number
+  qtdProduct: number
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date
@@ -29,9 +24,11 @@ export class ProductOrder {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date
 
-  @ManyToOne(() => Order, order => order.postToProducts)
-  order!: Order
+  @ManyToOne(() => Order, order => order.orderProducts)
+  @JoinColumn({ name: 'order_id' })
+  order: Order
 
-  @ManyToOne(() => Product, product => product.postToProducts)
-  product!: Product
+  @ManyToOne(() => Product, product => product.orderProducts)
+  @JoinColumn({ name: 'product_id' })
+  product: Product
 }

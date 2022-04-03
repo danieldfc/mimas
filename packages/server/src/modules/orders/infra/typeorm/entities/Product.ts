@@ -6,7 +6,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
-
 import { ProductOrder } from './ProductOrder'
 
 @Entity('products')
@@ -21,7 +20,7 @@ export class Product {
   description: string
 
   @Column({ type: 'money' })
-  price: number
+  price: string
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date
@@ -29,6 +28,6 @@ export class Product {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date
 
-  @OneToMany(() => ProductOrder, postToCategory => postToCategory.product)
-  postToProducts!: ProductOrder[]
+  @OneToMany(() => ProductOrder, orderProducts => orderProducts.product)
+  orderProducts: ProductOrder[]
 }
