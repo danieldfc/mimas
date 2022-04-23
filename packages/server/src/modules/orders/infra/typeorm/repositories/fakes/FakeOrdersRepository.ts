@@ -1,7 +1,7 @@
 import ICreateOrderDTO from '@modules/orders/dtos/ICreateOrderDTO'
 import IFindOrdersDTO from '@modules/orders/dtos/IFindOrdersDTO'
 import { Order } from '@modules/orders/infra/typeorm/entities/Order'
-import { randomUUID } from 'crypto'
+import { v4 as uuidV4 } from 'uuid'
 import { Product } from '../../entities/Product'
 import { ProductOrder } from '../../entities/ProductOrder'
 import IOrdersRepository from '../IOrdersRepository'
@@ -18,7 +18,7 @@ export default class FakeOrdersRepository implements IOrdersRepository {
     const order = new Order()
 
     Object.assign(order, {
-      id: randomUUID(),
+      id: uuidV4(),
       title,
       description,
       finalPrice: workmanship + priceProducts
@@ -43,7 +43,7 @@ export default class FakeOrdersRepository implements IOrdersRepository {
     if (order) {
       const orderProduct = new ProductOrder()
       Object.assign(orderProduct, {
-        id: randomUUID(),
+        id: uuidV4(),
         order,
         product,
         qtdProduct

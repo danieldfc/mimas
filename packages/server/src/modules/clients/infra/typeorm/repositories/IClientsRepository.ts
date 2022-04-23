@@ -3,6 +3,7 @@ import { Client } from '../entities/Client'
 
 export default interface IClientsRepository {
   create(data: ICreateClientDTO): Promise<Client>
+  findAll(): Promise<Client[]>
   findByName(name: string): Promise<Client | undefined>
   save(client: Client): Promise<void>
 }
