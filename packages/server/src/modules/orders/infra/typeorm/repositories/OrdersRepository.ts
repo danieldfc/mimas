@@ -1,3 +1,4 @@
+import IFindOrdersDTO from '@modules/orders/dtos/IFindOrdersDTO'
 import { getRepository, Repository } from 'typeorm'
 import ICreateOrderDTO from '../../../dtos/ICreateOrderDTO'
 import { Order } from '../entities/Order'
@@ -25,6 +26,14 @@ export default class OrdersRepository implements IOrdersRepository {
     await this.save(order)
 
     return order
+  }
+
+  public async findAll(options?: IFindOrdersDTO): Promise<Order[]> {
+    return this.ormRepository.find({
+      take: options?.first || 10,
+      skip: options?.offset || 0,
+      relations: ['orderProducts']
+    })
   }
 
   public findById(id: string): Promise<Order | undefined> {

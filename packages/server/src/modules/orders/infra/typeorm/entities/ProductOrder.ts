@@ -28,7 +28,7 @@ export class ProductOrder {
   @JoinColumn({ name: 'order_id' })
   order: Order
 
-  @ManyToOne(() => Product, product => product.orderProducts)
+  @ManyToOne(() => Product, product => product.orderProducts, { eager: true })
   @JoinColumn({ name: 'product_id' })
   product: Product
 }

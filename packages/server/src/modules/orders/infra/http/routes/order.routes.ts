@@ -1,10 +1,12 @@
 import { celebrate, Joi, Segments } from 'celebrate'
 import { Router } from 'express'
 import { CreateOrderController } from '../controllers/CreateOrderController'
+import { FindOrdersWithProductsController } from '../controllers/FindOrdersWithProductsController'
 
 const orderRoute = Router()
 
 const createOrderController = new CreateOrderController()
+const findOrdersWithProductsController = new FindOrdersWithProductsController()
 
 orderRoute.post(
   '/',
@@ -23,5 +25,7 @@ orderRoute.post(
   }),
   createOrderController.handle
 )
+
+orderRoute.get('/', findOrdersWithProductsController.handle)
 
 export { orderRoute }
