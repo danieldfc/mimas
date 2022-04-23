@@ -1,3 +1,4 @@
+import FakeClientsRepository from '@modules/clients/infra/typeorm/repositories/fakes/FakeClientsRepository'
 import FakeOrdersRepository from '../infra/typeorm/repositories/fakes/FakeOrdersRepository'
 import FakeProductsOrdersRepository from '../infra/typeorm/repositories/fakes/FakeProductsOrdersRepository'
 import FakeProductsRepository from '../infra/typeorm/repositories/fakes/FakeProductsRepository'
@@ -9,6 +10,7 @@ let findOrdersWithProductsService: FindOrdersWithProductsService
 
 let fakeProductsRepository: FakeProductsRepository
 let fakeProductsOrdersRepository: FakeProductsOrdersRepository
+let fakeClientsRepository: FakeClientsRepository
 let createOrderService: CreateOrderService
 
 describe('FindOrdersWithProducts', () => {
@@ -16,10 +18,12 @@ describe('FindOrdersWithProducts', () => {
     fakeOrdersRepository = new FakeOrdersRepository()
     fakeProductsRepository = new FakeProductsRepository()
     fakeProductsOrdersRepository = new FakeProductsOrdersRepository()
+    fakeClientsRepository = new FakeClientsRepository()
     createOrderService = new CreateOrderService(
       fakeOrdersRepository,
       fakeProductsRepository,
-      fakeProductsOrdersRepository
+      fakeProductsOrdersRepository,
+      fakeClientsRepository
     )
 
     findOrdersWithProductsService = new FindOrdersWithProductsService(
@@ -34,6 +38,11 @@ describe('FindOrdersWithProducts', () => {
       price: 200
     })
 
+    const client = await fakeClientsRepository.create({
+      name: 'John Doe',
+      phone: '+5583999999999'
+    })
+
     const qtdProduct = 12
 
     const order = await createOrderService.execute({
@@ -45,10 +54,12 @@ describe('FindOrdersWithProducts', () => {
           qtd: qtdProduct
         }
       ],
-      workmanship: 200
+      workmanship: 200,
+      clientId: client.id
     })
 
     fakeOrdersRepository.associateProduct(order.id, product, qtdProduct)
+    fakeOrdersRepository.associateClient(order.id, client)
 
     const ordersWithProduct = await findOrdersWithProductsService.execute({
       first: 10,
@@ -59,5 +70,6 @@ describe('FindOrdersWithProducts', () => {
 
     expect(firstOrder).toHaveProperty('orderProducts')
     expect(firstOrder.orderProducts[0].order.id).toBe(firstOrder.id)
+    expect(firstOrder.orderProducts[0].order.clients[0].id).toBe(client.id)
   })
 })

@@ -1,7 +1,10 @@
+import { Client } from '@modules/clients/infra/typeorm/entities/Client'
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
@@ -14,10 +17,10 @@ export class Order {
   id: string
 
   @Column({ length: 100 })
-  title: string
+  title!: string
 
   @Column({ type: 'money' })
-  finalPrice: number
+  finalPrice!: number
 
   @Column({ length: 255 })
   description: string
@@ -30,4 +33,18 @@ export class Order {
 
   @OneToMany(() => ProductOrder, orderProducts => orderProducts.order)
   orderProducts: ProductOrder[]
+
+  @ManyToMany(() => Client, { eager: true })
+  @JoinTable({
+    name: 'orders_clients',
+    inverseJoinColumn: {
+      name: 'client_id',
+      referencedColumnName: 'id'
+    },
+    joinColumn: {
+      name: 'order_id',
+      referencedColumnName: 'id'
+    }
+  })
+  clients: Client[]
 }

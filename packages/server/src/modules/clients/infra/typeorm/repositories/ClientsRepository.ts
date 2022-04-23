@@ -32,6 +32,12 @@ export default class ClientsRepository implements IClientsRepository {
     return this.ormRepository.find()
   }
 
+  public async findById(clientId: string): Promise<Client | undefined> {
+    return this.ormRepository.findOne({
+      where: { id: clientId }
+    })
+  }
+
   public async findByName(name: string): Promise<Client | undefined> {
     const client = await this.ormRepository.findOne({
       where: { name }

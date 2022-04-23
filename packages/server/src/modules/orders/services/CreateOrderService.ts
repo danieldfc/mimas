@@ -1,3 +1,4 @@
+import IClientsRepository from '@modules/clients/infra/typeorm/repositories/IClientsRepository'
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
 
@@ -22,6 +23,7 @@ interface IRequest {
   description: string
   workmanship: number
   products: IProduct[]
+  clientId: string
 }
 
 @injectable()
@@ -34,15 +36,25 @@ export class CreateOrderService {
     private productsRepository: IProductsRepository,
 
     @inject('ProductsOrdersRepository')
-    private productsOrdersRepository: IProductsOrdersRepository
+    private productsOrdersRepository: IProductsOrdersRepository,
+
+    @inject('ClientsRepository')
+    private clientsRepository: IClientsRepository
   ) {}
 
   async execute({
     description,
     products,
     title,
-    workmanship
+    workmanship,
+    clientId
   }: IRequest): Promise<Order> {
+    const client = await this.clientsRepository.findById(clientId)
+
+    if (!client) {
+      throw new AppError('Cliente não encontrado.', 404)
+    }
+
     if (workmanship <= 0) {
       throw new AppError('Não informado preço de mão de obra')
     }
@@ -61,7 +73,8 @@ export class CreateOrderService {
       title,
       description,
       workmanship,
-      priceProducts: priceProductsTotal
+      priceProducts: priceProductsTotal,
+      client
     })
 
     for (const product of productsEntities) {

@@ -7,50 +7,28 @@ import { formatDate } from '../../utils/formatDate'
 
 import { Header } from '../../components/Header'
 import TableList from '../../components/TableList'
+import api from '@mimas/axios-config'
+import { Client } from '../../hooks/client'
+
+type Order = {
+  id: string
+  title: string
+  finalPrice: string
+  description: string
+  clients: Client[]
+  createdAt: Date
+}
 
 export default function Dashboard() {
-  const [orders, setOrders] = useState([
-    {
-      id: 'kasmdlkmasdlkm',
-      title: 'Meu novo pedido 1',
-      description: 'Este pedido tem como objetivo 1...',
-      cliente: {
-        name: 'Aldaci',
-        telefone: '(83) 9 9999-99'
-      },
-      dateDelivere: new Date('2022-03-27 12:00:00'),
-      isDelivered: false,
-      priceTotal: 400
-    },
-    {
-      id: 'sdlçknjflkmn',
-      title: 'Meu novo pedido 2',
-      description: 'Este pedido tem como objetivo 2...',
-      cliente: {
-        name: 'Daniel Felizardo',
-        telefone: '(83) 9 9999-99'
-      },
-      dateDelivere: new Date('2022-03-27 12:00:00'),
-      isDelivered: true,
-      priceTotal: 200
-    },
-    {
-      id: 'sjdfgosnfdo',
-      title: 'Meu novo pedido 3',
-      description: 'Este pedido tem como objetivo 3...',
-      cliente: {
-        name: 'Letícia felizardo',
-        telefone: '(83) 9 9999-99'
-      },
-      dateDelivere: new Date('2022-03-28 14:00:00'),
-      isDelivered: null,
-      priceTotal: 300
-    }
-  ])
+  const [orders, setOrders] = useState<Order[]>([])
 
   useEffect(() => {
-    setOrders(orders)
-  }, orders)
+    async function getOrders() {
+      const response = await api.get('/orders')
+      setOrders([...response.data.orders])
+    }
+    getOrders()
+  }, [])
 
   return (
     <Container>
@@ -80,16 +58,22 @@ export default function Dashboard() {
                   <td>
                     <Link to={`/order/${order.id}`}>{order.title}</Link>
                   </td>
-                  <td className="center">{order.cliente.name}</td>
-                  <td className="center">{formatMoney(order.priceTotal)}</td>
-                  <td className="center">{formatDate(order.dateDelivere)}h</td>
+                  <td className="center">{order.clients[0].name}</td>
+                  <td className="center">
+                    {formatMoney(
+                      +order.finalPrice.replace('$', '').replace(',', '')
+                    )}
+                  </td>
+                  <td className="center">
+                    {formatDate(new Date(order.createdAt))}h
+                  </td>
                   <td className="actions">
                     <div>
                       <button
                         type="button"
                         className="finish"
                         onClick={() => {
-                          console.log('Deu certo')
+                          console.log('Deu certo finish')
                         }}
                       >
                         Finalizar
@@ -98,7 +82,7 @@ export default function Dashboard() {
                         type="button"
                         className="cancel"
                         onClick={() => {
-                          console.log('Deu certo')
+                          console.log('Deu certo cancel')
                         }}
                       >
                         Cancelar

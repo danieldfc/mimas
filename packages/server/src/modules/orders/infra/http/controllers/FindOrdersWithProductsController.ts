@@ -15,6 +15,6 @@ export class FindOrdersWithProductsController {
       offset: parseInt(offset as string)
     })
 
-    return response.status(200).json(orders)
+    return response.status(200).json({ orders })
   }
 }
