@@ -14,15 +14,10 @@ import { Container, Error } from './styles'
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string
   containerStyle?: object
-  icon?: React.ComponentType<IconBaseProps>
+  icon?: React.FunctionComponent<IconBaseProps>
 }
 
-const Input: React.FC<InputProps> = ({
-  name,
-  icon: Icon,
-  containerStyle = {},
-  ...rest
-}) => {
+function Input({ name, icon: Icon, containerStyle = {}, ...rest }: InputProps) {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const [isFocused, setIsFocused] = useState(false)
