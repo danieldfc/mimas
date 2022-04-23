@@ -16,6 +16,6 @@ export class CreateOrderController {
       clientId
     })
 
-    return response.status(201).json(order)
+    return response.status(201).json({ order })
   }
 }
