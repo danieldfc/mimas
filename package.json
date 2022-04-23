@@ -10,7 +10,7 @@
     "test:server": "cd packages/server && yarn test"
   },
   "engines": {
-    "node": ">=12.0.0 <13.0.0"
+    "node": "14.18.0"
   },
   "repository": {
     "type": "github",
