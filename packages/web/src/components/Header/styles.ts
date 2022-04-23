@@ -34,7 +34,7 @@ export const Content = styled.div`
 export const Profile = styled.div`
   display: flex;
   align-items: flex-start;
-  width: 500px;
+  width: 250px;
 
   display: flex;
   flex-direction: column;
@@ -50,6 +50,28 @@ export const Profile = styled.div`
     color: #7f3e98;
     &:hover {
       opacity: 0.8;
+    }
+  }
+`
+
+export const Navigation = styled.nav`
+  ul {
+    display: flex;
+
+    > :last-child {
+      margin-right: 0;
+    }
+
+    li {
+      margin-right: 20px;
+
+      a {
+        text-decoration: none;
+        color: #7f3e98;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
     }
   }
 `

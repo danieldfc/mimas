@@ -1,5 +1,5 @@
 import ICreateProductOrderDTO from '@modules/orders/dtos/ICreateProductOrderDTO'
-import { randomUUID } from 'crypto'
+import { v4 as uuidV4 } from 'uuid'
 import { ProductOrder } from '../../entities/ProductOrder'
 import IProductsOrdersRepository from '../IProductsOrdersRepository'
 
@@ -16,7 +16,7 @@ export default class FakeProductsOrdersRepository
     const productOrder = new ProductOrder()
 
     Object.assign(productOrder, {
-      id: randomUUID(),
+      id: uuidV4(),
       qtdProduct,
       product,
       order

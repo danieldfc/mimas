@@ -1,6 +1,6 @@
 import ICreateProductDTO from '@modules/orders/dtos/ICreateProductDTO'
 import { Product } from '@modules/orders/infra/typeorm/entities/Product'
-import { randomUUID } from 'crypto'
+import { v4 as uuidV4 } from 'uuid'
 import IProductsRepository from '../IProductsRepository'
 
 export default class FakeProductsRepository implements IProductsRepository {
@@ -14,7 +14,7 @@ export default class FakeProductsRepository implements IProductsRepository {
     const product = new Product()
 
     Object.assign(product, {
-      id: randomUUID(),
+      id: uuidV4(),
       title,
       description,
       price: `$${price}`

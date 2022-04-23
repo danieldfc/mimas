@@ -1,5 +1,5 @@
 import { hash } from 'bcrypt'
-import { randomUUID } from 'crypto'
+import { v4 as uuidV4 } from 'uuid'
 
 import IUsersRepository from '@modules/users/infra/typeorm/repositories/IUsersRepository'
 import { ICreateUserDTO } from '@modules/users/dtos'
@@ -26,7 +26,7 @@ class FakeUsersRepository implements IUsersRepository {
     const user = new User()
 
     Object.assign(user, {
-      id: randomUUID(),
+      id: uuidV4(),
       name,
       email,
       password: await hash(password, 10),

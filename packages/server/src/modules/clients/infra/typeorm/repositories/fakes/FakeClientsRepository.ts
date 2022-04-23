@@ -1,5 +1,5 @@
 import { ICreateClientDTO } from '@modules/clients/dtos/ICreateClient'
-import { randomUUID } from 'crypto'
+import { v4 as uuidV4 } from 'uuid'
 import { Client } from '../../entities/Client'
 import IClientsRepository from '../IClientsRepository'
 
@@ -15,7 +15,7 @@ export default class FakeClientsRepository implements IClientsRepository {
     const client = new Client()
 
     Object.assign(client, {
-      id: randomUUID(),
+      id: uuidV4(),
       name,
       address,
       email,
@@ -25,6 +25,10 @@ export default class FakeClientsRepository implements IClientsRepository {
     this.clients.push(client)
 
     return client
+  }
+
+  public async findAll(): Promise<Client[]> {
+    return this.clients
   }
 
   public async findByName(name: string): Promise<Client | undefined> {
