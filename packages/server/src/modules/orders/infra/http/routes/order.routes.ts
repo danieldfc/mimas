@@ -20,7 +20,8 @@ orderRoute.post(
           productId: Joi.string().uuid().required(),
           qtd: Joi.number().required()
         })
-        .required()
+        .required(),
+      clientId: Joi.string().uuid().required()
     }
   }),
   createOrderController.handle

@@ -4,7 +4,7 @@ import { container } from 'tsyringe'
 
 export class CreateOrderController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { title, description, products, workmanship } = request.body
+    const { title, description, products, workmanship, clientId } = request.body
 
     const createOrderService = container.resolve(CreateOrderService)
 
@@ -12,7 +12,8 @@ export class CreateOrderController {
       title,
       description,
       products,
-      workmanship
+      workmanship,
+      clientId
     })
 
     return response.status(201).json(order)

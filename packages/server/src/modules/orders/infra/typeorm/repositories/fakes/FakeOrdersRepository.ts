@@ -1,3 +1,4 @@
+import { Client } from '@modules/clients/infra/typeorm/entities/Client'
 import ICreateOrderDTO from '@modules/orders/dtos/ICreateOrderDTO'
 import IFindOrdersDTO from '@modules/orders/dtos/IFindOrdersDTO'
 import { Order } from '@modules/orders/infra/typeorm/entities/Order'
@@ -49,6 +50,14 @@ export default class FakeOrdersRepository implements IOrdersRepository {
         qtdProduct
       })
       order.orderProducts = [orderProduct]
+    }
+  }
+
+  public associateClient(idOrder: string, client: Client): void {
+    const order = this.orders.find(order => order.id === idOrder)
+
+    if (order) {
+      order.clients = [...(order.clients ?? []), client]
     }
   }
 
