@@ -13,8 +13,8 @@
     "@unform/core": "^2.1.6",
     "@unform/web": "^2.1.6",
     "polished": "^4.1.4",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-icons": "^4.3.1",
     "react-router-dom": "^5.2.0",
     "react-spring": "^8.0.27",
@@ -23,8 +23,8 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@types/react": "^17.0.33",
-    "@types/react-dom": "^17.0.10",
+    "@types/react": "^16.9.43",
+    "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.24",
     "@vitejs/plugin-react": "^1.0.7",
