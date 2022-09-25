@@ -1,19 +1,8 @@
 const isDevelopment = !!(process.env.NODE_ENV === 'development')
 
-console.log('env', process.env.NODE_ENV)
-console.log('name', process.env.NODE_NAME)
-console.log('host', process.env.DB_HOST)
-console.log('port', process.env.DB_PORT)
-console.log('user', process.env.DB_USER)
-console.log('pass', process.env.DB_PASS)
-
 const environments = {
   type: 'postgres',
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT),
-  username: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
+  url: process.env.DATABASE_URL,
   entities: [`${isDevelopment ? 'src' : 'dist'}/modules/**/entities/*{.ts,.js}`],
   migrations: [`${isDevelopment ? 'src' : 'dist'}/shared/infra/typeorm/migrations/*{.ts,.js}`],
   seeds: [`${isDevelopment ? 'src' : 'dist'}/shared/infra/typeorm/seeds/**/*{.ts,.js}`],
