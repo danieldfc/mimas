@@ -5,12 +5,12 @@
   "author": "Daniel Felizardo <daniel.david772@gmail.com>",
   "scripts": {
     "prepare": "husky install",
-    "test": "jest --no-cache",
+    "test": "NODE_ENV=test jest --no-cache",
     "test:web": "cd packages/web && yarn test",
     "test:server": "cd packages/server && yarn test"
   },
   "engines": {
-    "node": "^14.18.0"
+    "node": ">=16.15.0"
   },
   "repository": {
     "type": "github",
@@ -26,7 +26,7 @@
   "devDependencies": {
     "@mimas/eslint-config": "*",
     "@types/jest": "^27.4.1",
-    "@types/node": "^17.0.23",
+    "@types/node": "^12.0.0",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.4",

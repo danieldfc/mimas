@@ -5,27 +5,54 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "start": "yarn build && node dist/index.js",
-    "dev": "tsnd -r tsconfig-paths/register --respawn --exit-child --transpile-only --ignore-watch node_modules src/index.ts",
-    "test": "jest --no-cache"
+    "start": "yarn build && node dist/shared/infra/http/server.js",
+    "dev": "npx tsnd -r tsconfig-paths/register --inspect --respawn --exit-child --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "typeorm": "npx tsnd -r tsconfig-paths/register ../../node_modules/typeorm/cli.js",
+    "migration:create": "yarn typeorm migration:create -n",
+    "migration:run": "yarn typeorm migration:run",
+    "migration:undo": "yarn typeorm migration:revert",
+    "seed:config": "npx tsnd -r tsconfig-paths/register ../../node_modules/typeorm-seeding/dist/cli.js config",
+    "seed:run": "npx tsnd -r tsconfig-paths/register ../../node_modules/typeorm-seeding/dist/cli.js seed",
+    "schema:drop": "npx tsnd -r tsconfig-paths/register ../../node_modules/typeorm/cli.js schema:drop",
+    "schema:sync": "npx tsnd -r tsconfig-paths/register ../../node_modules/typeorm/cli.js schema:sync",
+    "test": "cross-env NODE_ENV=test npx jest --no-cache",
+    "test:dev": "cross-env NODE_ENV=test npx jest --no-cache --watchAll"
   },
   "dependencies": {
-    "@prisma/client": "^3.11.1",
+    "bcrypt": "^5.0.1",
+    "celebrate": "^15.0.1",
+    "class-transformer": "^0.5.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
     "pino": "^7.9.2",
-    "pino-pretty": "^7.6.0"
+    "pino-pretty": "^7.6.0",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.6.0",
+    "typeorm": "^0.2.32",
+    "typeorm-seeding": "^1.6.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.8",
     "@babel/node": "^7.16.8",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-decorators": "^7.17.8",
+    "@babel/plugin-transform-typescript": "^7.16.8",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
+    "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/faker": "^6.6.9",
+    "@types/jsonwebtoken": "^8.5.8",
     "babel-plugin-module-resolver": "^4.1.0",
-    "prisma": "^3.11.1",
-    "ts-node-dev": "^1.1.8",
-    "tsconfig-paths": "^3.14.1"
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
+    "cross-env": "^7.0.3",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.1.0"
   }
 }

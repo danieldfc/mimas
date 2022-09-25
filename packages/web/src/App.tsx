@@ -1,5 +1,19 @@
 import React from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
+
+import Routes from './routes'
+import GlobalStyle from './styles/global'
+
+import AppProvider from './hooks'
 
 export default function App() {
-  return <h1>Projeto Audácia! (Esta página ainda está sendo desenvolvida)</h1>
+  return (
+    <Router>
+      <AppProvider>
+        <Routes />
+      </AppProvider>
+
+      <GlobalStyle />
+    </Router>
+  )
 }
