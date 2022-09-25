@@ -111,8 +111,7 @@ export function CreateOrder() {
   useEffect(() => {
     async function getProducts() {
       const response = await api.get('/products')
-      setProducts(oldProducts => [
-        ...oldProducts,
+      setProducts([
         ...response.data.products.map((p: Product) => ({
           ...p,
           add: false,
