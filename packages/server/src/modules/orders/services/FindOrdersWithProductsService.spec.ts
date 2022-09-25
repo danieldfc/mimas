@@ -1,3 +1,4 @@
+import { Client } from '@modules/clients/infra/typeorm/entities/Client'
 import FakeClientsRepository from '@modules/clients/infra/typeorm/repositories/fakes/FakeClientsRepository'
 import FakeOrdersRepository from '../infra/typeorm/repositories/fakes/FakeOrdersRepository'
 import FakeProductsOrdersRepository from '../infra/typeorm/repositories/fakes/FakeProductsOrdersRepository'
@@ -14,7 +15,9 @@ let fakeClientsRepository: FakeClientsRepository
 let createOrderService: CreateOrderService
 
 describe('FindOrdersWithProducts', () => {
-  beforeEach(() => {
+  let client: Client
+
+  beforeEach(async () => {
     fakeOrdersRepository = new FakeOrdersRepository()
     fakeProductsRepository = new FakeProductsRepository()
     fakeProductsOrdersRepository = new FakeProductsOrdersRepository()
@@ -29,16 +32,14 @@ describe('FindOrdersWithProducts', () => {
     findOrdersWithProductsService = new FindOrdersWithProductsService(
       fakeOrdersRepository
     )
-  })
 
-  it('should be able to find all orders with orderProduct relation', async () => {
     const product = await fakeProductsRepository.create({
       title: 'Meu novo pedido',
       description: 'Meu pedido descrição',
       price: 200
     })
 
-    const client = await fakeClientsRepository.create({
+    client = await fakeClientsRepository.create({
       name: 'John Doe',
       phone: '+5583999999999'
     })
@@ -60,11 +61,23 @@ describe('FindOrdersWithProducts', () => {
 
     fakeOrdersRepository.associateProduct(order.id, product, qtdProduct)
     fakeOrdersRepository.associateClient(order.id, client)
+  })
 
+  it('should be able to find all orders with orderProduct relation', async () => {
     const ordersWithProduct = await findOrdersWithProductsService.execute({
       first: 10,
       offset: 0
     })
+
+    const firstOrder = ordersWithProduct[0]
+
+    expect(firstOrder).toHaveProperty('orderProducts')
+    expect(firstOrder.orderProducts[0].order.id).toBe(firstOrder.id)
+    expect(firstOrder.orderProducts[0].order.clients[0].id).toBe(client.id)
+  })
+
+  it('should be able to find all orders with orderProduct relation whithout elements paginate', async () => {
+    const ordersWithProduct = await findOrdersWithProductsService.execute({})
 
     const firstOrder = ordersWithProduct[0]
 

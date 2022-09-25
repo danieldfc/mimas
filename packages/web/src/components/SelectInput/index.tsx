@@ -1,25 +1,61 @@
-import React, { CSSProperties } from 'react'
+import { useField } from '@unform/core'
+import React, {
+  CSSProperties,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
+import { FiAlertCircle } from 'react-icons/fi'
+import { Props } from 'react-select'
 
-import Select, { Props } from 'react-select'
-
-import { Container } from './styles'
+import { Container, Content, Error, Select } from './styles'
 
 export type ItemSelect = {
   value: string
   label: string
 }
 
-type SelectInputProps = Props & {
+interface SelectInputProps extends Props {
   itens: ItemSelect[]
   title: string
+  containerStyle?: object
+  name: string
 }
 
 export default function SelectInput({
   itens,
   title,
   id,
-  onChange
+  onChange,
+  name,
+  containerStyle = {}
 }: SelectInputProps) {
+  const selectRef = useRef(null)
+
+  const [isFocused, setIsFocused] = useState(false)
+  const [isFilled, setIsFilled] = useState(false)
+
+  const { fieldName, defaultValue, error, registerField } = useField(name)
+
+  const handleSelectBlur = useCallback(() => {
+    setIsFocused(false)
+    // @ts-ignore
+    setIsFilled(!!selectRef.current?.value)
+  }, [])
+
+  const handleSelectFocus = useCallback(() => {
+    setIsFocused(true)
+  }, [])
+
+  useEffect(() => {
+    registerField({
+      name: fieldName,
+      ref: selectRef.current,
+      path: 'value'
+    })
+  }, [fieldName, registerField])
+
   const style: { [key: string]: CSSProperties } = {
     blockquote: {
       fontStyle: 'italic',
@@ -34,17 +70,34 @@ export default function SelectInput({
   }
 
   return (
-    <Container>
+    <Container
+      isErrored={!!error}
+      isFocused={isFocused}
+      isFilled={isFilled}
+      style={containerStyle}
+    >
       <label style={style.label} id="aria-label" htmlFor="aria-example-input">
         {title}:
       </label>
 
-      <Select
-        placeholder="Selecione um cliente..."
-        inputId={id}
-        options={itens}
-        onChange={onChange}
-      />
+      <Content>
+        <Select
+          placeholder="Selecione um cliente..."
+          inputId={id}
+          options={itens}
+          onChange={onChange}
+          onFocus={handleSelectFocus}
+          onBlur={handleSelectBlur}
+          defaultValue={defaultValue}
+          ref={selectRef}
+        />
+
+        {error && (
+          <Error title={error}>
+            <FiAlertCircle color="#c53030" size={20} />
+          </Error>
+        )}
+      </Content>
     </Container>
   )
 }

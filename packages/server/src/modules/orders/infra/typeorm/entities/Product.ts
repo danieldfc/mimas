@@ -20,7 +20,7 @@ export class Product {
   description: string
 
   @Column({ type: 'money' })
-  price: number
+  price: string
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date

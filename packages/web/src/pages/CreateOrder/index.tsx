@@ -19,6 +19,7 @@ import SelectInput from '../../components/SelectInput'
 import ModalRender from '../../components/Modal'
 import { useToast } from '../../hooks/toast'
 import getValidationErrors from '../../utils/getValidationError'
+import ListProductsAdd from '../../components/ListProductsAdded'
 
 export type Product = {
   id: string
@@ -77,19 +78,19 @@ export function CreateOrder() {
         }
 
         const schema = Yup.object().shape({
-          clientId: Yup.string().required('Cliente é obrigatório'),
+          clientId: Yup.string().uuid().required('Cliente é obrigatório'),
           products: Yup.array().min(1).required('Produtos obrigatórios'),
           workmanship: Yup.number().min(1),
           title: Yup.string().required('Título é obrigatório'),
           description: Yup.string().notRequired()
         })
+
         await schema.validate(order, { abortEarly: false })
 
-        history.push('/dashboard')
-
         await api.post('/orders', order)
+
+        history.push('/dashboard')
       } catch (err) {
-        console.log(err)
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)
 
@@ -100,13 +101,15 @@ export function CreateOrder() {
 
         addToast({
           type: 'error',
-          title: 'Erro na autenticação',
-          description: 'Ocorreu um erro ao fazer login, cheque as credências.'
+          title: 'Erro na criação de pedido',
+          description: 'Ocorreu um erro ao criar pedido, Tente novamentent.'
         })
       }
     },
     [clientId, products]
   )
+
+  const productsAdded = products.filter(p => p.add)
 
   useEffect(() => {
     async function getProducts() {
@@ -152,6 +155,7 @@ export function CreateOrder() {
               onChange={(event: any) => setClientId(event.value)}
               title="Cliente"
               id="form-client-id"
+              name="clientId"
             />
 
             <Input icon={MdTitle} name="title" placeholder="Título" />
@@ -176,13 +180,20 @@ export function CreateOrder() {
           >
             <CardListProducts products={products} />
           </ModalRender>
-          {products
-            .filter(p => p.add === true)
-            .map(p => (
-              <li key={p.id}>
-                {p.title} - {p.price} - {p.qtd}
-              </li>
+          <ul
+            style={{
+              marginTop: productsAdded.length ? '20px' : 0
+            }}
+          >
+            {productsAdded.map(p => (
+              <ListProductsAdd product={p} key={p.id} />
             ))}
+          </ul>
+
+          {!productsAdded.length && (
+            <p style={{ marginTop: '5px' }}>Adicione produtos no pedido</p>
+          )}
+
           <Button type="button" onClick={() => setModalIsOpen(true)}>
             Adicionar produtos
           </Button>
