@@ -1,5 +1,5 @@
 import ICreateProductDTO from '@modules/orders/dtos/ICreateProductDTO'
-import { getRepository, Repository } from 'typeorm'
+import { Repository, getRepository } from 'typeorm'
 import { Product } from '../entities/Product'
 import IProductsRepository from './IProductsRepository'
 
@@ -28,6 +28,10 @@ export default class ProductsRepository implements IProductsRepository {
 
   public findByIds(id: string[]): Promise<Product[]> {
     return this.ormRepository.findByIds(id)
+  }
+
+  public async findAll(): Promise<Product[]> {
+    return this.ormRepository.find()
   }
 
   async save(product: Product): Promise<void> {

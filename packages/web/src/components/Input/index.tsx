@@ -1,9 +1,9 @@
 import React, {
   InputHTMLAttributes,
+  useCallback,
   useEffect,
   useRef,
-  useState,
-  useCallback
+  useState
 } from 'react'
 import { IconBaseProps } from 'react-icons'
 import { FiAlertCircle } from 'react-icons/fi'

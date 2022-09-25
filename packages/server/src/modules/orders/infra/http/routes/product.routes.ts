@@ -1,10 +1,12 @@
-import { celebrate, Joi, Segments } from 'celebrate'
+import { Joi, Segments, celebrate } from 'celebrate'
 import { Router } from 'express'
 import { CreateProductController } from '../controllers/CreateProductController'
+import { ListProductsController } from '../controllers/ListProductsController'
 
 const productRoute = Router()
 
 const createProductController = new CreateProductController()
+const listProductsController = new ListProductsController()
 
 productRoute.post(
   '/',
@@ -17,5 +19,7 @@ productRoute.post(
   }),
   createProductController.handle
 )
+
+productRoute.get('/', listProductsController.handle)
 
 export { productRoute }

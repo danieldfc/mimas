@@ -1,14 +1,14 @@
 import api from '@mimas/axios-config'
 import React, {
   createContext,
-  useContext,
   useCallback,
-  useState,
-  useEffect
+  useContext,
+  useEffect,
+  useState
 } from 'react'
 
 export interface Client {
-  id?: string
+  id: string
   name: string
   phone: string
   email?: string
@@ -50,7 +50,7 @@ const ClientProvider: React.FC = ({ children }) => {
       return response.data.clients as Client[]
     }
     getClients()
-  }, [clients])
+  }, [])
 
   return (
     <ClientContaxt.Provider value={{ addClient, clients }}>

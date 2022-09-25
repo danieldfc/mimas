@@ -28,7 +28,7 @@ export default function Dashboard() {
       setOrders([...response.data.orders])
     }
     getOrders()
-  }, [])
+  }, [orders])
 
   return (
     <Container>
