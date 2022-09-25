@@ -1,5 +1,7 @@
 const isDevelopment = !!(process.env.NODE_ENV === 'development')
 
+console.log('env', process.env.NODE_ENV)
+console.log('name', process.env.NODE_NAME)
 console.log('host', process.env.DB_HOST)
 console.log('port', process.env.DB_PORT)
 console.log('user', process.env.DB_USER)
