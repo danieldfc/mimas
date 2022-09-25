@@ -25,6 +25,10 @@ export default class FakeProductsRepository implements IProductsRepository {
     return product
   }
 
+  public async findAll(): Promise<Product[]> {
+    return this.products
+  }
+
   public async findByIds(ids: string[]): Promise<Product[]> {
     return this.products.reduce((acc, product) => {
       if (ids.includes(product.id)) acc.push(product)

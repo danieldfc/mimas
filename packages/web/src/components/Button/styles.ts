@@ -16,4 +16,9 @@ export const Container = styled.button`
   &:hover {
     background-color: ${shade(0.2, '#7f3e98')};
   }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: no-drop;
+  }
 `

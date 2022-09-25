@@ -1,6 +1,6 @@
 import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
-import React, { useRef, useCallback } from 'react'
+import React, { useCallback, useRef } from 'react'
 import * as Yup from 'yup'
 
 import { FiArrowLeft, FiMail, FiPhone } from 'react-icons/fi'
@@ -87,7 +87,12 @@ export function CreateClient() {
           <div>
             <Input icon={GoPerson} name="name" placeholder="Nome" />
             <Input icon={FiMail} name="email" placeholder="E-mail (opcional)" />
-            <Input icon={FiPhone} name="phone" placeholder="Telefone" />
+            <Input
+              icon={FiPhone}
+              name="phone"
+              placeholder="Telefone"
+              type="tel"
+            />
             <Input
               icon={FaRegAddressCard}
               name="address"
