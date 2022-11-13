@@ -1,5 +1,5 @@
 import IFindOrdersDTO from '@modules/orders/dtos/IFindOrdersDTO'
-import { getRepository, Repository } from 'typeorm'
+import { Repository, getRepository } from 'typeorm'
 import ICreateOrderDTO from '../../../dtos/ICreateOrderDTO'
 import { Order } from '../entities/Order'
 import IOrdersRepository from './IOrdersRepository'

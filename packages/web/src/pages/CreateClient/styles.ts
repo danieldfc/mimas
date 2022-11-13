@@ -29,4 +29,8 @@ export const Content = styled.div`
       background-color: ${shade(0.2, '#561482')};
     }
   }
+
+  form > button:last-child {
+    width: 100%;
+  }
 `

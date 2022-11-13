@@ -8,6 +8,7 @@ export const ModalContainer = styled(Modal)`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
 
   h2 {
     color: black;

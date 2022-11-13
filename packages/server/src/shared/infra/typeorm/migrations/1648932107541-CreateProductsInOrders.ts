@@ -42,16 +42,16 @@ export class CreateProductsInOrders1648932107541 implements MigrationInterface {
             referencedTableName: 'orders',
             referencedColumnNames: ['id'],
             columnNames: ['order_id'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE'
+            onDelete: 'NO ACTION',
+            onUpdate: 'NO ACTION'
           },
           {
             name: 'ProductOrder',
             referencedTableName: 'products',
             referencedColumnNames: ['id'],
             columnNames: ['product_id'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE'
+            onDelete: 'NO ACTION',
+            onUpdate: 'NO ACTION'
           }
         ]
       })

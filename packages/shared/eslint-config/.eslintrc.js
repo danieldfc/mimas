@@ -21,7 +21,7 @@ module.exports = {
     ecmaVersion: 11,
     sourceType: 'module'
   },
-  plugins: ['react', '@typescript-eslint', 'jsx-a11y', 'import','prettier', 'unused-imports'],
+  plugins: ['react', 'react-hooks', '@typescript-eslint', 'jsx-a11y', 'import','prettier', 'unused-imports'],
   rules: {
     '@typescript-eslint/no-use-before-define': 'off', // Allows us to hoist variables and functions which I am a fan of, functions not variables that is.
     '@typescript-eslint/no-explicit-any': 'off', // Too strict for my case, sometimes I need an any type
@@ -48,6 +48,8 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error', {
       "argsIgnorePattern": '_'
     }],
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
     'no-useless-constructor': 'off',
     "no-unused-vars": "off",
     "unused-imports/no-unused-imports": "error",

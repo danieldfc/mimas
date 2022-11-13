@@ -4,10 +4,10 @@ import { Container, StyledTable, TableWrapper } from './styles'
 
 type IProps = {
   children: JSX.Element
-  loading: boolean
+  loading?: boolean
 }
 
-export default function TableList({ children, loading }: IProps) {
+export default function TableList({ children, loading = false }: IProps) {
   return (
     <Container>
       {!loading ? (

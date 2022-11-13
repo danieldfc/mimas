@@ -54,6 +54,7 @@ export const StyledTable = styled.table`
   td.actions {
     display: flex;
     justify-content: center;
+    flex-direction: row;
     @media (max-width: 102.4rem) {
       flex-direction: column;
       align-items: flex-end;

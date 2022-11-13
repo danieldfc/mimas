@@ -6,10 +6,11 @@ import IProductsRepository from '../IProductsRepository'
 export default class FakeProductsRepository implements IProductsRepository {
   private products: Product[] = []
 
-  public async create({
+  async create({
     title,
     description,
-    price
+    price,
+    supplier
   }: ICreateProductDTO): Promise<Product> {
     const product = new Product()
 
@@ -17,7 +18,9 @@ export default class FakeProductsRepository implements IProductsRepository {
       id: uuidV4(),
       title,
       description,
-      price: `$${price}`
+      price: `$${price}`,
+      supplier,
+      supplierId: supplier.id
     })
 
     this.products.push(product)
@@ -25,15 +28,19 @@ export default class FakeProductsRepository implements IProductsRepository {
     return product
   }
 
-  public async findAll(): Promise<Product[]> {
+  async findAll(): Promise<Product[]> {
     return this.products
   }
 
-  public async findByIds(ids: string[]): Promise<Product[]> {
+  async findByIds(ids: string[]): Promise<Product[]> {
     return this.products.reduce((acc, product) => {
       if (ids.includes(product.id)) acc.push(product)
       return acc
     }, [] as Product[])
+  }
+
+  async findById(id: string): Promise<Product | undefined> {
+    return this.products.find(p => p.id === id)
   }
 
   async save(product: Product): Promise<void> {
@@ -42,5 +49,12 @@ export default class FakeProductsRepository implements IProductsRepository {
     )
 
     this.products[findIndex] = product
+  }
+
+  async destroy(id: string): Promise<void> {
+    const findIndex = this.products.findIndex(s => s.id === id)
+    if (findIndex > -1) {
+      this.products.splice(findIndex, 1)
+    }
   }
 }

@@ -40,7 +40,7 @@ export default function Dashboard() {
           <Link to="/order">Criar pedido</Link>
         </Wrapper>
 
-        <TableList loading={false}>
+        <TableList>
           <>
             <thead>
               <tr>
@@ -66,6 +66,7 @@ export default function Dashboard() {
                   </td>
                   <td className="center">
                     {formatDate(new Date(order.createdAt))}h
+                    {/* TODO - deveria ser a data de entrega do produto */}
                   </td>
                   <td className="actions">
                     <div>

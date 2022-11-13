@@ -3,7 +3,7 @@ import { animated } from 'react-spring'
 
 interface ContainerProps {
   type?: 'success' | 'error' | 'info'
-  hasDescription: number
+  hasDescription: boolean
 }
 
 const toastTypeVariations = {
@@ -31,10 +31,13 @@ export const Container = styled(animated.div)<ContainerProps>`
   & + div {
     margin-top: 8px;
   }
+
   ${props => toastTypeVariations[props.type || 'info']}
+
   > svg {
     margin: 4px 12px 0 0;
   }
+
   div {
     flex: 1;
     p {
@@ -44,6 +47,7 @@ export const Container = styled(animated.div)<ContainerProps>`
       line-height: 20px;
     }
   }
+
   button {
     position: absolute;
     right: 16px;
@@ -53,12 +57,13 @@ export const Container = styled(animated.div)<ContainerProps>`
     background: transparent;
     color: inherit;
   }
+
   ${props =>
     !props.hasDescription &&
     css`
       align-items: center;
       svg {
-        margin: 0;
+        margin-top: 0;
       }
     `}
 `

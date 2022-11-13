@@ -16,7 +16,8 @@
     "schema:drop": "npx tsnd -r tsconfig-paths/register ../../node_modules/typeorm/cli.js schema:drop",
     "schema:sync": "npx tsnd -r tsconfig-paths/register ../../node_modules/typeorm/cli.js schema:sync",
     "test": "cross-env NODE_ENV=test npx jest --no-cache",
-    "test:dev": "cross-env NODE_ENV=test npx jest --no-cache --watchAll"
+    "test:dev": "cross-env NODE_ENV=test npx jest --no-cache --watchAll",
+    "test:coverage": "cross-env NODE_ENV=test npx jest --no-cache --coverage"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

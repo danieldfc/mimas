@@ -10,15 +10,17 @@ export default class ProductsRepository implements IProductsRepository {
     this.ormRepository = getRepository(Product)
   }
 
-  public async create({
+  async create({
     title,
     description,
-    price
+    price,
+    supplier
   }: ICreateProductDTO): Promise<Product> {
     const product = this.ormRepository.create({
       title,
       description,
-      price: price.toString()
+      price: price.toString(),
+      supplier
     })
 
     await this.save(product)
@@ -26,15 +28,25 @@ export default class ProductsRepository implements IProductsRepository {
     return product
   }
 
-  public findByIds(id: string[]): Promise<Product[]> {
+  findByIds(id: string[]): Promise<Product[]> {
     return this.ormRepository.findByIds(id)
   }
 
-  public async findAll(): Promise<Product[]> {
+  findById(id: string): Promise<Product | undefined> {
+    return this.ormRepository.findOne({
+      where: { id }
+    })
+  }
+
+  findAll(): Promise<Product[]> {
     return this.ormRepository.find()
   }
 
   async save(product: Product): Promise<void> {
     await this.ormRepository.save(product)
+  }
+
+  async destroy(id: string): Promise<void> {
+    await this.ormRepository.delete(id)
   }
 }

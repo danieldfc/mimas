@@ -1,19 +1,24 @@
 import FakeClientsRepository from '@modules/clients/infra/typeorm/repositories/fakes/FakeClientsRepository'
 import FakeOrdersRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeOrdersRepository'
 import { AppError } from '@shared/errors/AppError'
+import { Supplier } from '../infra/typeorm/entities/Supplier'
 import FakeProductsOrdersRepository from '../infra/typeorm/repositories/fakes/FakeProductsOrdersRepository'
 import FakeProductsRepository from '../infra/typeorm/repositories/fakes/FakeProductsRepository'
+import FakeSuppliersRepository from '../infra/typeorm/repositories/fakes/FakeSuppliersRepository'
 import { CreateOrderService } from './CreateOrderService'
 
 let fakeOrdersRepository: FakeOrdersRepository
 let fakeProductsRepository: FakeProductsRepository
 let fakeProductsOrdersRepository: FakeProductsOrdersRepository
 let fakeClientsRepository: FakeClientsRepository
+let fakeSuppliersRepository: FakeSuppliersRepository
 let createOrderService: CreateOrderService
 
 describe('CreateOrder', () => {
-  beforeEach(() => {
+  let supplier: Supplier
+  beforeEach(async () => {
     fakeOrdersRepository = new FakeOrdersRepository()
+    fakeSuppliersRepository = new FakeSuppliersRepository()
     fakeProductsRepository = new FakeProductsRepository()
     fakeProductsOrdersRepository = new FakeProductsOrdersRepository()
     fakeClientsRepository = new FakeClientsRepository()
@@ -23,13 +28,21 @@ describe('CreateOrder', () => {
       fakeProductsOrdersRepository,
       fakeClientsRepository
     )
+
+    supplier = await fakeSuppliersRepository.create({
+      name: 'Nome fornecedor',
+      email: 'fornecedor@email.com',
+      phone: '(83) 99999-9999',
+      address: 'Rua Tal, nº99'
+    })
   })
 
   it('should be able to create a new order', async () => {
     const product = await fakeProductsRepository.create({
       title: 'meu novo produto',
       description: 'Meu item incrível',
-      price: 200
+      price: 200,
+      supplier
     })
 
     const client = await fakeClientsRepository.create({

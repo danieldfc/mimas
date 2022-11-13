@@ -14,6 +14,10 @@ export class CreateProduct1648932096117 implements MigrationInterface {
             default: 'uuid_generate_v4()'
           },
           {
+            name: 'supplier_id',
+            type: 'uuid'
+          },
+          {
             name: 'title',
             type: 'varchar',
             length: '100'
@@ -36,6 +40,16 @@ export class CreateProduct1648932096117 implements MigrationInterface {
             name: 'updated_at',
             type: 'timestamp',
             default: 'now()'
+          }
+        ],
+        foreignKeys: [
+          {
+            name: 'ProductSupplier',
+            referencedTableName: 'suppliers',
+            referencedColumnNames: ['id'],
+            columnNames: ['supplier_id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
           }
         ]
       })

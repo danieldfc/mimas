@@ -32,43 +32,46 @@ export function CreateClient() {
   const { addClient } = useClient()
   const { addToast } = useToast()
 
-  const handleSubmit = useCallback(async (data: IFormDataClient) => {
-    const fields = removeEmptyFields<IFormDataClient>(data)
-    try {
-      formRef.current?.setErrors({})
+  const handleSubmit = useCallback(
+    async (data: IFormDataClient) => {
+      const fields = removeEmptyFields<IFormDataClient>(data)
+      try {
+        formRef.current?.setErrors({})
 
-      const schema = Yup.object().shape({
-        name: Yup.string().required('Nome obrigatório'),
-        email: Yup.string().email('Digite um e-mail válido').nullable(),
-        phone: Yup.string().required('Telefone obrigatório'),
-        address: Yup.string().nullable()
-      })
-      await schema.validate(fields, { abortEarly: false })
+        const schema = Yup.object().shape({
+          name: Yup.string().required('Nome obrigatório'),
+          email: Yup.string().email('Digite um e-mail válido').nullable(),
+          phone: Yup.string().required('Telefone obrigatório'),
+          address: Yup.string().nullable()
+        })
+        await schema.validate(fields, { abortEarly: false })
 
-      await addClient({
-        email: fields.email,
-        name: fields.name ?? '',
-        phone: fields.phone ?? '',
-        address: fields.address
-      })
+        await addClient({
+          email: fields.email,
+          name: fields.name ?? '',
+          phone: fields.phone ?? '',
+          address: fields.address
+        })
 
-      history.push('/clients')
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err)
+        history.push('/clients')
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err)
 
-        formRef.current?.setErrors(errors)
+          formRef.current?.setErrors(errors)
 
-        return
+          return
+        }
+
+        addToast({
+          type: 'error',
+          title: 'Erro na criação do cliente',
+          description: 'Ocorreu um erro ao criar um cliente.'
+        })
       }
-
-      addToast({
-        type: 'error',
-        title: 'Erro na criação do cliente',
-        description: 'Ocorreu um erro ao criar um cliente.'
-      })
-    }
-  }, [])
+    },
+    [addClient, addToast, history]
+  )
 
   return (
     <Container>
@@ -99,7 +102,9 @@ export function CreateClient() {
               placeholder="Endereço (opcional)"
             />
           </div>
-          <Button type="submit">Criar cliente</Button>
+          <Button type="submit" label="little">
+            Criar cliente
+          </Button>
         </Form>
       </Content>
     </Container>

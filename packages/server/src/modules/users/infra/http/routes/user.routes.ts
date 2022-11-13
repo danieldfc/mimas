@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { celebrate, Segments, Joi } from 'celebrate'
+import { Joi, Segments, celebrate } from 'celebrate'
 import { CreateUserController } from '../controllers/CreateUserController'
 
 const userRouter = Router()

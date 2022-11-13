@@ -9,7 +9,8 @@ import { CreateOrder } from '../pages/CreateOrder'
 import { Clients } from '../pages/Clients'
 import { CreateClient } from '../pages/CreateClient'
 import { Specifications } from '../pages/Specifications'
-import Products from '../pages/Products'
+import { Suppliers } from '../pages/Suppliers'
+import { CreateSupplier } from '../pages/CreateSupplier'
 
 const Routes: React.FC = () => (
   <Switch>
@@ -19,7 +20,8 @@ const Routes: React.FC = () => (
     <Route path="/order/:orderId" component={Specifications} isPrivate />
     <Route path="/clients" component={Clients} isPrivate />
     <Route path="/create-client" component={CreateClient} isPrivate />
-    <Route path="/products" component={Products} isPrivate />
+    <Route path="/suppliers" component={Suppliers} isPrivate />
+    <Route path="/create-supplier" component={CreateSupplier} isPrivate />
   </Switch>
 )
 

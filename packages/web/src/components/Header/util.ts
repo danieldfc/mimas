@@ -4,7 +4,7 @@ export const navigateLink = [
     name: 'Clientes'
   },
   {
-    href: '/products',
-    name: 'Produtos'
+    href: '/suppliers',
+    name: 'Fornecedores'
   }
 ]

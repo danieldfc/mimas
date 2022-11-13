@@ -28,7 +28,7 @@ export function Clients() {
       </HeaderWrapper>
 
       <Content>
-        <TableList loading={false}>
+        <TableList>
           <>
             <thead>
               <tr>

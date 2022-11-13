@@ -1,8 +1,10 @@
 import { Client } from '@modules/clients/infra/typeorm/entities/Client'
 import FakeClientsRepository from '@modules/clients/infra/typeorm/repositories/fakes/FakeClientsRepository'
+import { Supplier } from '../infra/typeorm/entities/Supplier'
 import FakeOrdersRepository from '../infra/typeorm/repositories/fakes/FakeOrdersRepository'
 import FakeProductsOrdersRepository from '../infra/typeorm/repositories/fakes/FakeProductsOrdersRepository'
 import FakeProductsRepository from '../infra/typeorm/repositories/fakes/FakeProductsRepository'
+import FakeSuppliersRepository from '../infra/typeorm/repositories/fakes/FakeSuppliersRepository'
 import { CreateOrderService } from './CreateOrderService'
 import { FindOrdersWithProductsService } from './FindOrdersWithProductsService'
 
@@ -12,12 +14,15 @@ let findOrdersWithProductsService: FindOrdersWithProductsService
 let fakeProductsRepository: FakeProductsRepository
 let fakeProductsOrdersRepository: FakeProductsOrdersRepository
 let fakeClientsRepository: FakeClientsRepository
+let fakeSuppliersRepository: FakeSuppliersRepository
 let createOrderService: CreateOrderService
 
 describe('FindOrdersWithProducts', () => {
   let client: Client
+  let supplier: Supplier
 
   beforeEach(async () => {
+    fakeSuppliersRepository = new FakeSuppliersRepository()
     fakeOrdersRepository = new FakeOrdersRepository()
     fakeProductsRepository = new FakeProductsRepository()
     fakeProductsOrdersRepository = new FakeProductsOrdersRepository()
@@ -29,6 +34,13 @@ describe('FindOrdersWithProducts', () => {
       fakeClientsRepository
     )
 
+    supplier = await fakeSuppliersRepository.create({
+      name: 'Nome fornecedor',
+      email: 'fornecedor@email.com',
+      phone: '(83) 99999-9999',
+      address: 'Rua Tal, nº99'
+    })
+
     findOrdersWithProductsService = new FindOrdersWithProductsService(
       fakeOrdersRepository
     )
@@ -36,7 +48,8 @@ describe('FindOrdersWithProducts', () => {
     const product = await fakeProductsRepository.create({
       title: 'Meu novo pedido',
       description: 'Meu pedido descrição',
-      price: 200
+      price: 200,
+      supplier
     })
 
     client = await fakeClientsRepository.create({

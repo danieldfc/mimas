@@ -49,4 +49,14 @@ export const Content = styled.div`
       color: #000;
     }
   }
+
+  form > div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    button {
+      width: 100%;
+    }
+  }
 `

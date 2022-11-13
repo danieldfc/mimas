@@ -29,10 +29,12 @@ const Toast: React.FC<ToastProps> = ({ message, style }) => {
     }
   }, [removeToast, message.id])
 
+  const hasDescription = !!message.description
+
   return (
     <Container
       type={message.type}
-      hasDescription={Number(!!message.description)}
+      hasDescription={hasDescription}
       style={style}
     >
       {icons[message.type || 'info']}

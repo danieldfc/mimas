@@ -1,5 +1,8 @@
-import { celebrate, Joi, Segments } from 'celebrate'
+import { Joi, Segments, celebrate } from 'celebrate'
 import { Router } from 'express'
+
+import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated'
+
 import { CreateOrderController } from '../controllers/CreateOrderController'
 import { FindOrdersWithProductsController } from '../controllers/FindOrdersWithProductsController'
 
@@ -10,6 +13,7 @@ const findOrdersWithProductsController = new FindOrdersWithProductsController()
 
 orderRoute.post(
   '/',
+  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       title: Joi.string().required(),
@@ -27,6 +31,10 @@ orderRoute.post(
   createOrderController.handle
 )
 
-orderRoute.get('/', findOrdersWithProductsController.handle)
+orderRoute.get(
+  '/',
+  ensureAuthenticated,
+  findOrdersWithProductsController.handle
+)
 
 export { orderRoute }

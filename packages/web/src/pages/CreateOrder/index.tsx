@@ -20,12 +20,15 @@ import ModalRender from '../../components/Modal'
 import { useToast } from '../../hooks/toast'
 import getValidationErrors from '../../utils/getValidationError'
 import ListProductsAdd from '../../components/ListProductsAdded'
+import { Supplier } from '../../hooks/supplier'
 
 export type Product = {
   id: string
   title: string
   description: string
   price: string
+  supplierId: string
+  supplier: Supplier
 
   add: boolean
   qtd: number
@@ -106,7 +109,7 @@ export function CreateOrder() {
         })
       }
     },
-    [clientId, products]
+    [clientId, addToast, history, products]
   )
 
   const productsAdded = products.filter(p => p.add)
@@ -194,10 +197,18 @@ export function CreateOrder() {
             <p style={{ marginTop: '5px' }}>Adicione produtos no pedido</p>
           )}
 
-          <Button type="button" onClick={() => setModalIsOpen(true)}>
-            Adicionar produtos
-          </Button>
-          <Button type="submit">Criar pedido</Button>
+          <div>
+            <Button
+              type="button"
+              label="little"
+              onClick={() => setModalIsOpen(true)}
+            >
+              Adicionar produtos
+            </Button>
+            <Button type="submit" label="little">
+              Criar pedido
+            </Button>
+          </div>
         </Form>
       </Content>
     </Container>
