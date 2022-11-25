@@ -37,7 +37,6 @@ export class CreateOrderService {
     clientId,
     deliveryAt
   }: IRequest): Promise<Order> {
-    console.log(deliveryAt)
     const client = await this.clientsRepository.findById(clientId)
 
     if (!client) {
