@@ -1,29 +1,19 @@
 import IClientsRepository from '@modules/clients/infra/typeorm/repositories/IClientsRepository'
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
+import { IMetadadoProduct, IProductMerged } from '../dtos/ICreateOrderDTO'
 
 import { Order } from '../infra/typeorm/entities/Order'
 import IOrdersRepository from '../infra/typeorm/repositories/IOrdersRepository'
-import IProductsOrdersRepository from '../infra/typeorm/repositories/IProductsOrdersRepository'
 import IProductsRepository from '../infra/typeorm/repositories/IProductsRepository'
-
-interface IProduct {
-  productId: string
-  qtd: number
-}
-
-interface IProductMerged {
-  id: string
-  price: number
-  qtd: number
-}
 
 interface IRequest {
   title: string
   description: string
   workmanship: number
-  products: IProduct[]
+  metadado: IMetadadoProduct[]
   clientId: string
+  deliveryAt: Date | null
 }
 
 @injectable()
@@ -35,20 +25,19 @@ export class CreateOrderService {
     @inject('ProductsRepository')
     private productsRepository: IProductsRepository,
 
-    @inject('ProductsOrdersRepository')
-    private productsOrdersRepository: IProductsOrdersRepository,
-
     @inject('ClientsRepository')
     private clientsRepository: IClientsRepository
   ) {}
 
   async execute({
     description,
-    products,
+    metadado,
     title,
     workmanship,
-    clientId
+    clientId,
+    deliveryAt
   }: IRequest): Promise<Order> {
+    console.log(deliveryAt)
     const client = await this.clientsRepository.findById(clientId)
 
     if (!client) {
@@ -59,50 +48,63 @@ export class CreateOrderService {
       throw new AppError('Não informado preço de mão de obra')
     }
 
-    if (!products.length) {
+    if (!metadado.length) {
       throw new AppError('Não informado produtos.')
     }
 
-    const productsVerified = await this.getProducts(products)
-    const productsEntities = await this.productsRepository.findByIds(
-      productsVerified.map(p => p.id)
-    )
-    const priceProductsTotal = this.getPriceTotalProduct(productsVerified)
+    if (deliveryAt !== null) {
+      this.verifyDeliveryDate(deliveryAt)
+    }
 
-    const order = await this.ordersRepository.create({
+    const productsVerified = await this.getProducts(metadado)
+    const priceProductsTotal = this.getPriceTotalProducts(productsVerified)
+
+    return this.ordersRepository.create({
       title,
       description,
       workmanship,
       priceProducts: priceProductsTotal,
-      client
+      client,
+      deliveryAt,
+      metadado: productsVerified
     })
-
-    for (const product of productsEntities) {
-      const findProductVerified = productsVerified.find(
-        p => p.id === product.id
-      )
-      if (findProductVerified) {
-        this.productsOrdersRepository.create({
-          order,
-          product,
-          qtdProduct: findProductVerified.qtd
-        })
-      }
-    }
-
-    return order
   }
 
-  private async getProducts(products: IProduct[]): Promise<IProductMerged[]> {
+  private verifyDeliveryDate(deliveryAt: Date): void {
+    if (deliveryAt.getTime() <= new Date().getTime()) {
+      throw new AppError(
+        'Delivery date is recorded in the past, change it to greater than today'
+      )
+    }
+
+    const hourUTC = deliveryAt.getUTCHours()
+    const millisecondUTC = deliveryAt.getUTCMilliseconds()
+    const secondUTC = deliveryAt.getUTCSeconds()
+    const minuteUTC = deliveryAt.getUTCMinutes()
+    const verifyZeroUTC =
+      millisecondUTC === 0 && secondUTC === 0 && minuteUTC === 0
+    const verifySixHour = hourUTC <= 6 && verifyZeroUTC
+    const verifySeventeenHour = hourUTC >= 17 && verifyZeroUTC
+
+    if (verifySixHour || verifySeventeenHour) {
+      throw new AppError('Delivery date exceeds deadlines')
+    }
+  }
+
+  private async getProducts(
+    metadado: IMetadadoProduct[]
+  ): Promise<IProductMerged[]> {
     const productsVerified = await this.productsRepository.findByIds(
-      products.map(p => p.productId)
+      metadado.map(p => p.productId)
     )
 
     return productsVerified.reduce((acc, product) => {
-      const productFound = products.find(p => p.productId === product.id)
+      const productFound = metadado.find(p => p.productId === product.id)
       if (productFound) {
         acc.push({
           id: product.id,
+          title: product.title,
+          description: product.description,
           price: parseInt(product.price.replace('$', '')),
           qtd: productFound.qtd
         })
@@ -111,7 +113,7 @@ export class CreateOrderService {
     }, [] as IProductMerged[])
   }
 
-  private getPriceTotalProduct(products: IProductMerged[]): number {
+  private getPriceTotalProducts(products: IProductMerged[]): number {
     return products.reduce(
       (acc, product) => acc + product.price * product.qtd,
       0

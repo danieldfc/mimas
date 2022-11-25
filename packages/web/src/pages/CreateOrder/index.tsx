@@ -5,7 +5,12 @@ import { Link, useHistory } from 'react-router-dom'
 import * as Yup from 'yup'
 import api from '@mimas/axios-config'
 
-import { MdDescription, MdOutlinePriceCheck, MdTitle } from 'react-icons/md'
+import {
+  MdDateRange,
+  MdDescription,
+  MdOutlinePriceCheck,
+  MdTitle
+} from 'react-icons/md'
 import { FiArrowLeft } from 'react-icons/fi'
 
 import Button from '../../components/Button'
@@ -37,6 +42,7 @@ export type Product = {
 type IFormDataOrder = {
   title: string
   description?: string
+  deliveryAt: Date
   workmanship: number
   clientId: string
   products: Product[]
@@ -76,16 +82,21 @@ export function CreateOrder() {
 
         const order = {
           ...data,
+          deliveryAt: new Date(`${data.deliveryAt}:00-00:00`),
           clientId,
-          products: produtos
+          metadado: produtos,
+          workmanship: +data.workmanship
         }
 
         const schema = Yup.object().shape({
           clientId: Yup.string().uuid().required('Cliente é obrigatório'),
-          products: Yup.array().min(1).required('Produtos obrigatórios'),
+          metadado: Yup.array().min(1).required('Produtos obrigatórios'),
           workmanship: Yup.number().min(1),
           title: Yup.string().required('Título é obrigatório'),
-          description: Yup.string().notRequired()
+          description: Yup.string().notRequired(),
+          deliveryAt: Yup.date()
+            .typeError('Esperado que digite a data acima da data presente.')
+            .required('Data de entrega é obrigatória')
         })
 
         await schema.validate(order, { abortEarly: false })
@@ -173,6 +184,13 @@ export function CreateOrder() {
               placeholder="Preço de mão de obra"
               type="number"
               onChange={changeValueMaoObra}
+            />
+            <Input
+              icon={MdDateRange}
+              name="deliveryAt"
+              placeholder="Preço de mão de obra"
+              type="datetime-local"
+              min={new Date().toISOString().slice(0, -8)}
             />
           </div>
           <ModalRender

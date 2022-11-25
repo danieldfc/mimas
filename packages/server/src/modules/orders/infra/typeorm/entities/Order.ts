@@ -1,15 +1,20 @@
 import { Client } from '@modules/clients/infra/typeorm/entities/Client'
+import { IProductMerged } from '@modules/orders/dtos/ICreateOrderDTO'
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
-import { ProductOrder } from './ProductOrder'
+
+export enum StatusOrder {
+  OPEN = 'open',
+  FINISH = 'finish',
+  CANCEL = 'cancel'
+}
 
 @Entity('orders')
 export class Order {
@@ -31,8 +36,18 @@ export class Order {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date
 
-  @OneToMany(() => ProductOrder, orderProducts => orderProducts.order)
-  orderProducts: ProductOrder[]
+  @Column({
+    name: 'delivery_at',
+    nullable: true,
+    type: 'timestamptz'
+  })
+  deliveryAt: Date | null
+
+  @Column({ type: 'json' })
+  metadado: IProductMerged[]
+
+  @Column({ type: 'enum', enumName: 'orders_status_enum' })
+  status: StatusOrder
 
   @ManyToMany(() => Client, { eager: true })
   @JoinTable({

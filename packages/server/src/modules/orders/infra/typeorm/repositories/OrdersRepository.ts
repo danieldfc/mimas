@@ -16,13 +16,17 @@ export default class OrdersRepository implements IOrdersRepository {
     description,
     workmanship,
     priceProducts,
-    client
+    client,
+    deliveryAt,
+    metadado
   }: ICreateOrderDTO): Promise<Order> {
     const order = this.ormRepository.create({
       finalPrice: workmanship + priceProducts,
       title,
       description,
-      clients: [client]
+      clients: [client],
+      metadado,
+      deliveryAt
     })
 
     await this.save(order)
@@ -34,7 +38,7 @@ export default class OrdersRepository implements IOrdersRepository {
     return this.ormRepository.find({
       take: options?.first || 10,
       skip: options?.offset || 0,
-      relations: ['orderProducts', 'clients']
+      relations: ['clients']
     })
   }
 

@@ -2,14 +2,12 @@ import FakeClientsRepository from '@modules/clients/infra/typeorm/repositories/f
 import FakeOrdersRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeOrdersRepository'
 import { AppError } from '@shared/errors/AppError'
 import { Supplier } from '../infra/typeorm/entities/Supplier'
-import FakeProductsOrdersRepository from '../infra/typeorm/repositories/fakes/FakeProductsOrdersRepository'
 import FakeProductsRepository from '../infra/typeorm/repositories/fakes/FakeProductsRepository'
 import FakeSuppliersRepository from '../infra/typeorm/repositories/fakes/FakeSuppliersRepository'
 import { CreateOrderService } from './CreateOrderService'
 
 let fakeOrdersRepository: FakeOrdersRepository
 let fakeProductsRepository: FakeProductsRepository
-let fakeProductsOrdersRepository: FakeProductsOrdersRepository
 let fakeClientsRepository: FakeClientsRepository
 let fakeSuppliersRepository: FakeSuppliersRepository
 let createOrderService: CreateOrderService
@@ -20,12 +18,10 @@ describe('CreateOrder', () => {
     fakeOrdersRepository = new FakeOrdersRepository()
     fakeSuppliersRepository = new FakeSuppliersRepository()
     fakeProductsRepository = new FakeProductsRepository()
-    fakeProductsOrdersRepository = new FakeProductsOrdersRepository()
     fakeClientsRepository = new FakeClientsRepository()
     createOrderService = new CreateOrderService(
       fakeOrdersRepository,
       fakeProductsRepository,
-      fakeProductsOrdersRepository,
       fakeClientsRepository
     )
 
@@ -50,17 +46,27 @@ describe('CreateOrder', () => {
       phone: '+5583999999999'
     })
 
+    const now = new Date()
+    const twoDayInFuture = 2
+    const horaAvailable = '07'
+    const deliveryAt = new Date(
+      `${now.getFullYear()}-${now.getMonth() + 1}-${
+        now.getDate() + twoDayInFuture
+      }T${horaAvailable}:00:00-00:00`
+    )
+
     const order = await createOrderService.execute({
       workmanship: 200,
       title: 'Meu novo pedido',
       description: 'Minha descrição de pedido',
-      products: [
+      metadado: [
         {
           productId: product.id,
           qtd: 12
         }
       ],
-      clientId: client.id
+      clientId: client.id,
+      deliveryAt
     })
 
     expect(order).toHaveProperty('id')
@@ -77,8 +83,9 @@ describe('CreateOrder', () => {
         workmanship: 200,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
-        products: [],
-        clientId: client.id
+        metadado: [],
+        clientId: client.id,
+        deliveryAt: null
       })
     ).rejects.toBeInstanceOf(AppError)
   })
@@ -94,8 +101,9 @@ describe('CreateOrder', () => {
         workmanship: 0,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
-        products: [],
-        clientId: client.id
+        metadado: [],
+        clientId: client.id,
+        deliveryAt: null
       })
     ).rejects.toBeInstanceOf(AppError)
   })
@@ -111,8 +119,9 @@ describe('CreateOrder', () => {
         workmanship: -1,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
-        products: [],
-        clientId: client.id
+        metadado: [],
+        clientId: client.id,
+        deliveryAt: null
       })
     ).rejects.toBeInstanceOf(AppError)
   })
@@ -123,8 +132,121 @@ describe('CreateOrder', () => {
         workmanship: -1,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
-        products: [],
-        clientId: 'not-found'
+        metadado: [],
+        clientId: 'not-found',
+        deliveryAt: null
+      })
+    ).rejects.toBeInstanceOf(AppError)
+  })
+
+  it('should not be able to create a new order with delivery date <= now', async () => {
+    const product = await fakeProductsRepository.create({
+      title: 'meu novo produto',
+      description: 'Meu item incrível',
+      price: 200,
+      supplier
+    })
+
+    const client = await fakeClientsRepository.create({
+      name: 'John Doe',
+      phone: '+5583999999999'
+    })
+
+    const deliveryAt = new Date()
+
+    await expect(
+      createOrderService.execute({
+        workmanship: 100,
+        title: 'Meu novo pedido',
+        description: 'Minha descrição de pedido',
+        metadado: [
+          {
+            productId: product.id,
+            qtd: 12
+          }
+        ],
+        clientId: client.id,
+        deliveryAt
+      })
+    ).rejects.toBeInstanceOf(AppError)
+
+    deliveryAt.setMilliseconds(deliveryAt.getMilliseconds() - 1)
+
+    await expect(
+      createOrderService.execute({
+        workmanship: 100,
+        title: 'Meu novo pedido',
+        description: 'Minha descrição de pedido',
+        metadado: [
+          {
+            productId: product.id,
+            qtd: 12
+          }
+        ],
+        clientId: client.id,
+        deliveryAt
+      })
+    ).rejects.toBeInstanceOf(AppError)
+  })
+
+  it('should not be able to create a new order with delivery date exceeds deadlines', async () => {
+    const product = await fakeProductsRepository.create({
+      title: 'meu novo produto',
+      description: 'Meu item incrível',
+      price: 200,
+      supplier
+    })
+
+    const client = await fakeClientsRepository.create({
+      name: 'John Doe',
+      phone: '+5583999999999'
+    })
+
+    const now = new Date()
+    const twoDayInFuture = 2
+    let hoursAvailable = '06'
+    let deliveryAt = new Date(
+      `${now.getFullYear()}-${now.getMonth() + 1}-${
+        now.getDate() + twoDayInFuture
+      }T${hoursAvailable}:00:00-00:00`
+    )
+
+    await expect(
+      createOrderService.execute({
+        workmanship: 100,
+        title: 'Meu novo pedido',
+        description: 'Minha descrição de pedido',
+        metadado: [
+          {
+            productId: product.id,
+            qtd: 12
+          }
+        ],
+        clientId: client.id,
+        deliveryAt
+      })
+    ).rejects.toBeInstanceOf(AppError)
+
+    hoursAvailable = '17'
+    deliveryAt = new Date(
+      `${now.getFullYear()}-${now.getMonth() + 1}-${
+        now.getDate() + twoDayInFuture
+      }T${hoursAvailable}:00:00-00:00`
+    )
+
+    await expect(
+      createOrderService.execute({
+        workmanship: 100,
+        title: 'Meu novo pedido',
+        description: 'Minha descrição de pedido',
+        metadado: [
+          {
+            productId: product.id,
+            qtd: 12
+          }
+        ],
+        clientId: client.id,
+        deliveryAt
       })
     ).rejects.toBeInstanceOf(AppError)
   })

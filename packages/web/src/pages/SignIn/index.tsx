@@ -81,14 +81,12 @@ export default function SignIn() {
             />
           </div>
 
-          <Button type="submit">Entrar</Button>
+          <Button type="submit" label="little">
+            Entrar
+          </Button>
 
           {/* <Link to="/forgot-password">Esqueci minha senha</Link> */}
         </Form>
-        {/* <Link to="signup">
-          <FiLogIn />
-          Criar conta
-        </Link> */}
       </Content>
     </Container>
   )

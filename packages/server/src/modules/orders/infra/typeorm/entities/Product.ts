@@ -4,11 +4,9 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
-import { ProductOrder } from './ProductOrder'
 import { Supplier } from './Supplier'
 
 @Entity('products')
@@ -33,9 +31,6 @@ export class Product {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date
-
-  @OneToMany(() => ProductOrder, orderProducts => orderProducts.product)
-  orderProducts: ProductOrder[]
 
   @ManyToOne(() => Supplier, supplier => supplier.products)
   @JoinColumn({ name: 'supplier_id' })

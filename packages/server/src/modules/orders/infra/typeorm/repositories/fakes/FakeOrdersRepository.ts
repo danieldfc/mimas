@@ -3,8 +3,6 @@ import ICreateOrderDTO from '@modules/orders/dtos/ICreateOrderDTO'
 import IFindOrdersDTO from '@modules/orders/dtos/IFindOrdersDTO'
 import { Order } from '@modules/orders/infra/typeorm/entities/Order'
 import { v4 as uuidV4 } from 'uuid'
-import { Product } from '../../entities/Product'
-import { ProductOrder } from '../../entities/ProductOrder'
 import IOrdersRepository from '../IOrdersRepository'
 
 export default class FakeOrdersRepository implements IOrdersRepository {
@@ -14,7 +12,10 @@ export default class FakeOrdersRepository implements IOrdersRepository {
     title,
     description,
     workmanship,
-    priceProducts
+    priceProducts,
+    deliveryAt,
+    client,
+    metadado
   }: ICreateOrderDTO): Promise<Order> {
     const order = new Order()
 
@@ -22,7 +23,10 @@ export default class FakeOrdersRepository implements IOrdersRepository {
       id: uuidV4(),
       title,
       description,
-      finalPrice: workmanship + priceProducts
+      finalPrice: workmanship + priceProducts,
+      deliveryAt,
+      client,
+      metadado
     })
 
     this.orders.push(order)
@@ -32,25 +36,6 @@ export default class FakeOrdersRepository implements IOrdersRepository {
 
   public async findById(id: string): Promise<Order | undefined> {
     return this.orders.find(order => order.id === id)
-  }
-
-  public associateProduct(
-    idOrder: string,
-    product: Product,
-    qtdProduct: number
-  ): void {
-    const order = this.orders.find(order => order.id === idOrder)
-
-    if (order) {
-      const orderProduct = new ProductOrder()
-      Object.assign(orderProduct, {
-        id: uuidV4(),
-        order,
-        product,
-        qtdProduct
-      })
-      order.orderProducts = [orderProduct]
-    }
   }
 
   public associateClient(idOrder: string, client: Client): void {
