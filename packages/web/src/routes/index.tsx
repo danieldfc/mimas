@@ -11,10 +11,12 @@ import { CreateClient } from '../pages/CreateClient'
 import { Specifications } from '../pages/Specifications'
 import { Suppliers } from '../pages/Suppliers'
 import { CreateSupplier } from '../pages/CreateSupplier'
+import Profile from '../pages/Profile'
 
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={SignIn} />
+    <Route path="/profile" component={Profile} isPrivate />
     <Route path="/dashboard" component={Dashboard} isPrivate />
     <Route path="/order" exact component={CreateOrder} isPrivate />
     <Route path="/order/:orderId" component={Specifications} isPrivate />

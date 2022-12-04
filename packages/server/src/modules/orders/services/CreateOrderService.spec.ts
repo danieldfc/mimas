@@ -202,13 +202,17 @@ describe('CreateOrder', () => {
       phone: '+5583999999999'
     })
 
+    const padStart = (str: string, tam: number, preenchimento: string) =>
+      str.padStart(tam, preenchimento)
+
     const now = new Date()
     const twoDayInFuture = 2
     let hoursAvailable = '06'
+    const month = padStart(String(now.getMonth() + 1), 2, '0')
+    const day = padStart(String(now.getDate() + twoDayInFuture), 2, '0')
+
     let deliveryAt = new Date(
-      `${now.getFullYear()}-${now.getMonth() + 1}-${
-        now.getDate() + twoDayInFuture
-      }T${hoursAvailable}:00:00-00:00`
+      `${now.getFullYear()}-${month}-${day}T${hoursAvailable}:00:00-00:00`
     )
 
     await expect(
@@ -229,9 +233,7 @@ describe('CreateOrder', () => {
 
     hoursAvailable = '17'
     deliveryAt = new Date(
-      `${now.getFullYear()}-${now.getMonth() + 1}-${
-        now.getDate() + twoDayInFuture
-      }T${hoursAvailable}:00:00-00:00`
+      `${now.getFullYear()}-${month}-${day}T${hoursAvailable}:00:00-00:00`
     )
 
     await expect(

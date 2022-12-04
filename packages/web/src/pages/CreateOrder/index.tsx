@@ -116,7 +116,7 @@ export function CreateOrder() {
         addToast({
           type: 'error',
           title: 'Erro na criação de pedido',
-          description: 'Ocorreu um erro ao criar pedido, Tente novamentent.'
+          description: 'Ocorreu um erro ao criar pedido, Tente novamente.'
         })
       }
     },

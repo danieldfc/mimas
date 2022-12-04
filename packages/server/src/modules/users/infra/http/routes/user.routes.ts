@@ -1,10 +1,13 @@
-import { Router } from 'express'
 import { Joi, Segments, celebrate } from 'celebrate'
+import { Router } from 'express'
 import { CreateUserController } from '../controllers/CreateUserController'
+import { UpdateProfileController } from '../controllers/UpdateProfileController'
+import ensureAuthenticated from '../middlewares/ensureAuthenticated'
 
 const userRouter = Router()
 
 const createUserController = new CreateUserController()
+const updateProfileController = new UpdateProfileController()
 
 userRouter.post(
   '/',
@@ -17,6 +20,19 @@ userRouter.post(
     }
   }),
   createUserController.handle
+)
+
+userRouter.put(
+  '/:id',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string(),
+      email: Joi.string().email(),
+      nick: Joi.string()
+    }
+  }),
+  updateProfileController.handle
 )
 
 export { userRouter }

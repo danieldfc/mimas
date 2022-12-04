@@ -26,12 +26,14 @@ interface AuthContextData {
   updateUser(user: User): void
 }
 
+const LOCAL_STORAGE_GO_COSTURA = '@GoCostura'
+
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
-    const token = localStorage.getItem('@GoCostura:token')
-    const user = localStorage.getItem('@GoCostura:user')
+    const token = localStorage.getItem(`${LOCAL_STORAGE_GO_COSTURA}:token`)
+    const user = localStorage.getItem(`${LOCAL_STORAGE_GO_COSTURA}:user`)
 
     if (token && user) {
       api.defaults.headers.authorization = `Bearer ${token}`
@@ -50,8 +52,11 @@ const AuthProvider: React.FC = ({ children }) => {
 
     const { token, user } = response.data
 
-    localStorage.setItem('@GoCostura:token', token)
-    localStorage.setItem('@GoCostura:user', JSON.stringify(user))
+    localStorage.setItem(`${LOCAL_STORAGE_GO_COSTURA}:token`, token)
+    localStorage.setItem(
+      `${LOCAL_STORAGE_GO_COSTURA}:user`,
+      JSON.stringify(user)
+    )
 
     api.defaults.headers.authorization = `Bearer ${token}`
 
@@ -59,15 +64,18 @@ const AuthProvider: React.FC = ({ children }) => {
   }, [])
 
   const signOut = useCallback(() => {
-    localStorage.removeItem('@GoCostura:token')
-    localStorage.removeItem('@GoCostura:user')
+    localStorage.removeItem(`${LOCAL_STORAGE_GO_COSTURA}:token`)
+    localStorage.removeItem(`${LOCAL_STORAGE_GO_COSTURA}:user`)
 
     setData({} as AuthState)
   }, [])
 
   const updateUser = useCallback(
     (user: User) => {
-      localStorage.setItem('@GoCostura:user', JSON.stringify(user))
+      localStorage.setItem(
+        `${LOCAL_STORAGE_GO_COSTURA}:user`,
+        JSON.stringify(user)
+      )
 
       setData({
         token: data.token,
