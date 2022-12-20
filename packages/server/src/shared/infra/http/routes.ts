@@ -9,6 +9,13 @@ import { supplierRoute } from '@modules/orders/infra/http/routes/supplier.routes
 
 const routes = Router()
 
+routes.get('/', (_, res) => {
+  return res.status(200).json({
+    success: true,
+    message: 'Obrigado por utilizar a nossa API!'
+  })
+})
+
 routes.use('/users', userRouter)
 routes.use('/sessions', sessionsRouter)
 routes.use('/orders', orderRoute)
