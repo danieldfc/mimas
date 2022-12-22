@@ -5,7 +5,11 @@ const filesProd = isDevelopment ? '.ts' : '.js'
 
 const environments = {
   type: 'postgres',
-  url: process.env.DATABASE_URL,
+  host: process.env.DB_HOST || 'localhost',
+  port: parseInt(process.env.DB_PORT || '5432'),
+  username: process.env.DB_USER || 'xxx',
+  password: process.env.DB_PASS || 'xxx',
+  database: process.env.DB_NAME || 'costura',
   entities: [`${folderProd}/modules/**/entities/*${filesProd}`],
   migrations: [`${folderProd}/shared/infra/typeorm/migrations/*${filesProd}`],
   seeds: [`${folderProd}/shared/infra/typeorm/seeds/**/*${filesProd}`],
