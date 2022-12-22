@@ -1,7 +1,6 @@
 const isDevelopment = !!(process.env.NODE_ENV === 'development')
 
 const folderProd = isDevelopment ? 'src' : 'dist'
-const filesProd = isDevelopment ? '.ts' : '.js'
 
 const environments = {
   type: 'postgres',
@@ -10,13 +9,13 @@ const environments = {
   username: process.env.DB_USER || 'xxx',
   password: process.env.DB_PASS || 'xxx',
   database: process.env.DB_NAME || 'costura',
-  entities: [`src/modules/**/entities/*.ts`],
-  migrations: [`${folderProd}/shared/infra/typeorm/migrations/*${filesProd}`],
-  seeds: [`${folderProd}/shared/infra/typeorm/seeds/**/*${filesProd}`],
-  factories: [`${folderProd}/shared/infra/typeorm/factories/**/*${filesProd}`],
+  entities: [`${folderProd}/modules/**/entities/*{.js,.ts}`],
+  migrations: [`${folderProd}/shared/infra/typeorm/migrations/*{.js,.ts}`],
+  seeds: [`${folderProd}/shared/infra/typeorm/seeds/**/*{.js,.ts}`],
+  factories: [`${folderProd}/shared/infra/typeorm/factories/**/*{.js,.ts}`],
   cli: {
-    entitiesDir: `${folderProd}/modules/**/entities`,
-    migrationsDir: `${folderProd}/shared/infra/typeorm/migrations`,
+    entitiesDir: `src/modules/**/entities`,
+    migrationsDir: `src/shared/infra/typeorm/migrations`,
   }
 }
 
