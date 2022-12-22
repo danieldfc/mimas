@@ -10,7 +10,7 @@ const environments = {
   username: process.env.DB_USER || 'xxx',
   password: process.env.DB_PASS || 'xxx',
   database: process.env.DB_NAME || 'costura',
-  entities: [`${folderProd}/modules/**/entities/*${filesProd}`],
+  entities: [`src/modules/**/entities/*.ts`],
   migrations: [`${folderProd}/shared/infra/typeorm/migrations/*${filesProd}`],
   seeds: [`${folderProd}/shared/infra/typeorm/seeds/**/*${filesProd}`],
   factories: [`${folderProd}/shared/infra/typeorm/factories/**/*${filesProd}`],
