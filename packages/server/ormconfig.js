@@ -9,13 +9,13 @@ const environments = {
   username: process.env.DB_USER || 'xxx',
   password: process.env.DB_PASS || 'xxx',
   database: process.env.DB_NAME || 'costura',
-  entities: [`src/modules/**/entities/*{.js,.ts}`],
-  migrations: [`${folderProd}/shared/infra/typeorm/migrations/*{.js,.ts}`],
-  seeds: [`${folderProd}/shared/infra/typeorm/seeds/**/*{.js,.ts}`],
-  factories: [`${folderProd}/shared/infra/typeorm/factories/**/*{.js,.ts}`],
+  entities: [folderProd + '/modules/**/entities/*{.js,.ts}'],
+  migrations: [folderProd + '/shared/infra/typeorm/migrations/*{.js,.ts}'],
+  seeds: [folderProd + '/shared/infra/typeorm/seeds/**/*{.js,.ts}'],
+  factories: [folderProd + '/shared/infra/typeorm/factories/**/*{.js,.ts}'],
   cli: {
-    entitiesDir: `src/modules/**/entities`,
-    migrationsDir: `src/shared/infra/typeorm/migrations`,
+    entitiesDir: 'src/modules/**/entities',
+    migrationsDir: 'src/shared/infra/typeorm/migrations',
   }
 }
 
