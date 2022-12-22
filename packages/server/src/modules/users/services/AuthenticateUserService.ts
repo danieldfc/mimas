@@ -1,6 +1,6 @@
 import { compare } from 'bcrypt'
 import { sign } from 'jsonwebtoken'
-import { injectable, inject } from 'tsyringe'
+import { inject, injectable } from 'tsyringe'
 
 import { AppError } from '@shared/errors/AppError'
 import { auth as authConfig } from '@config/index'

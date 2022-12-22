@@ -4,8 +4,8 @@ import 'dotenv/config'
 import express, { NextFunction, Request, Response } from 'express'
 
 import 'express-async-errors'
-import '@shared/container'
 import '@shared/infra/typeorm'
+import '@shared/container'
 
 import { logger } from '@config/index'
 import { AppError } from '@shared/errors/AppError'

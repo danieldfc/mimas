@@ -1,5 +1,5 @@
 import { ICreateClientDTO } from '@modules/clients/dtos/ICreateClient'
-import { getRepository, Repository } from 'typeorm'
+import { Repository, getRepository } from 'typeorm'
 import { Client } from '../entities/Client'
 import IClientsRepository from './IClientsRepository'
 

@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm'
+import { Repository, getRepository } from 'typeorm'
 
 import IUsersRepository from '@modules/users/infra/typeorm/repositories/IUsersRepository'
 import { ICreateUserDTO } from '@modules/users/dtos'
