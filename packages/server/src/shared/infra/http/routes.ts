@@ -9,10 +9,6 @@ import { supplierRoute } from '@modules/orders/infra/http/routes/supplier.routes
 
 const routes = Router()
 
-routes.get('/', (_, res) => {
-  return res.status(200).send('OK! Aldaciosa')
-})
-
 routes.use('/users', userRouter)
 routes.use('/sessions', sessionsRouter)
 routes.use('/orders', orderRoute)
