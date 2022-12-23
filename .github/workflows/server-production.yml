@@ -1,4 +1,4 @@
-name: Deploy Server
+name: Build & Deploy Server
 
 on:
   push:
@@ -37,3 +37,35 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: ".,!node_modules"
           target: "~/mimas"
+          
+      - name: Install dependencies on EC2
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/mimas
+            yarn
+            
+      - name: Run migrations on EC2
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/mimas/packages/server
+            ./node_modules/.bin/typeorm migration:run
+            
+      - name: Restart server
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: pm2 restart costura-api
+            
