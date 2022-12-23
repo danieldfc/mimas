@@ -24,6 +24,8 @@ export class UpdateStatusOrderService {
 
     Object.assign(order, { status })
 
+    console.log(status)
+
     await this.ordersRepository.save(order)
 
     return order
