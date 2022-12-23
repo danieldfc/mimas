@@ -11,7 +11,6 @@ const routes = Router()
 
 routes.use('/users', userRouter)
 routes.use('/sessions', sessionsRouter)
-
 routes.use('/orders', orderRoute)
 routes.use('/products', productRoute)
 routes.use('/clients', clientRoutes)
