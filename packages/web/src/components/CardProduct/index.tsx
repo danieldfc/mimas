@@ -25,7 +25,7 @@ export default function CardProduct({ product }: Props) {
         product.add = !!qtdNew
       }
     },
-    [product]
+    []
   )
 
   const productAdded = useCallback(
