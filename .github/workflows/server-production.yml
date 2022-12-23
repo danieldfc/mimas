@@ -46,7 +46,6 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            nvm use 16
             cd ~/mimas
             yarn
             cd ./packages/server
