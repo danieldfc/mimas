@@ -1,4 +1,4 @@
-name: Build & Deploy Server
+name: Deploy Server
 
 on:
   push:
