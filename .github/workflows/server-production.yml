@@ -37,4 +37,4 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           source: "dist"
-          target: "test"
+          target: "test_my_app"
