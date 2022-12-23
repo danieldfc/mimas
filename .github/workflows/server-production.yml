@@ -38,29 +38,17 @@ jobs:
           source: ".,!node_modules"
           target: "~/mimas"
 
-      - name: Install dependencies on EC2
+      - name: Run production scripts
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          script: nvm use 16 && cd ~/mimas && yarn
-
-      - name: Run migrations on EC2
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_KEY }}
-          script: cd ~/mimas/packages/server && ./node_modules/.bin/typeorm migration:run
-
-      - name: Restart server on EC2
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_KEY }}
-          script: pm2 restart costura-api
+          script: |
+            nvm use 16
+            cd ~/mimas
+            yarn
+            cd ./packages/server
+            ./node_modules/.bin/typeorm migration:run
+            pm2 restart costura-api
