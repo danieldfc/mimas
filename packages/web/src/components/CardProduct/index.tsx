@@ -30,7 +30,7 @@ export default function CardProduct({ product }: Props) {
 
   const productAdded = useCallback(
     (productAdd = false) => (!productAdd ? 'Adicionar' : 'Remover'),
-    [product]
+    []
   )
 
   return (
