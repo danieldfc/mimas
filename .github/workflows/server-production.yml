@@ -36,7 +36,5 @@ jobs:
           source: "dist"
           target: "test"
       
-      - name: Executar as migrations
-
       - name: Run Tests
         run: yarn test:server
