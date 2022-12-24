@@ -5,7 +5,7 @@ import { ICreateUserDTO } from '@modules/users/dtos'
 
 import { User } from '../entities/User'
 
-export default class UserRepository implements IUsersRepository {
+export default class UsersRepository implements IUsersRepository {
   private ormRepository: Repository<User>
 
   constructor() {

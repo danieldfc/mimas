@@ -40,7 +40,7 @@ export default function Profile() {
         })
         await schema.validate(fields, { abortEarly: false })
 
-        await api.put(`/users/${user.id}`, {
+        await api.put(`/profile`, {
           email: fields.email,
           name: fields.name,
           nick: fields.nick

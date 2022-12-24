@@ -6,6 +6,8 @@ import { orderRoute } from '@modules/orders/infra/http/routes/order.routes'
 import { productRoute } from '@modules/orders/infra/http/routes/product.routes'
 import { clientRoutes } from '@modules/clients/infra/http/routes/clients.routes'
 import { supplierRoute } from '@modules/orders/infra/http/routes/supplier.routes'
+import { passwordRouter } from '@modules/users/infra/http/routes/password.routes'
+import { profileRouter } from '@modules/users/infra/http/routes/profile.routes'
 
 const routes = Router()
 
@@ -15,5 +17,7 @@ routes.use('/orders', orderRoute)
 routes.use('/products', productRoute)
 routes.use('/clients', clientRoutes)
 routes.use('/suppliers', supplierRoute)
+routes.use('/password', passwordRouter)
+routes.use('/profile', profileRouter)
 
 export { routes }
