@@ -6,12 +6,14 @@ import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAut
 import { CreateOrderController } from '../controllers/CreateOrderController'
 import { FindOrdersWithProductsController } from '../controllers/FindOrdersWithProductsController'
 import { UpdateStatusOrderController } from '../controllers/UpdateStatusOrderController'
+import { FindOrderController } from '../controllers/FindOrderController'
 
 const orderRoute = Router()
 
 const createOrderController = new CreateOrderController()
 const findOrdersWithProductsController = new FindOrdersWithProductsController()
 const updateStatusOrderController = new UpdateStatusOrderController()
+const findOrderController = new FindOrderController()
 
 orderRoute.post(
   '/',
@@ -40,9 +42,16 @@ orderRoute.get(
   findOrdersWithProductsController.handle
 )
 
+orderRoute.get('/:id', ensureAuthenticated, findOrderController.handle)
+
 orderRoute.patch(
   '/:id',
   ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      status: Joi.string().required()
+    }
+  }),
   updateStatusOrderController.handle
 )
 

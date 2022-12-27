@@ -1,11 +1,15 @@
 import styled, { css } from 'styled-components'
 
 import { shade } from 'polished'
+import { StatusOrder } from '../../pages/Dashboard'
 
 export type LabelButton = 'small' | 'little' | 'average' | 'big'
 
+export type TypeButton = StatusOrder | 'default'
+
 interface ButtonProps {
   label: LabelButton
+  typeButton: TypeButton
 }
 
 const lableTypeVariations = {
@@ -25,6 +29,34 @@ const lableTypeVariations = {
     width: 100%;
     height: 8rem;
   `
+}
+
+const typeButtonVariation = {
+  finish: css`
+    color: green;
+    background-color: white;
+    border: #000 solid 1px;
+    &:hover {
+      color: white;
+    }
+  `,
+  cancel: css`
+    color: red;
+    background-color: white;
+    border: #000 solid 1px;
+    &:hover {
+      color: white;
+    }
+  `,
+  open: css`
+    color: blue;
+    background-color: white;
+    border: #000 solid 1px;
+    &:hover {
+      color: white;
+    }
+  `,
+  default: css``
 }
 
 export const Container = styled.button<ButtonProps>`
@@ -49,4 +81,6 @@ export const Container = styled.button<ButtonProps>`
   }
 
   ${props => lableTypeVariations[props.label || 'big']}
+
+  ${props => typeButtonVariation[props.typeButton || 'default']}
 `

@@ -10,9 +10,17 @@ import api from '@mimas/axios-config'
 import { Client } from '../../hooks/client'
 import { useToast } from '../../hooks/toast'
 
-type StatusOrder = 'finish' | 'cancel' | 'open'
+export type StatusOrder = 'finish' | 'cancel' | 'open'
 
-type Order = {
+export interface IProductMerged {
+  id: string
+  title: string
+  description: string
+  price: number
+  qtd: number
+}
+
+export type Order = {
   id: string
   title: string
   finalPrice: string
@@ -21,6 +29,7 @@ type Order = {
   clients: Client[]
   createdAt: Date
   status: StatusOrder
+  metadado: IProductMerged[]
 }
 
 export default function Dashboard() {
