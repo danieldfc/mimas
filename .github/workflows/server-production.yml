@@ -50,4 +50,5 @@ jobs:
             yarn
             cd ./packages/server
             ./node_modules/.bin/typeorm migration:run
+            ./node_modules/.bin/typeorm-seeding/dist/cli.js seed
             pm2 restart costura-api
