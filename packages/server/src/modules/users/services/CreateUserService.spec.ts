@@ -2,14 +2,20 @@ import { AppError } from '@shared/errors/AppError'
 
 import FakeUsersRepository from '@modules/users/infra/typeorm/repositories/fakes/FakeUsersRepository'
 import { CreateUserService } from './CreateUserService'
+import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider'
 
 let fakeUsersRepository: FakeUsersRepository
+let fakeHashProvider: FakeHashProvider
 let createUserService: CreateUserService
 
 describe('CreateUser', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository()
-    createUserService = new CreateUserService(fakeUsersRepository)
+    fakeHashProvider = new FakeHashProvider()
+    createUserService = new CreateUserService(
+      fakeUsersRepository,
+      fakeHashProvider
+    )
   })
 
   it('should be able to create a new user', async () => {

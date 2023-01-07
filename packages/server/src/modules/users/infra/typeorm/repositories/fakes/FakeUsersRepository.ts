@@ -1,4 +1,3 @@
-import { hash } from 'bcrypt'
 import { v4 as uuidV4 } from 'uuid'
 
 import IUsersRepository from '@modules/users/infra/typeorm/repositories/IUsersRepository'
@@ -29,7 +28,7 @@ class FakeUsersRepository implements IUsersRepository {
       id: uuidV4(),
       name,
       email,
-      password: await hash(password, 10),
+      password,
       nick
     })
 

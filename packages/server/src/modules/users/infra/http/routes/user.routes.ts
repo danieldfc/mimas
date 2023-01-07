@@ -1,13 +1,13 @@
 import { Joi, Segments, celebrate } from 'celebrate'
 import { Router } from 'express'
 import { CreateUserController } from '../controllers/CreateUserController'
-import { UpdateProfileController } from '../controllers/UpdateProfileController'
+import { ProfileController } from '../controllers/ProfileController'
 import ensureAuthenticated from '../middlewares/ensureAuthenticated'
 
 const userRouter = Router()
 
 const createUserController = new CreateUserController()
-const updateProfileController = new UpdateProfileController()
+const profileController = new ProfileController()
 
 userRouter.post(
   '/',
@@ -29,10 +29,13 @@ userRouter.put(
     [Segments.BODY]: {
       name: Joi.string(),
       email: Joi.string().email(),
-      nick: Joi.string()
+      nick: Joi.string(),
+      oldPassword: Joi.string(),
+      password: Joi.string(),
+      password_confirmation: Joi.string().valid(Joi.ref('password'))
     }
   }),
-  updateProfileController.handle
+  profileController.update
 )
 
 export { userRouter }
