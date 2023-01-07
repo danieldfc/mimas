@@ -18,10 +18,13 @@ const Routes: React.FC = () => (
     <Route path="/" exact component={SignIn} />
     <Route path="/profile" component={Profile} isPrivate />
     <Route path="/dashboard" component={Dashboard} isPrivate />
+
     <Route path="/order" exact component={CreateOrder} isPrivate />
     <Route path="/order/:orderId" component={Specifications} isPrivate />
+
     <Route path="/clients" component={Clients} isPrivate />
     <Route path="/create-client" component={CreateClient} isPrivate />
+
     <Route path="/suppliers" component={Suppliers} isPrivate />
     <Route path="/create-supplier" component={CreateSupplier} isPrivate />
   </Switch>
