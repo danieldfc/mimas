@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 import Button from '../../components/Button'
 import { Header } from '../../components/Header'
 import { useToast } from '../../hooks/toast'
+import { formatMoney } from '../../utils/formatMoney'
 import { Order, StatusOrder } from '../Dashboard'
 import { MetadadoProduct } from './MetadadoOrder'
 import {
@@ -113,7 +114,9 @@ export function Specifications() {
             )}
           </WrapperButtons>
 
-          <h2>{order.title}</h2>
+          <h2>
+            {order.title} - {order.finalPrice}
+          </h2>
           <p>{order.description}</p>
 
           <MetadadoProducts>
@@ -124,6 +127,9 @@ export function Specifications() {
                 index={index}
               />
             ))}
+            <li>
+              <h4>Mão de obra - {formatMoney(order.workmanship)}</h4>
+            </li>
           </MetadadoProducts>
         </Content>
       )}

@@ -9,7 +9,7 @@ import { useClient } from '../../hooks/client'
 import { Container, Content, HeaderWrapper } from './styles'
 
 export function Clients() {
-  const { clients } = useClient()
+  const { clients = [] } = useClient()
 
   return (
     <Container>
@@ -40,9 +40,11 @@ export function Clients() {
               </tr>
             </thead>
             <tbody>
-              {(clients ?? []).map((client, key) => (
+              {clients.map((client, key) => (
                 <tr key={client.id || key}>
-                  <td> {client.name}</td>
+                  <td>
+                    <Link to={`/clients/${client.id}`}>{client.name}</Link>
+                  </td>
                   <td className="center">{client.email ?? 'N/A'}</td>
                   <td className="center">{client.phone}</td>
                   <td className="center">{client.address ?? 'N/A'}</td>

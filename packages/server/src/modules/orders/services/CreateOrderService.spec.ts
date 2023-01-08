@@ -70,6 +70,7 @@ describe('CreateOrder', () => {
     })
 
     expect(order).toHaveProperty('id')
+    expect(order.workmanship).toEqual(200)
   })
 
   it('should not be able to create a new order without products', async () => {

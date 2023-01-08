@@ -12,6 +12,7 @@ import { Specifications } from '../pages/Specifications'
 import { Suppliers } from '../pages/Suppliers'
 import { CreateSupplier } from '../pages/CreateSupplier'
 import Profile from '../pages/Profile'
+import { ShowClient } from '../pages/ShowClient'
 
 const Routes: React.FC = () => (
   <Switch>
@@ -22,7 +23,8 @@ const Routes: React.FC = () => (
     <Route path="/order" exact component={CreateOrder} isPrivate />
     <Route path="/order/:orderId" component={Specifications} isPrivate />
 
-    <Route path="/clients" component={Clients} isPrivate />
+    <Route path="/clients" exact component={Clients} isPrivate />
+    <Route path="/clients/:clientId" component={ShowClient} isPrivate />
     <Route path="/create-client" component={CreateClient} isPrivate />
 
     <Route path="/suppliers" component={Suppliers} isPrivate />

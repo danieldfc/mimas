@@ -49,6 +49,9 @@ export class Order {
   @Column({ type: 'enum', enumName: 'orders_status_enum' })
   status: StatusOrder
 
+  @Column()
+  workmanship: number
+
   @ManyToMany(() => Client, { eager: true })
   @JoinTable({
     name: 'orders_clients',

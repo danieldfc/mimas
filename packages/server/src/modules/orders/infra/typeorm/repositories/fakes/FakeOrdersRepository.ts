@@ -26,7 +26,8 @@ export default class FakeOrdersRepository implements IOrdersRepository {
       finalPrice: workmanship + priceProducts,
       deliveryAt,
       client,
-      metadado
+      metadado,
+      workmanship
     })
 
     this.orders.push(order)
