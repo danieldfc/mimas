@@ -22,6 +22,7 @@ export default class OrdersRepository implements IOrdersRepository {
   }: ICreateOrderDTO): Promise<Order> {
     const order = this.ormRepository.create({
       finalPrice: workmanship + priceProducts,
+      workmanship,
       title,
       description,
       clients: [client],

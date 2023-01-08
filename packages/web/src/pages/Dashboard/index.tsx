@@ -30,6 +30,7 @@ export type Order = {
   createdAt: Date
   status: StatusOrder
   metadado: IProductMerged[]
+  workmanship: number
 }
 
 export default function Dashboard() {
