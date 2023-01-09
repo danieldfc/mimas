@@ -29,6 +29,10 @@ export const Content = styled.div`
       height: 24px;
     }
   }
+
+  @media (max-width: 1280px) {
+    width: 75%;
+  }
 `
 
 export const Profile = styled.div`

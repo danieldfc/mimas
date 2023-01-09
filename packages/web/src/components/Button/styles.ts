@@ -16,10 +16,47 @@ const lableTypeVariations = {
   small: css`
     width: 25%;
     height: 2rem;
+
+    @media (max-width: 1440px) {
+      width: 35%;
+      height: 2.5rem;
+
+      font-size: 0.8rem;
+      line-height: 1rem;
+    }
+
+    @media (max-width: 1280px) {
+      width: 40%;
+      height: 2.5rem;
+
+      font-size: 0.8rem;
+      line-height: 1rem;
+    }
+
+    @media (max-width: 625px) {
+      width: 70%;
+    }
+
+    @media (max-width: 425px) {
+      width: 80%;
+    }
   `,
   little: css`
     width: 50%;
     height: 4rem;
+
+    @media (max-width: 1280px) {
+      width: 60%;
+      height: 3.5rem;
+    }
+
+    @media (max-width: 625px) {
+      width: 70%;
+    }
+
+    @media (max-width: 425px) {
+      width: 80%;
+    }
   `,
   average: css`
     width: 75%;

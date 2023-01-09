@@ -11,6 +11,10 @@ export const Content = styled.div`
   h2 {
     margin-bottom: 30px;
   }
+
+  @media (max-width: 1280px) {
+    width: 75%;
+  }
 `
 
 export const HeaderWrapper = styled.div`
@@ -36,6 +40,10 @@ export const HeaderWrapper = styled.div`
       color: #cfbaf0;
       text-decoration: underline;
     }
+  }
+
+  @media (max-width: 1280px) {
+    width: 75%;
   }
 `
 
