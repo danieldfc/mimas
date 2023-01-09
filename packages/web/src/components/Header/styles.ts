@@ -2,11 +2,17 @@ import styled from 'styled-components'
 
 export const Container = styled.header`
   width: 100vw;
+  max-width: 100%;
   height: 6rem;
 
   padding: 24px 0;
   background: #ffffff;
   color: #000;
+
+  @media (max-width: 768px) {
+    padding: 12px 0;
+    height: 5rem;
+  }
 `
 
 export const Content = styled.div`
@@ -37,6 +43,14 @@ export const Content = styled.div`
 
     > img {
       margin-right: 2rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin: 0 0.3rem;
+
+    > img {
+      margin-right: 0.5rem;
     }
   }
 `
@@ -91,6 +105,10 @@ export const Navigation = styled.nav`
 
   @media (max-width: 768px) {
     margin-top: 0.5rem;
+
+    ul {
+      width: 75%;
+    }
   }
 `
 
