@@ -6,7 +6,7 @@ import logoImg from '../../assets/machine.png'
 
 import { useAuth } from '../../hooks/auth'
 
-import { Container, Content, Navigation, Profile } from './styles'
+import { Container, Content, Navigation, Profile, Wrapper } from './styles'
 import { navigateLink } from './util'
 
 export function Header() {
@@ -15,21 +15,23 @@ export function Header() {
     <Container>
       <Content>
         <img src={logoImg} alt="Costura" />
-        <Profile>
-          <span>Bem vindo,</span>
-          <Link to="/profile">
-            <strong>{user.name}</strong>
-          </Link>
-        </Profile>
-        <Navigation>
-          <ul>
-            {navigateLink.map(nav => (
-              <li key={nav.href}>
-                <Link to={nav.href}>{nav.name}</Link>
-              </li>
-            ))}
-          </ul>
-        </Navigation>
+        <Wrapper>
+          <Profile>
+            <span>Bem vindo,&nbsp;</span>
+            <Link to="/profile">
+              <strong>{user.name}</strong>
+            </Link>
+          </Profile>
+          <Navigation>
+            <ul>
+              {navigateLink.map(nav => (
+                <li key={nav.href}>
+                  <Link to={nav.href}>{nav.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </Navigation>
+        </Wrapper>
         <button type="button" onClick={signOut}>
           <FiPower />
         </button>

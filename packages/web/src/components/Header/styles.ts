@@ -1,9 +1,11 @@
 import styled from 'styled-components'
 
 export const Container = styled.header`
+  width: 100vw;
+  height: 6rem;
+
   padding: 24px 0;
   background: #ffffff;
-  height: 6rem;
   color: #000;
 `
 
@@ -32,6 +34,10 @@ export const Content = styled.div`
 
   @media (max-width: 1280px) {
     width: 75%;
+
+    > img {
+      margin-right: 2rem;
+    }
   }
 `
 
@@ -56,6 +62,10 @@ export const Profile = styled.div`
       opacity: 0.8;
     }
   }
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+  }
 `
 
 export const Navigation = styled.nav`
@@ -77,5 +87,21 @@ export const Navigation = styled.nav`
         }
       }
     }
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 0.5rem;
+  }
+`
+
+export const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 `
