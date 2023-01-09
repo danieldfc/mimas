@@ -81,7 +81,7 @@ export default function SignIn() {
             />
           </div>
 
-          <Button type="submit" label="small">
+          <Button type="submit" label="little">
             Entrar
           </Button>
 
