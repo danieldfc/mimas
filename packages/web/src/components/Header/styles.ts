@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.header`
   width: 100vw;
-  max-width: 100%;
+  max-width: 100vw;
   height: 6rem;
 
   padding: 24px 0;
@@ -11,7 +11,11 @@ export const Container = styled.header`
 
   @media (max-width: 768px) {
     padding: 12px 0;
+    width: 100vw;
     height: 5rem;
+
+    font-size: 0.8rem;
+    line-height: 1rem;
   }
 `
 
@@ -47,10 +51,20 @@ export const Content = styled.div`
   }
 
   @media (max-width: 768px) {
-    margin: 0 0.3rem;
-
     > img {
       margin-right: 0.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+    }
+  }
+
+  @media (max-width: 425px) {
+    margin: 0 0.9rem;
+
+    > img {
+      margin-right: 0;
+      height: 2rem;
+      border-radius: 50%;
     }
   }
 `
@@ -79,12 +93,15 @@ export const Profile = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: row;
+    width: 210px;
   }
 `
 
 export const Navigation = styled.nav`
   ul {
     display: flex;
+    justify-content: center;
+    align-items: center;
 
     > :last-child {
       margin-right: 0;
