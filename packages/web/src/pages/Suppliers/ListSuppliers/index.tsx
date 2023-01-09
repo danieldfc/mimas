@@ -7,12 +7,11 @@ import { MdOutlineTitle, MdPriceChange } from 'react-icons/md'
 import { FaBoxOpen } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import * as Yup from 'yup'
-import Button from '../../components/Button'
-import { Header } from '../../components/Header'
-import Input from '../../components/Input'
-import ModalRender from '../../components/Modal'
-import TableList from '../../components/TableList'
-import { Product } from '../CreateOrder'
+import Button from '../../../components/Button'
+import { Header } from '../../../components/Header'
+import Input from '../../../components/Input'
+import ModalRender from '../../../components/Modal'
+import TableList from '../../../components/TableList'
 
 import {
   Container,
@@ -22,9 +21,10 @@ import {
   Wrapper,
   WrapperButton
 } from './styles'
-import { useToast } from '../../hooks/toast'
-import getValidationErrors from '../../utils/getValidationError'
-import { Supplier, useSupplier } from '../../hooks/supplier'
+import { useToast } from '../../../hooks/toast'
+import getValidationErrors from '../../../utils/getValidationError'
+import { Supplier, useSupplier } from '../../../hooks/supplier'
+import { Product } from '../../../interfaces/Product'
 
 type IFormProduct = {
   price: number
@@ -33,7 +33,7 @@ type IFormProduct = {
   supplierId: string
 }
 
-export function Suppliers() {
+export function ListSuppliers() {
   const { suppliers } = useSupplier()
   const [loading, setLoading] = useState(false)
   const [supplierSelected, setSupplierSelected] = useState<Supplier | null>(

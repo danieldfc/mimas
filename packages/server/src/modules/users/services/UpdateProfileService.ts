@@ -11,6 +11,7 @@ type IRequest = {
   email?: string
   nick?: string
   oldPassword?: string
+  password_confirmation?: string
   password?: string
 }
 
@@ -30,6 +31,7 @@ export class UpdateProfileService {
     nick,
     email,
     oldPassword,
+    password_confirmation,
     password
   }: IRequest): Promise<User> {
     const user = await this.userRepository.findById(userId)
@@ -42,8 +44,9 @@ export class UpdateProfileService {
       name,
       nick,
       email,
+      oldPassword,
       password,
-      oldPassword
+      password_confirmation
     }) as Omit<IRequest, 'userId'>
 
     if (attributes.email && user.email !== attributes.email) {

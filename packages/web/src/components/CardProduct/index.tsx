@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { Product } from '../../pages/CreateOrder'
+import { Product } from '../../interfaces/Product'
 
 import { Container } from './styles'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Product } from '../../pages/CreateOrder'
+import { Product } from '../../interfaces/Product'
 import CardProduct from '../CardProduct'
 import { Container } from './styles'
 

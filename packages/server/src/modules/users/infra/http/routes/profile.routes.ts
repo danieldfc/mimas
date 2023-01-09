@@ -17,7 +17,9 @@ profileRouter.put(
       name: Joi.string(),
       email: Joi.string().email(),
       nick: Joi.string(),
-      password: Joi.string()
+      oldPassword: Joi.string(),
+      password: Joi.string(),
+      password_confirmation: Joi.string().valid(Joi.ref('password'))
     }
   }),
   profileController.update

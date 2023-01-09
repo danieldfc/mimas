@@ -16,7 +16,8 @@ const environments = {
   cli: {
     entitiesDir: 'src/modules/**/entities',
     migrationsDir: 'src/shared/infra/typeorm/migrations',
-  }
+  },
+  // logging: true
 }
 
 const base = {

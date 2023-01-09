@@ -13,31 +13,19 @@ import {
 } from 'react-icons/md'
 import { FiArrowLeft } from 'react-icons/fi'
 
-import Button from '../../components/Button'
-import { Header } from '../../components/Header'
-import Input from '../../components/Input'
-import { useClient } from '../../hooks/client'
+import Button from '../../../components/Button'
+import { Header } from '../../../components/Header'
+import Input from '../../../components/Input'
+import { useClient } from '../../../hooks/client'
 
 import { Container, Content, HeaderWrapper } from './styles'
-import { CardListProducts } from '../../components/CardListProducts'
-import SelectInput from '../../components/SelectInput'
-import ModalRender from '../../components/Modal'
-import { useToast } from '../../hooks/toast'
-import getValidationErrors from '../../utils/getValidationError'
-import ListProductsAdd from '../../components/ListProductsAdded'
-import { Supplier } from '../../hooks/supplier'
-
-export type Product = {
-  id: string
-  title: string
-  description: string
-  price: string
-  supplierId: string
-  supplier: Supplier
-
-  add: boolean
-  qtd: number
-}
+import { CardListProducts } from '../../../components/CardListProducts'
+import SelectInput from '../../../components/SelectInput'
+import ModalRender from '../../../components/Modal'
+import { useToast } from '../../../hooks/toast'
+import getValidationErrors from '../../../utils/getValidationError'
+import ListProductsAdd from '../../../components/ListProductsAdded'
+import { Product } from '../../../interfaces/Product'
 
 type IFormDataOrder = {
   title: string

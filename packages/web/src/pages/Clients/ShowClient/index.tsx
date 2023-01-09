@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
 import { Link, useHistory, useParams } from 'react-router-dom'
-import { Header } from '../../components/Header'
-import { useClient } from '../../hooks/client'
-import { useToast } from '../../hooks/toast'
+import { Header } from '../../../components/Header'
+import { useClient } from '../../../hooks/client'
+import { useToast } from '../../../hooks/toast'
 import { Container, Content, HeaderWrapper, LinkWhatsapp } from './styles'
 
 export function ShowClient() {

@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import { Product } from '../pages/CreateOrder'
+import { Product } from '../interfaces/Product'
 
 export type Supplier = {
   id: string

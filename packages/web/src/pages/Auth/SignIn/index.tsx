@@ -5,13 +5,13 @@ import { FiLock, FiMail } from 'react-icons/fi'
 import { useHistory } from 'react-router-dom'
 import * as Yup from 'yup'
 
-import Button from '../../components/Button'
-import Input from '../../components/Input'
+import Button from '../../../components/Button'
+import Input from '../../../components/Input'
 
-import { useAuth } from '../../hooks/auth'
-import { useToast } from '../../hooks/toast'
+import { useAuth } from '../../../hooks/auth'
+import { useToast } from '../../../hooks/toast'
 
-import getValidationErrors from '../../utils/getValidationError'
+import getValidationErrors from '../../../utils/getValidationError'
 import { Container, Content } from './styles'
 
 interface SignInFormData {

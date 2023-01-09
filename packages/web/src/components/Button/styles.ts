@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
 import { shade } from 'polished'
-import { StatusOrder } from '../../pages/Dashboard'
+import { StatusOrder } from '../../pages/Orders/ListOrders'
 
 export type LabelButton = 'small' | 'little' | 'average' | 'big'
 

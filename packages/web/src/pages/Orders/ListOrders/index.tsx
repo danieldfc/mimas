@@ -2,38 +2,15 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Container, Content, Wrapper } from './styles'
-import { formatMoney } from '../../utils/formatMoney'
+import { formatMoney } from '../../../utils/formatMoney'
 
-import { Header } from '../../components/Header'
-import TableList from '../../components/TableList'
+import { Header } from '../../../components/Header'
+import TableList from '../../../components/TableList'
 import api from '@mimas/axios-config'
-import { Client } from '../../hooks/client'
-import { useToast } from '../../hooks/toast'
+import { useToast } from '../../../hooks/toast'
+import { Order, StatusOrder } from '../../../interfaces/Order'
 
-export type StatusOrder = 'finish' | 'cancel' | 'open'
-
-export interface IProductMerged {
-  id: string
-  title: string
-  description: string
-  price: number
-  qtd: number
-}
-
-export type Order = {
-  id: string
-  title: string
-  finalPrice: string
-  description: string
-  deliveryAt: string
-  clients: Client[]
-  createdAt: Date
-  status: StatusOrder
-  metadado: IProductMerged[]
-  workmanship: number
-}
-
-export default function Dashboard() {
+export default function ListOrders() {
   const [orders, setOrders] = useState<Order[]>([])
   const { addToast } = useToast()
 
@@ -95,7 +72,7 @@ export default function Dashboard() {
               <tr>
                 <th> PEDIDO </th>
                 <th className="center"> CLIENTE </th>
-                <th className="center"> PREÇO </th>
+                <th className="center"> PREÇO FINAL </th>
                 <th className="center"> DATA DA ENTREGA </th>
                 <th className="center"> AÇÕES </th>
                 <th />

@@ -1,7 +1,6 @@
 import React from 'react'
-import { formatMoney } from '../../../utils/formatMoney'
-
-import { IProductMerged } from '../../Dashboard'
+import { IProductMerged } from '../../../../interfaces/Order'
+import { formatMoney } from '../../../../utils/formatMoney'
 
 import { Container } from './styles'
 

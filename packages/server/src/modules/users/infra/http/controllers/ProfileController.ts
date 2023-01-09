@@ -20,7 +20,8 @@ export class ProfileController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const userId = request.user.id
-    const { name, nick, email, oldPassword, password } = request.body
+    const { name, nick, email, oldPassword, password, password_confirmation } =
+      request.body
 
     const updateProfileService = container.resolve(UpdateProfileService)
 
@@ -30,6 +31,7 @@ export class ProfileController {
       name,
       nick,
       oldPassword,
+      password_confirmation,
       password
     })
 

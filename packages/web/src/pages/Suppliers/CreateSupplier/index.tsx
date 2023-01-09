@@ -1,59 +1,58 @@
 import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
 import React, { useCallback, useRef } from 'react'
-import * as Yup from 'yup'
-
-import { FiArrowLeft, FiMail, FiPhone } from 'react-icons/fi'
-import { GoPerson } from 'react-icons/go'
 import { FaRegAddressCard } from 'react-icons/fa'
+import { FiMail, FiPhone } from 'react-icons/fi'
+import { GoPerson } from 'react-icons/go'
+import { useHistory } from 'react-router-dom'
+import * as Yup from 'yup'
+import Button from '../../../components/Button'
+import { Header } from '../../../components/Header'
+import Input from '../../../components/Input'
+import { useSupplier } from '../../../hooks/supplier'
+import { useToast } from '../../../hooks/toast'
+import getValidationErrors from '../../../utils/getValidationError'
+import removeEmptyFields from '../../../utils/removeEmptyFields'
+import { Container, Content } from './styles'
 
-import { Link, useHistory } from 'react-router-dom'
-import Button from '../../components/Button'
-import { Header } from '../../components/Header'
-import Input from '../../components/Input'
-
-import { Container, Content, HeaderWrapper } from './styles'
-import removeEmptyFields from '../../utils/removeEmptyFields'
-import getValidationErrors from '../../utils/getValidationError'
-import { useToast } from '../../hooks/toast'
-import { useClient } from '../../hooks/client'
-
-interface IFormDataClient {
+interface IFormDataSupplier {
   name: string
   phone: string
-  email?: string
-  address?: string
+  email: string
+  address: string
 }
 
-export function CreateClient() {
+export function CreateSupplier() {
   const formRef = useRef<FormHandles>(null)
+  const { addSupplier } = useSupplier()
   const history = useHistory()
-
-  const { addClient } = useClient()
   const { addToast } = useToast()
 
   const handleSubmit = useCallback(
-    async (data: IFormDataClient) => {
-      const fields = removeEmptyFields<IFormDataClient>(data)
+    async (data: IFormDataSupplier) => {
+      const fields = removeEmptyFields<IFormDataSupplier>(data)
       try {
         formRef.current?.setErrors({})
 
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome obrigatório'),
-          email: Yup.string().email('Digite um e-mail válido').nullable(),
+          email: Yup.string()
+            .email('Digite um e-mail válido')
+            .required('E-mail obrigatório'),
           phone: Yup.string().required('Telefone obrigatório'),
           address: Yup.string().nullable()
         })
         await schema.validate(fields, { abortEarly: false })
 
-        await addClient({
-          email: fields.email,
+        await addSupplier({
+          email: fields.email ?? '',
           name: fields.name ?? '',
           phone: fields.phone ?? '',
-          address: fields.address
+          address: fields.address ?? '',
+          products: []
         })
 
-        history.push('/clients')
+        history.push('/suppliers')
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)
@@ -65,31 +64,24 @@ export function CreateClient() {
 
         addToast({
           type: 'error',
-          title: 'Erro na criação do cliente',
-          description: 'Ocorreu um erro ao criar um cliente.'
+          title: 'Erro na criação do fornecedor',
+          description: 'Ocorreu um erro ao criar um fornecedor.'
         })
       }
     },
-    [addClient, addToast, history]
+    [addToast, history, addSupplier]
   )
 
   return (
     <Container>
       <Header />
-      <HeaderWrapper>
-        <h3>Criar um novo cliente</h3>
-
-        <Link to="/clients">
-          <FiArrowLeft />
-          Voltar
-        </Link>
-      </HeaderWrapper>
 
       <Content>
+        <h2>Cadastrar novo fornecedor</h2>
         <Form ref={formRef} onSubmit={handleSubmit}>
           <div>
             <Input icon={GoPerson} name="name" placeholder="Nome" />
-            <Input icon={FiMail} name="email" placeholder="E-mail (opcional)" />
+            <Input icon={FiMail} name="email" placeholder="E-mail" />
             <Input
               icon={FiPhone}
               name="phone"
@@ -103,7 +95,7 @@ export function CreateClient() {
             />
           </div>
           <Button type="submit" label="little">
-            Criar cliente
+            Cadastrar
           </Button>
         </Form>
       </Content>

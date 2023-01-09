@@ -2,13 +2,13 @@ import React from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 
-import { Header } from '../../components/Header'
-import TableList from '../../components/TableList'
-import { useClient } from '../../hooks/client'
+import { Header } from '../../../components/Header'
+import TableList from '../../../components/TableList'
+import { useClient } from '../../../hooks/client'
 
 import { Container, Content, HeaderWrapper } from './styles'
 
-export function Clients() {
+export function ListClients() {
   const { clients = [] } = useClient()
 
   return (
