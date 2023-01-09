@@ -19,7 +19,7 @@ export const HeaderWrapper = styled.div`
   div {
     display: flex;
     justify-content: space-between;
-    width: 180px;
+    width: 250px;
 
     > :last-child {
       color: #cfbaf0;
@@ -41,4 +41,20 @@ export const Content = styled.div`
       margin-right: 20px;
     }
   }
+`
+
+export const ContainerWithoutClient = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 3rem;
+  margin: 0 auto;
+
+  background-color: white;
+  color: black;
+  padding: 3rem;
+
+  border-radius: 1rem;
 `

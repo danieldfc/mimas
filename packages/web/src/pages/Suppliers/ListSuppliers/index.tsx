@@ -137,7 +137,7 @@ export function ListSuppliers() {
             <FiArrowLeft />
             Voltar
           </Link>
-          <Link to="/create-supplier">Cadastrar fornecedor</Link>
+          <Link to="/create-supplier">Cadastrar novo fornecedor</Link>
         </div>
       </Wrapper>
 

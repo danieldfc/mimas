@@ -6,7 +6,12 @@ import { Header } from '../../../components/Header'
 import TableList from '../../../components/TableList'
 import { useClient } from '../../../hooks/client'
 
-import { Container, Content, HeaderWrapper } from './styles'
+import {
+  Container,
+  ContainerWithoutClient,
+  Content,
+  HeaderWrapper
+} from './styles'
 
 export function ListClients() {
   const { clients = [] } = useClient()
@@ -23,36 +28,42 @@ export function ListClients() {
             <FiArrowLeft />
             Voltar
           </Link>
-          <Link to="/create-client">Criar cliente</Link>
+          <Link to="/create-client">Cadastrar novo cliente</Link>
         </div>
       </HeaderWrapper>
 
       <Content>
-        <TableList>
-          <>
-            <thead>
-              <tr>
-                <th> CLIENTE </th>
-                <th className="center"> E-MAIL </th>
-                <th className="center"> TELEFONE </th>
-                <th className="center"> ENDEREÇO </th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {clients.map((client, key) => (
-                <tr key={client.id || key}>
-                  <td>
-                    <Link to={`/clients/${client.id}`}>{client.name}</Link>
-                  </td>
-                  <td className="center">{client.email ?? 'N/A'}</td>
-                  <td className="center">{client.phone}</td>
-                  <td className="center">{client.address ?? 'N/A'}</td>
+        {clients.length ? (
+          <TableList>
+            <>
+              <thead>
+                <tr>
+                  <th> CLIENTE </th>
+                  <th className="center"> E-MAIL </th>
+                  <th className="center"> TELEFONE </th>
+                  <th className="center"> ENDEREÇO </th>
+                  <th />
                 </tr>
-              ))}
-            </tbody>
-          </>
-        </TableList>
+              </thead>
+              <tbody>
+                {clients.map((client, key) => (
+                  <tr key={client.id || key}>
+                    <td>
+                      <Link to={`/clients/${client.id}`}>{client.name}</Link>
+                    </td>
+                    <td className="center">{client.email ?? 'N/A'}</td>
+                    <td className="center">{client.phone}</td>
+                    <td className="center">{client.address ?? 'N/A'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </>
+          </TableList>
+        ) : (
+          <ContainerWithoutClient>
+            Você não possui clientes cadastrados
+          </ContainerWithoutClient>
+        )}
       </Content>
     </Container>
   )

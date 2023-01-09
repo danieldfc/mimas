@@ -13,14 +13,44 @@ export const Content = styled.div`
   }
 `
 
-export const Wrapper = styled.div`
+export const HeaderWrapper = styled.div`
+  max-width: 1240px;
+  margin: 64px auto;
+
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 30px;
+  align-items: center;
 
   a {
+    display: flex;
+    align-items: center;
     color: #cfbaf0;
-    text-decoration: underline;
   }
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    width: 180px;
+
+    > :last-child {
+      color: #cfbaf0;
+      text-decoration: underline;
+    }
+  }
+`
+
+export const ContainerWithoutOrder = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 3rem;
+  margin: 0 auto;
+
+  background-color: white;
+  color: black;
+  padding: 3rem;
+
+  border-radius: 1rem;
 `

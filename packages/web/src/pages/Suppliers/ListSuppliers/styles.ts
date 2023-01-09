@@ -36,7 +36,7 @@ export const Wrapper = styled.div`
   div {
     display: flex;
     justify-content: space-between;
-    width: 15rem;
+    width: 280px;
 
     > :last-child {
       color: #cfbaf0;

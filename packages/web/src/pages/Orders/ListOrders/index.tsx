@@ -1,7 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Container, Content, Wrapper } from './styles'
+import {
+  Container,
+  ContainerWithoutOrder,
+  Content,
+  HeaderWrapper
+} from './styles'
 import { formatMoney } from '../../../utils/formatMoney'
 
 import { Header } from '../../../components/Header'
@@ -60,75 +65,81 @@ export default function ListOrders() {
     <Container>
       <Header />
 
-      <Content>
-        <Wrapper>
-          <h3>Meus pedidos</h3>
-          <Link to="/order">Criar pedido</Link>
-        </Wrapper>
+      <HeaderWrapper>
+        <h3>Meus pedidos</h3>
+        <Link to="/order">Cadastrar novo pedido</Link>
+      </HeaderWrapper>
 
-        <TableList>
-          <>
-            <thead>
-              <tr>
-                <th> PEDIDO </th>
-                <th className="center"> CLIENTE </th>
-                <th className="center"> PREÇO FINAL </th>
-                <th className="center"> DATA DA ENTREGA </th>
-                <th className="center"> AÇÕES </th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order, key) => (
-                <tr key={order.id || key}>
-                  <td>
-                    <Link to={`/order/${order.id}`}>{order.title}</Link>
-                  </td>
-                  <td className="center">{order.clients[0].name}</td>
-                  <td className="center">
-                    {formatMoney(
-                      +order.finalPrice.replace('$', '').replace(',', '')
-                    )}
-                  </td>
-                  <td className="center">
-                    {order.deliveryAt ? parseData(order.deliveryAt) : '-'}h
-                    {/* TODO - deveria ser a data de entrega do produto */}
-                  </td>
-                  <td className="actions">
-                    <div>
-                      {order.status === 'open' ? (
-                        <>
-                          <button
-                            type="button"
-                            className="finish"
-                            onClick={() =>
-                              finalizarCancelarPedido(order.id, 'finish')
-                            }
-                          >
-                            Finalizar
-                          </button>
-                          <button
-                            type="button"
-                            className="cancel"
-                            onClick={() =>
-                              finalizarCancelarPedido(order.id, 'cancel')
-                            }
-                          >
-                            Cancelar
-                          </button>
-                        </>
-                      ) : order.status === 'cancel' ? (
-                        <strong className="cancel">Cancelado</strong>
-                      ) : (
-                        <strong className="finish">Finalizado</strong>
-                      )}
-                    </div>
-                  </td>
+      <Content>
+        {!orders.length ? (
+          <ContainerWithoutOrder>
+            Você não possui pedidos cadastrados
+          </ContainerWithoutOrder>
+        ) : (
+          <TableList>
+            <>
+              <thead>
+                <tr>
+                  <th> PEDIDO </th>
+                  <th className="center"> CLIENTE </th>
+                  <th className="center"> PREÇO FINAL </th>
+                  <th className="center"> DATA DA ENTREGA </th>
+                  <th className="center"> AÇÕES </th>
+                  <th />
                 </tr>
-              ))}
-            </tbody>
-          </>
-        </TableList>
+              </thead>
+              <tbody>
+                {orders.map((order, key) => (
+                  <tr key={order.id || key}>
+                    <td>
+                      <Link to={`/order/${order.id}`}>{order.title}</Link>
+                    </td>
+                    <td className="center">{order.clients[0].name}</td>
+                    <td className="center">
+                      {formatMoney(
+                        +order.finalPrice.replace('$', '').replace(',', '')
+                      )}
+                    </td>
+                    <td className="center">
+                      {order.deliveryAt ? parseData(order.deliveryAt) : '-'}h
+                      {/* TODO - deveria ser a data de entrega do produto */}
+                    </td>
+                    <td className="actions">
+                      <div>
+                        {order.status === 'open' ? (
+                          <>
+                            <button
+                              type="button"
+                              className="finish"
+                              onClick={() =>
+                                finalizarCancelarPedido(order.id, 'finish')
+                              }
+                            >
+                              Finalizar
+                            </button>
+                            <button
+                              type="button"
+                              className="cancel"
+                              onClick={() =>
+                                finalizarCancelarPedido(order.id, 'cancel')
+                              }
+                            >
+                              Cancelar
+                            </button>
+                          </>
+                        ) : order.status === 'cancel' ? (
+                          <strong className="cancel">Cancelado</strong>
+                        ) : (
+                          <strong className="finish">Finalizado</strong>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </>
+          </TableList>
+        )}
       </Content>
     </Container>
   )
