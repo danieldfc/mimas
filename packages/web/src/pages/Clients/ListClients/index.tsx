@@ -39,7 +39,6 @@ export function ListClients() {
               <thead>
                 <tr>
                   <th> CLIENTE </th>
-                  <th className="center"> E-MAIL </th>
                   <th className="center"> TELEFONE </th>
                   <th />
                 </tr>
@@ -50,7 +49,6 @@ export function ListClients() {
                     <td>
                       <Link to={`/clients/${client.id}`}>{client.name}</Link>
                     </td>
-                    <td className="center">{client.email ?? 'N/A'}</td>
                     <td className="center">{client.phone}</td>
                   </tr>
                 ))}

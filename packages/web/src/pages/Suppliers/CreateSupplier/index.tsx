@@ -2,9 +2,9 @@ import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
 import React, { useCallback, useRef } from 'react'
 import { FaRegAddressCard } from 'react-icons/fa'
-import { FiMail, FiPhone } from 'react-icons/fi'
+import { FiArrowLeft, FiMail, FiPhone } from 'react-icons/fi'
 import { GoPerson } from 'react-icons/go'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import * as Yup from 'yup'
 import Button from '../../../components/Button'
 import { Header } from '../../../components/Header'
@@ -13,7 +13,7 @@ import { useSupplier } from '../../../hooks/supplier'
 import { useToast } from '../../../hooks/toast'
 import getValidationErrors from '../../../utils/getValidationError'
 import removeEmptyFields from '../../../utils/removeEmptyFields'
-import { Container, Content } from './styles'
+import { Container, Content, HeaderWrapper } from './styles'
 
 interface IFormDataSupplier {
   name: string
@@ -76,8 +76,16 @@ export function CreateSupplier() {
     <Container>
       <Header />
 
+      <HeaderWrapper>
+        <h3>Cadastrar novo fornecedor</h3>
+
+        <Link to="/suppliers">
+          <FiArrowLeft />
+          Voltar
+        </Link>
+      </HeaderWrapper>
+
       <Content>
-        <h2>Cadastrar novo fornecedor</h2>
         <Form ref={formRef} onSubmit={handleSubmit}>
           <div>
             <Input icon={GoPerson} name="name" placeholder="Nome" />

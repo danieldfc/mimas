@@ -50,6 +50,12 @@ export const Container = styled.div.attrs({
   svg {
     margin-right: 16px;
   }
+
+  @media (max-width: 425px) {
+    svg {
+      display: none;
+    }
+  }
 `
 
 export const Error = styled(Tooltip)`
