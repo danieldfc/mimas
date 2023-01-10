@@ -1,11 +1,18 @@
 import { shade } from 'polished'
 import styled from 'styled-components'
 
-export const Container = styled.div``
+export const Container = styled.main`
+  > h3 {
+    max-width: 1240px;
+    margin: -1.5rem auto;
+    padding: 0 2.5rem;
+  }
+`
 
-export const HeaderWrapper = styled.div`
+export const HeaderWrapper = styled.aside`
   max-width: 1240px;
-  margin: 64px auto;
+  margin: 2.5rem auto;
+  padding: 0 2.5rem;
 
   display: flex;
   justify-content: space-between;
@@ -18,9 +25,28 @@ export const HeaderWrapper = styled.div`
   }
 `
 
-export const Content = styled.div`
+export const SelectorClient = styled.div`
+  display: flex;
+
+  > :first-child {
+    width: 100%;
+  }
+`
+
+export const Content = styled.section`
   max-width: 1240px;
-  margin: 64px auto;
+  margin: 2.5rem auto;
+  padding: 0 2.5rem;
+
+  display: flex;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`
+
+export const InfoPedido = styled.aside`
+  width: 70%;
 
   button {
     background-color: #561482;
@@ -50,13 +76,46 @@ export const Content = styled.div`
     }
   }
 
-  form > div:last-child {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  form > :last-child {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
+
+export const WrapperContent = styled.aside`
+  width: 30%;
+  margin-left: 1rem;
+  padding-left: 1rem;
+
+  border-left: 2px solid #fff;
+
+  button {
+    background-color: #561482;
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    border-left: none;
+    margin-left: 0;
+    margin-top: 1rem;
+    padding-left: 0;
+
+    border-top: 2px solid #fff;
 
     button {
-      width: 100%;
+      height: 3.5rem;
+      font-size: 0.8rem;
+    }
+  }
+
+  @media (max-width: 425px) {
+    button {
+      font-size: 0.7rem;
     }
   }
 `

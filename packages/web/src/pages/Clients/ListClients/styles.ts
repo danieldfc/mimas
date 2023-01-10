@@ -36,9 +36,8 @@ export const HeaderWrapper = styled.div`
 
 export const Content = styled.div`
   max-width: 1240px;
-  margin: 64px auto;
-
-  width: 90%;
+  margin: 2.5rem auto;
+  padding: 0 2.5rem;
 
   ul {
     display: flex;
@@ -48,6 +47,10 @@ export const Content = styled.div`
     > li {
       margin-right: 20px;
     }
+  }
+
+  @media (max-width: 425px) {
+    padding: 0 1.5rem;
   }
 `
 

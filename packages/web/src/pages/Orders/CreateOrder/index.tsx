@@ -18,7 +18,14 @@ import { Header } from '../../../components/Header'
 import Input from '../../../components/Input'
 import { useClient } from '../../../hooks/client'
 
-import { Container, Content, HeaderWrapper } from './styles'
+import {
+  Container,
+  Content,
+  HeaderWrapper,
+  InfoPedido,
+  SelectorClient,
+  WrapperContent
+} from './styles'
 import { CardListProducts } from '../../../components/CardListProducts'
 import SelectInput from '../../../components/SelectInput'
 import ModalRender from '../../../components/Modal'
@@ -148,47 +155,81 @@ export function CreateOrder() {
         </Link>
       </HeaderWrapper>
 
-      <Content>
-        <h3>Total do pedido: R$ {precoTotal}</h3>
-        <Form ref={formRef} onSubmit={handleSubmit} id="form-create-order">
-          <div>
-            <SelectInput
-              itens={clients.map(p => ({ label: p.name, value: p.id }))}
-              onChange={(event: any) => setClientId(event.value)}
-              title="Cliente"
-              id="form-client-id"
-              name="clientId"
-            />
+      <h3>Total do pedido: R$ {precoTotal}</h3>
 
-            <Input icon={MdTitle} name="title" placeholder="Título" />
-            <Input
-              icon={MdDescription}
-              name="description"
-              placeholder="Descrição"
-            />
-            <Input
-              icon={MdOutlinePriceCheck}
-              name="workmanship"
-              placeholder="Preço de mão de obra"
-              type="number"
-              onChange={changeValueMaoObra}
-            />
-            <Input
-              icon={MdDateRange}
-              name="deliveryAt"
-              placeholder="Preço de mão de obra"
-              type="datetime-local"
-              min={new Date().toISOString().slice(0, -8)}
-            />
-          </div>
-          <ModalRender
-            isOpen={modalIsOpen}
-            onAfterClose={() => changeValueMaoObra()}
-            onRequestClose={closeModal}
-            title="Cadastro de itens do pedido"
+      <Content>
+        <InfoPedido>
+          <Form ref={formRef} onSubmit={handleSubmit} id="form-create-order">
+            <div>
+              <SelectorClient>
+                <SelectInput
+                  itens={clients.map(p => ({ label: p.name, value: p.id }))}
+                  onChange={(event: any) => {
+                    if (event) {
+                      setClientId(event.value)
+                    } else {
+                      setClientId('')
+                    }
+                  }}
+                  title="Cliente"
+                  id="form-client-id"
+                  name="clientId"
+                  isClearable
+                />
+              </SelectorClient>
+
+              <Input
+                icon={MdTitle}
+                name="title"
+                placeholder="Título"
+                disabled={!clientId.length}
+              />
+              <Input
+                icon={MdDescription}
+                name="description"
+                placeholder="Descrição"
+                disabled={!clientId.length}
+              />
+              <Input
+                icon={MdOutlinePriceCheck}
+                name="workmanship"
+                placeholder="Preço de mão de obra"
+                type="number"
+                onChange={changeValueMaoObra}
+                disabled={!clientId.length}
+              />
+              <Input
+                icon={MdDateRange}
+                name="deliveryAt"
+                placeholder="Preço de mão de obra"
+                type="datetime-local"
+                min={new Date().toISOString().slice(0, -8)}
+                disabled={!clientId.length}
+              />
+            </div>
+            <ModalRender
+              isOpen={modalIsOpen}
+              onAfterClose={() => changeValueMaoObra()}
+              onRequestClose={closeModal}
+              title="Cadastro de itens do pedido"
+            >
+              <CardListProducts products={products} />
+            </ModalRender>
+            <Button type="submit" label="little" disabled={!clientId.length}>
+              Cadastrar pedido
+            </Button>
+          </Form>
+        </InfoPedido>
+        <WrapperContent>
+          <Button
+            type="button"
+            label="small"
+            onClick={() => setModalIsOpen(true)}
+            disabled={!clientId.length}
           >
-            <CardListProducts products={products} />
-          </ModalRender>
+            Adicionar produtos
+          </Button>
+
           <ul
             style={{
               marginTop: productsAdded.length ? '20px' : 0
@@ -198,24 +239,7 @@ export function CreateOrder() {
               <ListProductsAdd product={p} key={p.id} />
             ))}
           </ul>
-
-          {!productsAdded.length && (
-            <p style={{ marginTop: '5px' }}>Adicione produtos no pedido</p>
-          )}
-
-          <div>
-            <Button
-              type="button"
-              label="little"
-              onClick={() => setModalIsOpen(true)}
-            >
-              Adicionar produtos
-            </Button>
-            <Button type="submit" label="little">
-              Criar pedido
-            </Button>
-          </div>
-        </Form>
+        </WrapperContent>
       </Content>
     </Container>
   )

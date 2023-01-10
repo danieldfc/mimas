@@ -8,12 +8,13 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   max-width: 1240px;
-  margin: 64px auto;
+  margin: 2.5rem auto;
+  padding: 0 2.5rem;
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 1280px) {
-    width: 90%;
+  @media (max-width: 768px) {
+    padding: 0 1.5rem;
   }
 `
 

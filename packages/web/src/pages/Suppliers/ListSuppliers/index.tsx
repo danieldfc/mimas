@@ -17,6 +17,7 @@ import {
   AsideSupplier,
   Container,
   ContainerWithoutSupplier,
+  Content,
   ContentSupplier,
   SelectSupplier,
   Wrapper,
@@ -275,63 +276,144 @@ export function ListSuppliers() {
         </div>
       </Wrapper>
 
-      {!suppliers.length && (
-        <ContainerWithoutSupplier>
-          Você não possui fornecedores cadastrados
-        </ContainerWithoutSupplier>
-      )}
+      <Content>
+        {!suppliers.length && (
+          <ContainerWithoutSupplier>
+            Você não possui fornecedores cadastrados
+          </ContainerWithoutSupplier>
+        )}
 
-      {suppliers.length && (
-        <>
-          <AsideSupplier>
-            <SelectSupplier>
-              {suppliers.map((supplier, index) => (
-                <li key={supplier.id}>
-                  <input
-                    id={`supplier-${index}`}
-                    type="radio"
-                    name={supplier.name}
-                    value={supplier.id}
-                    checked={
-                      supplierSelected
-                        ? supplierSelected.id === supplier.id
-                        : false
-                    }
-                    onChange={() => setSupplierSelected(supplier)}
-                  />
-                  <label htmlFor={`supplier-${index}`}>
-                    &nbsp;{formatBigString(supplier.name, 25)}
-                  </label>
-                </li>
-              ))}
-            </SelectSupplier>
+        {!!suppliers.length && (
+          <>
+            <AsideSupplier>
+              <SelectSupplier>
+                {suppliers.map((supplier, index) => (
+                  <li key={supplier.id}>
+                    <input
+                      id={`supplier-${index}`}
+                      type="radio"
+                      name={supplier.name}
+                      value={supplier.id}
+                      checked={
+                        supplierSelected
+                          ? supplierSelected.id === supplier.id
+                          : false
+                      }
+                      onChange={() => setSupplierSelected(supplier)}
+                    />
+                    <label htmlFor={`supplier-${index}`}>
+                      &nbsp;{formatBigString(supplier.name, 25)}
+                    </label>
+                  </li>
+                ))}
+              </SelectSupplier>
 
-            <ContentSupplier>
-              <WrapperButton>
-                <Button
-                  disabled={!supplierSelected?.id}
-                  onClick={() => {
-                    setModalIsOpen(false)
-                    setModalProductIsOpen(false)
-                    setModalFornecedorIsOpen(true)
-                  }}
-                  label="small"
-                >
-                  Atualizar fornecedor
+              <ContentSupplier>
+                <WrapperButton>
+                  <Button
+                    disabled={!supplierSelected?.id}
+                    onClick={() => {
+                      setModalIsOpen(false)
+                      setModalProductIsOpen(false)
+                      setModalFornecedorIsOpen(true)
+                    }}
+                    label="small"
+                  >
+                    Atualizar fornecedor
+                  </Button>
+                  <Button
+                    disabled={!supplierSelected?.id}
+                    onClick={() => {
+                      setModalIsOpen(true)
+                      setModalProductIsOpen(false)
+                      setModalFornecedorIsOpen(false)
+                    }}
+                    label="small"
+                  >
+                    Cadastrar novos produtos
+                  </Button>
+                </WrapperButton>
+                <TableList loading={loading}>
+                  <>
+                    <thead>
+                      <tr>
+                        <th> PRODUTO </th>
+                        <th className="center"> DESCRIÇÃO </th>
+                        <th className="center"> PREÇO </th>
+                        <th className="center"> AÇÕES </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(supplierSelected?.products ?? []).map(
+                        (product: Product) => (
+                          <tr key={product.id}>
+                            <td> {product.title}</td>
+                            <td className="center">
+                              {product.description ?? 'N/A'}
+                            </td>
+                            <td className="center">{product.price}</td>
+                            <td className="actions">
+                              <button
+                                onClick={() =>
+                                  handleDeleteProduct(
+                                    product.id,
+                                    supplierSelected as Supplier
+                                  )
+                                }
+                                type="button"
+                                className="finish"
+                              >
+                                Remover
+                              </button>
+                              <button
+                                type="button"
+                                className="cancel"
+                                onClick={() => {
+                                  setProductSelected(product)
+                                  setModalProductIsOpen(true)
+                                }}
+                              >
+                                Editar
+                              </button>
+                            </td>
+                          </tr>
+                        )
+                      )}
+                    </tbody>
+                  </>
+                </TableList>
+              </ContentSupplier>
+            </AsideSupplier>
+
+            <ModalRender
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              title="Cadastro de produtos do fornecedor"
+            >
+              <Form ref={formRef} onSubmit={handleSubmit}>
+                <Input
+                  icon={FaBoxOpen}
+                  name="title"
+                  placeholder="Título do produto"
+                />
+                <Input
+                  icon={MdOutlineTitle}
+                  name="description"
+                  placeholder="Descrição do produto"
+                />
+                <Input
+                  icon={MdPriceChange}
+                  name="price"
+                  placeholder="Preço do produto"
+                  type="number"
+                  min="0"
+                />
+                <Button type="submit" label="little">
+                  Cadastrar
                 </Button>
-                <Button
-                  disabled={!supplierSelected?.id}
-                  onClick={() => {
-                    setModalIsOpen(true)
-                    setModalProductIsOpen(false)
-                    setModalFornecedorIsOpen(false)
-                  }}
-                  label="small"
-                >
-                  Cadastrar novos produtos
-                </Button>
-              </WrapperButton>
-              <TableList loading={loading}>
+              </Form>
+
+              <TableList>
                 <>
                   <thead>
                     <tr>
@@ -352,14 +434,14 @@ export function ListSuppliers() {
                           <td className="center">{product.price}</td>
                           <td className="actions">
                             <button
+                              type="button"
+                              className="finish"
                               onClick={() =>
                                 handleDeleteProduct(
                                   product.id,
                                   supplierSelected as Supplier
                                 )
                               }
-                              type="button"
-                              className="finish"
                             >
                               Remover
                             </button>
@@ -368,6 +450,7 @@ export function ListSuppliers() {
                               className="cancel"
                               onClick={() => {
                                 setProductSelected(product)
+                                setModalIsOpen(false)
                                 setModalProductIsOpen(true)
                               }}
                             >
@@ -380,167 +463,87 @@ export function ListSuppliers() {
                   </tbody>
                 </>
               </TableList>
-            </ContentSupplier>
-          </AsideSupplier>
+            </ModalRender>
 
+            {productSelected && (
+              <ModalRender
+                isOpen={modalProductIsOpen}
+                onRequestClose={closeModal}
+                title="Editar produto"
+              >
+                <Form ref={formRef} onSubmit={handleSubmitUpdate}>
+                  <Input
+                    icon={FaBoxOpen}
+                    name="title"
+                    placeholder="Título do produto"
+                    defaultValue={productSelected.title}
+                  />
+                  <Input
+                    icon={MdOutlineTitle}
+                    name="description"
+                    placeholder="Descrição do produto"
+                    defaultValue={productSelected.description}
+                  />
+                  <Input
+                    icon={MdPriceChange}
+                    name="price"
+                    placeholder="Preço do produto"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    defaultValue={parseFloat(
+                      productSelected.price.replace('$', '')
+                    )}
+                  />
+                  <Button type="submit" label="little">
+                    Atualizar produto
+                  </Button>
+                </Form>
+              </ModalRender>
+            )}
+          </>
+        )}
+
+        {supplierSelected && (
           <ModalRender
-            isOpen={modalIsOpen}
+            isOpen={modalFornecedorIsOpen}
             onRequestClose={closeModal}
-            title="Cadastro de produtos do fornecedor"
+            title="Atualizar informações do fornecedor"
           >
-            <Form ref={formRef} onSubmit={handleSubmit}>
+            <Form ref={formRef} onSubmit={handleSubmitUpdateSupplier}>
               <Input
-                icon={FaBoxOpen}
-                name="title"
-                placeholder="Título do produto"
+                icon={GoPerson}
+                name="name"
+                placeholder="Nome"
+                defaultValue={supplierSelected.name}
               />
               <Input
-                icon={MdOutlineTitle}
-                name="description"
-                placeholder="Descrição do produto"
+                icon={FiMail}
+                type="email"
+                name="email"
+                placeholder="E-mail"
+                defaultValue={supplierSelected.email}
               />
               <Input
-                icon={MdPriceChange}
-                name="price"
-                placeholder="Preço do produto"
-                type="number"
-                min="0"
+                icon={FiPhone}
+                type="tel"
+                name="phone"
+                placeholder="Telefone"
+                defaultValue={supplierSelected.phone}
+              />
+              <Input
+                icon={FaRegAddressCard}
+                name="address"
+                placeholder="Endereço"
+                defaultValue={supplierSelected.address}
               />
               <Button type="submit" label="little">
-                Cadastrar
+                Atualizar
               </Button>
             </Form>
-
-            <TableList>
-              <>
-                <thead>
-                  <tr>
-                    <th> PRODUTO </th>
-                    <th className="center"> DESCRIÇÃO </th>
-                    <th className="center"> PREÇO </th>
-                    <th className="center"> AÇÕES </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(supplierSelected?.products ?? []).map(
-                    (product: Product) => (
-                      <tr key={product.id}>
-                        <td> {product.title}</td>
-                        <td className="center">
-                          {product.description ?? 'N/A'}
-                        </td>
-                        <td className="center">{product.price}</td>
-                        <td className="actions">
-                          <button
-                            type="button"
-                            className="finish"
-                            onClick={() =>
-                              handleDeleteProduct(
-                                product.id,
-                                supplierSelected as Supplier
-                              )
-                            }
-                          >
-                            Remover
-                          </button>
-                          <button
-                            type="button"
-                            className="cancel"
-                            onClick={() => {
-                              setProductSelected(product)
-                              setModalIsOpen(false)
-                              setModalProductIsOpen(true)
-                            }}
-                          >
-                            Editar
-                          </button>
-                        </td>
-                      </tr>
-                    )
-                  )}
-                </tbody>
-              </>
-            </TableList>
           </ModalRender>
-
-          {productSelected && (
-            <ModalRender
-              isOpen={modalProductIsOpen}
-              onRequestClose={closeModal}
-              title="Editar produto"
-            >
-              <Form ref={formRef} onSubmit={handleSubmitUpdate}>
-                <Input
-                  icon={FaBoxOpen}
-                  name="title"
-                  placeholder="Título do produto"
-                  defaultValue={productSelected.title}
-                />
-                <Input
-                  icon={MdOutlineTitle}
-                  name="description"
-                  placeholder="Descrição do produto"
-                  defaultValue={productSelected.description}
-                />
-                <Input
-                  icon={MdPriceChange}
-                  name="price"
-                  placeholder="Preço do produto"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  defaultValue={parseFloat(
-                    productSelected.price.replace('$', '')
-                  )}
-                />
-                <Button type="submit" label="little">
-                  Atualizar produto
-                </Button>
-              </Form>
-            </ModalRender>
-          )}
-        </>
-      )}
-
-      {supplierSelected && (
-        <ModalRender
-          isOpen={modalFornecedorIsOpen}
-          onRequestClose={closeModal}
-          title="Atualizar informações do fornecedor"
-        >
-          <Form ref={formRef} onSubmit={handleSubmitUpdateSupplier}>
-            <Input
-              icon={GoPerson}
-              name="name"
-              placeholder="Nome"
-              defaultValue={supplierSelected.name}
-            />
-            <Input
-              icon={FiMail}
-              type="email"
-              name="email"
-              placeholder="E-mail"
-              defaultValue={supplierSelected.email}
-            />
-            <Input
-              icon={FiPhone}
-              type="tel"
-              name="phone"
-              placeholder="Telefone"
-              defaultValue={supplierSelected.phone}
-            />
-            <Input
-              icon={FaRegAddressCard}
-              name="address"
-              placeholder="Endereço"
-              defaultValue={supplierSelected.address}
-            />
-            <Button type="submit" label="little">
-              Atualizar
-            </Button>
-          </Form>
-        </ModalRender>
-      )}
+        )}
+      </Content>
     </Container>
   )
 }

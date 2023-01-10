@@ -3,6 +3,16 @@ import { shade } from 'polished'
 
 export const Container = styled.div``
 
+export const Content = styled.div`
+  max-width: 1240px;
+  margin: 2.5rem auto;
+  padding: 0 2.5rem;
+
+  @media (max-width: 425px) {
+    padding: 0 1.5rem;
+  }
+`
+
 export const Wrapper = styled.div`
   max-width: 1240px;
   margin: 2.5rem auto;
@@ -174,7 +184,7 @@ export const ContainerWithoutSupplier = styled.div`
   justify-content: center;
   align-items: center;
 
-  max-width: 1240px;
+  width: 100%;
   height: 3rem;
   margin: 0 auto;
 

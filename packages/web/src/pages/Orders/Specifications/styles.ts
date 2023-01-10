@@ -24,7 +24,7 @@ export const Wrapper = styled.div`
 
 export const Content = styled.div`
   max-width: 1240px;
-  margin: 64px auto;
+  margin: 0 auto;
 
   width: 90%;
 

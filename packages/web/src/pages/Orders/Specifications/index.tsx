@@ -80,67 +80,69 @@ export function Specifications() {
         </Link>
       </Wrapper>
 
-      {order ? (
-        <Content>
-          <WrapperButtons>
-            {order.status === 'open' ? (
-              <>
+      <Content>
+        {order ? (
+          <>
+            <WrapperButtons>
+              {order.status === 'open' ? (
+                <>
+                  <Button
+                    type="button"
+                    label="small"
+                    typeButton="finish"
+                    onClick={() => modifyStatusOrder('finish')}
+                  >
+                    Finalizar
+                  </Button>
+                  <Button
+                    type="button"
+                    label="small"
+                    typeButton="cancel"
+                    onClick={() => modifyStatusOrder('cancel')}
+                  >
+                    Cancelar
+                  </Button>
+                </>
+              ) : (
                 <Button
                   type="button"
                   label="small"
-                  typeButton="finish"
-                  onClick={() => modifyStatusOrder('finish')}
+                  typeButton="open"
+                  onClick={() => modifyStatusOrder('open')}
                 >
-                  Finalizar
+                  Reabrir
                 </Button>
-                <Button
-                  type="button"
-                  label="small"
-                  typeButton="cancel"
-                  onClick={() => modifyStatusOrder('cancel')}
-                >
-                  Cancelar
-                </Button>
-              </>
-            ) : (
-              <Button
-                type="button"
-                label="small"
-                typeButton="open"
-                onClick={() => modifyStatusOrder('open')}
-              >
-                Reabrir
-              </Button>
-            )}
-          </WrapperButtons>
+              )}
+            </WrapperButtons>
 
-          <h2>
-            <div>
-              {order.title}
-              <Link to={`/clients/${order.clients[0].id}`}>
-                {order.clients[0].name}
-              </Link>
-            </div>
-            {formatMoney(parseFloat(order.finalPrice.replace('$', '')))}
-          </h2>
-          <p>Descrição do pedido: {order.description}</p>
+            <h2>
+              <div>
+                {order.title}
+                <Link to={`/clients/${order.clients[0]?.id}`}>
+                  {order.clients[0]?.name ?? 'N/A'}
+                </Link>
+              </div>
+              {formatMoney(parseFloat(order.finalPrice.replace('$', '')))}
+            </h2>
+            <p>Descrição do pedido: {order.description}</p>
 
-          <MetadadoProducts>
-            {order.metadado.map((product, index) => (
-              <MetadadoProduct
-                product={product}
-                key={product.id}
-                index={index}
-              />
-            ))}
-            <li>
-              <h4>Mão de obra - {formatMoney(order.workmanship)}</h4>
-            </li>
-          </MetadadoProducts>
-        </Content>
-      ) : (
-        <h2>Produto selecionado não existe :(</h2>
-      )}
+            <MetadadoProducts>
+              {order.metadado.map((product, index) => (
+                <MetadadoProduct
+                  product={product}
+                  key={product.id}
+                  index={index}
+                />
+              ))}
+              <li>
+                <h4>Mão de obra - {formatMoney(order.workmanship)}</h4>
+              </li>
+            </MetadadoProducts>
+          </>
+        ) : (
+          <h2>Produto selecionado não existe :(</h2>
+        )}
+      </Content>
     </Container>
   )
 }

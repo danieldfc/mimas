@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import Tooltip from '../Tooltip'
-import SelectContainer from 'react-select'
+import SelectCreatable from 'react-select/creatable'
 
 interface ContainerProps {
   isFocused: boolean
@@ -64,6 +64,6 @@ export const Error = styled(Tooltip)`
   }
 `
 
-export const Select = styled(SelectContainer)`
+export const Select = styled(SelectCreatable)`
   flex: 1;
 `

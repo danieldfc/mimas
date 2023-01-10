@@ -7,7 +7,6 @@ import {
   Content,
   HeaderWrapper
 } from './styles'
-import { formatMoney } from '../../../utils/formatMoney'
 
 import { Header } from '../../../components/Header'
 import TableList from '../../../components/TableList'
@@ -82,7 +81,6 @@ export default function ListOrders() {
                 <tr>
                   <th> PEDIDO </th>
                   <th className="center"> CLIENTE </th>
-                  <th className="center"> PREÇO </th>
                   <th className="center"> ENTREGA </th>
                   <th className="center"> AÇÕES </th>
                   <th />
@@ -95,14 +93,9 @@ export default function ListOrders() {
                       <Link to={`/order/${order.id}`}>{order.title}</Link>
                     </td>
                     <td className="center">
-                      <Link to={`/clients/${order.clients[0].id}`}>
-                        {order.clients[0].name}
+                      <Link to={`/clients/${order.clients[0]?.id}`}>
+                        {order.clients[0]?.name ?? 'Cliente excluído'}
                       </Link>
-                    </td>
-                    <td className="center">
-                      {formatMoney(
-                        +order.finalPrice.replace('$', '').replace(',', '')
-                      )}
                     </td>
                     <td className="center">
                       {order.deliveryAt ? parseData(order.deliveryAt) : '-'}h

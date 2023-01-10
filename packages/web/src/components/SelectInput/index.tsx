@@ -21,6 +21,7 @@ interface SelectInputProps extends Props {
   title: string
   containerStyle?: object
   name: string
+  value?: string
 }
 
 export default function SelectInput({
@@ -29,7 +30,8 @@ export default function SelectInput({
   id,
   onChange,
   name,
-  containerStyle = {}
+  containerStyle = {},
+  isClearable
 }: SelectInputProps) {
   const selectRef = useRef(null)
 
@@ -90,6 +92,8 @@ export default function SelectInput({
           onBlur={handleSelectBlur}
           defaultValue={defaultValue}
           ref={selectRef}
+          isClearable={isClearable}
+          noOptionsMessage={() => 'Nenhum cliente encontrado'}
         />
 
         {error && (
