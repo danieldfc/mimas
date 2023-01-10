@@ -50,10 +50,13 @@ export const Content = styled.div`
     flex-direction: row;
     justify-content: space-between;
 
+    font-size: 1.3rem;
+    line-height: 1.2rem;
+
     div {
       display: flex;
       justify-content: space-between;
-      width: 65%;
+      width: 62%;
     }
 
     a {
@@ -66,6 +69,9 @@ export const Content = styled.div`
     }
 
     @media (max-width: 768px) {
+      font-size: 1rem;
+      line-height: 1.4rem;
+
       div {
         flex-direction: column;
       }
