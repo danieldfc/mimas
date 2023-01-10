@@ -82,8 +82,8 @@ export default function ListOrders() {
                 <tr>
                   <th> PEDIDO </th>
                   <th className="center"> CLIENTE </th>
-                  <th className="center"> PREÇO FINAL </th>
-                  <th className="center"> DATA DA ENTREGA </th>
+                  <th className="center"> PREÇO </th>
+                  <th className="center"> ENTREGA </th>
                   <th className="center"> AÇÕES </th>
                   <th />
                 </tr>

@@ -1,15 +1,7 @@
 import styled from 'styled-components'
 import { shade } from 'polished'
 
-export const Container = styled.div`
-  > .ReactModalPortal {
-    table tbody td.actions {
-      @media (max-width: 102.4) {
-        background: red;
-      }
-    }
-  }
-`
+export const Container = styled.div``
 
 export const Wrapper = styled.div`
   max-width: 1240px;

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
-import { Link, useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { Header } from '../../../components/Header'
 import { useClient } from '../../../hooks/client'
 import { useToast } from '../../../hooks/toast'
@@ -15,7 +15,7 @@ export function ShowClient() {
   const clienteSelected = useMemo(() => {
     const client = clients.find(cl => cl.id === clientId)
     if (!client) {
-      history.push('/clients')
+      history.goBack()
       addToast({
         type: 'info',
         title: `Cliente não encontrado`,
@@ -31,35 +31,31 @@ export function ShowClient() {
     <Container>
       <Header />
 
-      {clienteSelected && (
-        <>
-          <HeaderWrapper>
-            <h3>Cliente - {clienteSelected.name}</h3>
+      <HeaderWrapper>
+        <h3>Cliente - {clienteSelected?.name}</h3>
 
-            <Link to="/dashboard">
-              <FiArrowLeft />
-              Voltar
-            </Link>
-          </HeaderWrapper>
+        <button type="button" onClick={history.goBack}>
+          <FiArrowLeft />
+          Voltar
+        </button>
+      </HeaderWrapper>
 
-          <Content>
-            <p>Email: {clienteSelected.email ?? 'N/A'}</p>
-            <p>Telefone: {clienteSelected.phone ?? 'N/A'}</p>
-            <p>Endereço: {clienteSelected.address ?? 'N/A'}</p>
+      <Content>
+        <p>Email: {clienteSelected?.email ?? 'N/A'}</p>
+        <p>Telefone: {clienteSelected?.phone ?? 'N/A'}</p>
+        <p>Endereço: {clienteSelected?.address ?? 'N/A'}</p>
 
-            {clienteSelected.phone && (
-              <LinkWhatsapp
-                role="button"
-                href={`https://api.whatsapp.com/send?phone=${clienteSelected.phone}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Enviar para o Whatsapp
-              </LinkWhatsapp>
-            )}
-          </Content>
-        </>
-      )}
+        {clienteSelected?.phone && (
+          <LinkWhatsapp
+            role="button"
+            href={`https://api.whatsapp.com/send?phone=${clienteSelected?.phone}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Enviar para o Whatsapp
+          </LinkWhatsapp>
+        )}
+      </Content>
     </Container>
   )
 }

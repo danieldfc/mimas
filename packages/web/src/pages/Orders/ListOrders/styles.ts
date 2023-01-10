@@ -12,18 +12,14 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
 
-  h2 {
-    margin-bottom: 30px;
-  }
-
   @media (max-width: 1280px) {
-    width: 75%;
+    width: 90%;
   }
 `
 
 export const HeaderWrapper = styled.div`
   max-width: 1240px;
-  margin: 64px auto;
+  margin: 2.5rem auto;
   padding: 0 2.5rem;
 
   display: flex;
@@ -34,21 +30,6 @@ export const HeaderWrapper = styled.div`
     display: flex;
     align-items: center;
     color: #cfbaf0;
-  }
-
-  div {
-    display: flex;
-    justify-content: space-between;
-    width: 180px;
-
-    > :last-child {
-      color: #cfbaf0;
-      text-decoration: underline;
-    }
-  }
-
-  @media (max-width: 1280px) {
-    width: 75%;
   }
 `
 

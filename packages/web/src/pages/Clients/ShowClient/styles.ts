@@ -5,27 +5,20 @@ export const Container = styled.div``
 
 export const HeaderWrapper = styled.div`
   max-width: 1240px;
-  margin: 64px auto;
+  margin: 2.5rem auto;
+  padding: 0 2.5rem;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  a {
+  button {
     display: flex;
     align-items: center;
     color: #cfbaf0;
-  }
 
-  div {
-    display: flex;
-    justify-content: space-between;
-    width: 180px;
-
-    > :last-child {
-      color: #cfbaf0;
-      text-decoration: underline;
-    }
+    background: none;
+    border: none;
   }
 `
 

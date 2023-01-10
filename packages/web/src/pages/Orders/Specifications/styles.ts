@@ -13,7 +13,6 @@ export const Wrapper = styled.div`
 
   a {
     color: #cfbaf0;
-    text-decoration: underline;
     display: flex;
     align-items: center;
   }
@@ -56,7 +55,7 @@ export const Content = styled.div`
     div {
       display: flex;
       justify-content: space-between;
-      width: 62%;
+      width: 60%;
     }
 
     a {
@@ -65,6 +64,12 @@ export const Content = styled.div`
 
       :hover {
         color: ${shade(0.2, '#7f3e98')};
+      }
+    }
+
+    @media (max-width: 1280px) {
+      div {
+        width: 62.5%;
       }
     }
 

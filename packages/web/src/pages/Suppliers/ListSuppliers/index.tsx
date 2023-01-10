@@ -406,8 +406,8 @@ export function ListSuppliers() {
                 type="number"
                 min="0"
               />
-              <Button type="submit" label="small">
-                Criar produto
+              <Button type="submit" label="little">
+                Cadastrar
               </Button>
             </Form>
 
