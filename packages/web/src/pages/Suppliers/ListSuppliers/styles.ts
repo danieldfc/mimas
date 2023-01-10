@@ -60,7 +60,7 @@ export const SelectSupplier = styled.ul`
     flex-direction: row;
     width: 90%;
     margin: 0 auto;
-    height: 2.85rem;
+    height: 3rem;
 
     align-items: center;
     justify-content: start;
@@ -75,6 +75,14 @@ export const SelectSupplier = styled.ul`
       display: flex;
       align-items: center;
       justify-content: center;
+
+      input {
+        margin-right: 0.3rem;
+      }
+
+      label {
+        margin-right: 1rem;
+      }
     }
 
     li + li {
