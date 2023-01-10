@@ -86,6 +86,16 @@ export const WrapperButtons = styled.div`
   > button {
     margin: 0;
   }
+
+  @media (max-width: 768px) {
+    button {
+      width: 100%;
+    }
+
+    button + button {
+      margin-left: 0.5rem;
+    }
+  }
 `
 
 export const MetadadoProducts = styled.ul`
