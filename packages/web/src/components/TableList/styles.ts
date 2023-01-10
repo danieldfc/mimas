@@ -144,7 +144,7 @@ export const TableWrapper = styled.div`
   border-radius: 0.4rem;
   background: #fff;
 
-  @media (max-width: 700px) {
-    padding: 1.5rem 0rem;
+  @media (max-width: 768px) {
+    padding: 0.5rem;
   }
 `
