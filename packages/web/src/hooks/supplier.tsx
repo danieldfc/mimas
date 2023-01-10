@@ -20,6 +20,7 @@ export type Supplier = {
 interface SupplierProviderData {
   suppliers: Supplier[]
   addSupplier(supplier: Omit<Supplier, 'id'>): Promise<void>
+  updateSupplier(id: string, supplier: Partial<Supplier>): Promise<void>
 }
 
 const SupplierContext = createContext<SupplierProviderData>(
@@ -54,6 +55,31 @@ const SupplierProvider: React.FC = ({ children }) => {
     []
   )
 
+  const updateSupplier = useCallback(
+    async (id: string, { name, phone, email, address }: Partial<Supplier>) => {
+      const supplierIndex = suppliers.findIndex(s => s.id === id)
+      if (supplierIndex < 0) return
+
+      const supplier = {
+        name,
+        phone,
+        email,
+        address
+      }
+
+      const response = await api.put(`/suppliers/${id}`, supplier)
+
+      setSuppliers(oldSuppliers => {
+        oldSuppliers[supplierIndex] = {
+          ...suppliers[supplierIndex],
+          ...response.data
+        }
+        return oldSuppliers
+      })
+    },
+    [suppliers]
+  )
+
   useEffect(() => {
     async function getSuppliers() {
       const response = await api.get('/suppliers')
@@ -64,7 +90,9 @@ const SupplierProvider: React.FC = ({ children }) => {
   }, [])
 
   return (
-    <SupplierContext.Provider value={{ addSupplier, suppliers }}>
+    <SupplierContext.Provider
+      value={{ addSupplier, suppliers, updateSupplier }}
+    >
       {children}
     </SupplierContext.Provider>
   )

@@ -11,14 +11,6 @@ export const Container = styled.div`
   }
 `
 
-export const Content = styled.div`
-  max-width: 1240px;
-  margin: 0 auto;
-
-  display: flex;
-  flex-direction: column;
-`
-
 export const Wrapper = styled.div`
   max-width: 1240px;
   margin: 64px auto;
@@ -46,30 +38,62 @@ export const Wrapper = styled.div`
 `
 
 export const SelectSupplier = styled.ul`
-  max-width: 1240px;
-  margin: 0 auto;
-
   display: flex;
+  flex-direction: column;
+
+  width: 15%;
+  height: 50vh;
+
   background-color: white;
   color: #000;
   padding: 0.7rem;
 
   border-radius: 0.4rem;
 
-  li {
-    display: flex;
-    flex-direction: column;
+  li + li {
+    margin-top: 0.3rem;
   }
 
-  li + li {
-    margin-left: 20px;
+  overflow: auto;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    width: 90%;
+    margin: 0 auto;
+    height: 2.85rem;
+
+    align-items: center;
+    justify-content: start;
+
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+    max-width: 90%;
+
+    margin-bottom: 1rem;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    li + li {
+      margin-left: 1rem;
+      margin-top: 0;
+    }
   }
 `
 
+export const ContentSupplier = styled.div`
+  width: 70%;
+
+  display: flex;
+  flex-direction: column;
+`
+
 export const WrapperButton = styled.div`
-  max-width: 1240px;
   margin-right: 1.3rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 
   display: flex;
   justify-content: right;
@@ -77,9 +101,23 @@ export const WrapperButton = styled.div`
   button {
     background-color: orange;
     transition: all 0.4s;
+    width: 30%;
+    margin-top: 0;
 
     :hover {
       background-color: ${shade(0.1, 'orange')};
+    }
+  }
+
+  button + button {
+    margin-left: 1.5rem;
+  }
+
+  @media (max-width: 1450px) {
+    button {
+      font-size: 0.7rem;
+      line-height: 1.1rem;
+      width: 40%;
     }
   }
 `
@@ -98,4 +136,14 @@ export const ContainerWithoutSupplier = styled.div`
   padding: 3rem;
 
   border-radius: 1rem;
+`
+
+export const AsideSupplier = styled.aside`
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `

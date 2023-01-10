@@ -17,6 +17,17 @@ body {
 body, button, input {
   font-family: 'Roboto Slab', serif;
   font-size: 16px;
+  line-height: 22px;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+  }
+
+  @media (max-width: 425px) {
+    font-size: 0.7rem;
+    line-height: 1.1rem;
+  }
 }
 
 h1,
