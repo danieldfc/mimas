@@ -32,7 +32,7 @@ export default function ListOrders() {
     const [ano, mes, dia] = data.split('-')
     const [hora, minuto] = horario.split(':')
 
-    return `${dia}-${mes}-${ano} ${hora}:${minuto}`
+    return `${dia}/${mes}/${ano} ${hora}:${minuto}`
   }, [])
 
   const finalizarCancelarPedido = useCallback(
@@ -94,7 +94,11 @@ export default function ListOrders() {
                     <td>
                       <Link to={`/order/${order.id}`}>{order.title}</Link>
                     </td>
-                    <td className="center">{order.clients[0].name}</td>
+                    <td className="center">
+                      <Link to={`/clients/${order.clients[0].id}`}>
+                        {order.clients[0].name}
+                      </Link>
+                    </td>
                     <td className="center">
                       {formatMoney(
                         +order.finalPrice.replace('$', '').replace(',', '')

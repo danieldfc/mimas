@@ -1,24 +1,34 @@
+import { shade } from 'polished'
 import styled from 'styled-components'
 
 export const Container = styled.div``
 
 export const Wrapper = styled.div`
   max-width: 1240px;
-  margin: 64px auto;
+  margin: 2.5rem auto;
+  padding: 0 2.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 30px;
 
   a {
     color: #cfbaf0;
     text-decoration: underline;
+    display: flex;
+    align-items: center;
+  }
+
+  @media (max-width: 425px) {
+    padding: 0 1.5rem;
   }
 `
 
 export const Content = styled.div`
   max-width: 1240px;
   margin: 64px auto;
+
+  width: 90%;
+
   display: flex;
   flex-direction: column;
 
@@ -33,6 +43,33 @@ export const Content = styled.div`
     border-bottom: #000 solid 1px;
     margin-bottom: 1rem;
     color: #7f3e98;
+
+    padding: 0.5rem 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+      width: 65%;
+    }
+
+    a {
+      color: #7f3e98;
+      transition: all 0.3s;
+
+      :hover {
+        color: ${shade(0.2, '#7f3e98')};
+      }
+    }
+
+    @media (max-width: 768px) {
+      div {
+        flex-direction: column;
+      }
+    }
   }
 
   > p {

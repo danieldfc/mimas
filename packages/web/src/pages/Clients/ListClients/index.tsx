@@ -21,13 +21,13 @@ export function ListClients() {
       <Header />
 
       <HeaderWrapper>
-        <h3>Clientes</h3>
+        <Link to="/dashboard">
+          <FiArrowLeft />
+          Voltar
+        </Link>
 
         <div>
-          <Link to="/dashboard">
-            <FiArrowLeft />
-            Voltar
-          </Link>
+          <h3>Meus clientes</h3>
           <Link to="/create-client">Cadastrar novo cliente</Link>
         </div>
       </HeaderWrapper>
@@ -41,7 +41,6 @@ export function ListClients() {
                   <th> CLIENTE </th>
                   <th className="center"> E-MAIL </th>
                   <th className="center"> TELEFONE </th>
-                  <th className="center"> ENDEREÇO </th>
                   <th />
                 </tr>
               </thead>
@@ -53,7 +52,6 @@ export function ListClients() {
                     </td>
                     <td className="center">{client.email ?? 'N/A'}</td>
                     <td className="center">{client.phone}</td>
-                    <td className="center">{client.address ?? 'N/A'}</td>
                   </tr>
                 ))}
               </tbody>

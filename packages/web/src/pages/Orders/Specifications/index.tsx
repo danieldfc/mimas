@@ -80,7 +80,7 @@ export function Specifications() {
         </Link>
       </Wrapper>
 
-      {order && (
+      {order ? (
         <Content>
           <WrapperButtons>
             {order.status === 'open' ? (
@@ -115,9 +115,15 @@ export function Specifications() {
           </WrapperButtons>
 
           <h2>
-            {order.title} - {order.finalPrice}
+            <div>
+              {order.title}
+              <Link to={`/clients/${order.clients[0].id}`}>
+                {order.clients[0].name}
+              </Link>
+            </div>
+            {formatMoney(parseFloat(order.finalPrice.replace('$', '')))}
           </h2>
-          <p>{order.description}</p>
+          <p>Descrição do pedido: {order.description}</p>
 
           <MetadadoProducts>
             {order.metadado.map((product, index) => (
@@ -132,9 +138,9 @@ export function Specifications() {
             </li>
           </MetadadoProducts>
         </Content>
+      ) : (
+        <h2>Produto selecionado não existe :(</h2>
       )}
-
-      {!order && <h2>Produto selecionado não existe :(</h2>}
     </Container>
   )
 }

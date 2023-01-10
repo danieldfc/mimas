@@ -24,6 +24,7 @@ export const Content = styled.div`
 export const HeaderWrapper = styled.div`
   max-width: 1240px;
   margin: 64px auto;
+  padding: 0 2.5rem;
 
   display: flex;
   justify-content: space-between;
