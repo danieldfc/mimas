@@ -28,6 +28,7 @@ import { Supplier, useSupplier } from '../../../hooks/supplier'
 import { Product } from '../../../interfaces/Product'
 import { GoPerson } from 'react-icons/go'
 import removeEmptyFields from '../../../utils/removeEmptyFields'
+import formatBigString from '../../../utils/formatBigString'
 
 type IFormProduct = {
   price: number
@@ -264,12 +265,12 @@ export function ListSuppliers() {
     <Container>
       <Header />
       <Wrapper>
-        <h3>Meus fornecedores</h3>
+        <Link to="/dashboard">
+          <FiArrowLeft />
+          Voltar
+        </Link>
         <div>
-          <Link to="/dashboard">
-            <FiArrowLeft />
-            Voltar
-          </Link>
+          <h3>Meus fornecedores</h3>
           <Link to="/create-supplier">Cadastrar novo fornecedor</Link>
         </div>
       </Wrapper>
@@ -299,7 +300,7 @@ export function ListSuppliers() {
                     onChange={() => setSupplierSelected(supplier)}
                   />
                   <label htmlFor={`supplier-${index}`}>
-                    &nbsp;{supplier.name}
+                    &nbsp;{formatBigString(supplier.name, 25)}
                   </label>
                 </li>
               ))}
@@ -316,7 +317,7 @@ export function ListSuppliers() {
                   }}
                   label="small"
                 >
-                  Editar informações do fornecedor
+                  Atualizar fornecedor
                 </Button>
                 <Button
                   disabled={!supplierSelected?.id}

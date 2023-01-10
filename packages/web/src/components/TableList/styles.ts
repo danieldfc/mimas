@@ -2,11 +2,6 @@ import styled from 'styled-components'
 import { darken } from 'polished'
 
 export const Container = styled.div`
-  padding: 0rem 1.2rem;
-
-  @media (max-width: 102.4rem) {
-    padding: 0rem 0.3rem;
-  }
   p.loading {
     font-size: 1rem;
     font-weight: bold;

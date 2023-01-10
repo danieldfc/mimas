@@ -13,11 +13,12 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div`
   max-width: 1240px;
-  margin: 64px auto;
+  margin: 2.5rem auto;
+  padding: 0 2.5rem;
 
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
 
   a {
     display: flex;
@@ -28,12 +29,17 @@ export const Wrapper = styled.div`
   div {
     display: flex;
     justify-content: space-between;
-    width: 280px;
+
+    margin-top: 2rem;
 
     > :last-child {
       color: #cfbaf0;
       text-decoration: underline;
     }
+  }
+
+  @media (max-width: 425px) {
+    padding: 0 1.5rem;
   }
 `
 
@@ -56,11 +62,17 @@ export const SelectSupplier = styled.ul`
 
   overflow: auto;
 
+  @media (max-width: 1280px) {
+    font-size: 0.9rem;
+  }
+
   @media (max-width: 768px) {
     flex-direction: row;
     width: 90%;
     margin: 0 auto;
     height: 3rem;
+
+    font-size: 0.8rem;
 
     align-items: center;
     justify-content: start;
@@ -93,19 +105,34 @@ export const SelectSupplier = styled.ul`
 `
 
 export const ContentSupplier = styled.div`
-  width: 70%;
+  width: 50%;
 
   display: flex;
   flex-direction: column;
 
+  > :last-child {
+    margin-left: 1rem;
+  }
+
+  @media (min-width: 1280px) {
+    width: 70%;
+  }
+
+  @media (max-width: 1280px) {
+    width: 75%;
+  }
+
   @media (max-width: 768px) {
     width: 90%;
     margin: 0 auto;
+
+    > :last-child {
+      margin-left: 0;
+    }
   }
 `
 
 export const WrapperButton = styled.div`
-  margin-right: 1.3rem;
   margin-bottom: 0.5rem;
 
   display: flex;
