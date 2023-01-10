@@ -65,7 +65,7 @@ export const SelectSupplier = styled.ul`
     align-items: center;
     justify-content: start;
 
-    overflow-x: scroll;
+    overflow-x: auto;
     flex-wrap: nowrap;
     max-width: 90%;
 
@@ -97,6 +97,11 @@ export const ContentSupplier = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    margin: 0 auto;
+  }
 `
 
 export const WrapperButton = styled.div`

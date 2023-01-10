@@ -35,9 +35,16 @@ export const StyledTable = styled.table`
       padding-right: 0.25rem;
     }
   }
-  thead th,
+  tbody th,
   tbody td {
     font-size: 1rem;
+
+    @media (max-width: 768rem) {
+      font-size: 0.9rem;
+    }
+    @media (max-width: 425px) {
+      font-size: 0.8rem;
+    }
   }
   th {
     color: #444444;
@@ -92,6 +99,13 @@ export const StyledTable = styled.table`
         &:hover {
           color: ${darken(0.3, '#78bc61')};
         }
+      }
+      @media (max-width: 768px) {
+        font-size: 0.8rem;
+        width: 100%;
+      }
+      @media (max-width: 425px) {
+        font-size: 0.7rem;
       }
       & + button {
         margin-left: 1.5rem;
