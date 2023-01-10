@@ -134,13 +134,18 @@ export const WrapperButton = styled.div`
     }
   }
 
+  @media (max-width: 768px) {
+    button {
+      width: 100%;
+    }
+  }
+
   @media (max-width: 450px) {
     margin-right: 0;
 
     button {
       font-size: 0.6rem;
       line-height: 1rem;
-      width: 100%;
     }
   }
 `
