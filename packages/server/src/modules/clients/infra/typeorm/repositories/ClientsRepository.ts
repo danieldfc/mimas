@@ -49,4 +49,8 @@ export default class ClientsRepository implements IClientsRepository {
   public async save(client: Client): Promise<void> {
     await this.ormRepository.save(client)
   }
+
+  public async delete(id: string): Promise<void> {
+    await this.ormRepository.delete(id)
+  }
 }

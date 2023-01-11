@@ -48,4 +48,8 @@ export default class FakeClientsRepository implements IClientsRepository {
 
     this.clients[findIndex] = client
   }
+
+  public async delete(id: string): Promise<void> {
+    this.clients = this.clients.filter(client => client.id !== id)
+  }
 }

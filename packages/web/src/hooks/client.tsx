@@ -18,6 +18,8 @@ export interface Client {
 interface ClientProviderData {
   clients: Client[]
   addClient(client: Omit<Client, 'id'>): Promise<void>
+  updateClient(id: string, client: Omit<Client, 'id'>): Promise<void>
+  deleteClient(id: string): Promise<void>
 }
 
 const ClientContaxt = createContext<ClientProviderData>(
@@ -43,17 +45,57 @@ const ClientProvider: React.FC = ({ children }) => {
     []
   )
 
+  const updateClient = useCallback(
+    async (id: string, { name, phone, email, address }: Omit<Client, 'id'>) => {
+      const clientIndex = clients.findIndex(cli => cli.id === id)
+      if (clientIndex < 0) return
+
+      const client = {
+        name,
+        phone,
+        email,
+        address
+      }
+
+      const response = await api.put(`/clients/${id}`, client)
+
+      setClients(oldClients => {
+        oldClients[clientIndex] = {
+          ...oldClients[clientIndex],
+          ...response.data.client
+        }
+
+        return oldClients
+      })
+    },
+    [clients]
+  )
+
+  const deleteClient = useCallback(
+    async (id: string) => {
+      const clientIndex = clients.findIndex(cli => cli.id === id)
+      if (clientIndex < 0) return
+
+      await api.delete(`/clients/${id}`)
+
+      setClients(cli => cli.filter(c => c.id !== id))
+    },
+    [clients]
+  )
+
   useEffect(() => {
     async function getClients() {
       const response = await api.get('/clients')
-      setClients(response.data.clients)
+      setClients([...response.data.clients])
       return response.data.clients as Client[]
     }
     getClients()
   }, [])
 
   return (
-    <ClientContaxt.Provider value={{ addClient, clients }}>
+    <ClientContaxt.Provider
+      value={{ addClient, clients, updateClient, deleteClient }}
+    >
       {children}
     </ClientContaxt.Provider>
   )
