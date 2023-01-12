@@ -6,9 +6,9 @@ import IProductsRepository from '../infra/typeorm/repositories/IProductsReposito
 interface IRequestDTO {
   productId: string
   supplierId: string
-  title: string
-  description: string
-  price: string
+  title?: string
+  description?: string
+  price?: string
 }
 
 @injectable()
