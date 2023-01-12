@@ -204,3 +204,25 @@ export const AsideSupplier = styled.aside`
     flex-direction: column;
   }
 `
+
+export const WrapperFormButton = styled.div`
+  display: flex;
+
+  button + button {
+    margin-left: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+      margin: 0;
+      height: 3rem;
+    }
+
+    button + button {
+      margin: 0.5rem 0 0 0;
+    }
+  }
+`

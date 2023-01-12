@@ -21,7 +21,8 @@ import {
   ContentSupplier,
   SelectSupplier,
   Wrapper,
-  WrapperButton
+  WrapperButton,
+  WrapperFormButton
 } from './styles'
 import { useToast } from '../../../hooks/toast'
 import getValidationErrors from '../../../utils/getValidationError'
@@ -46,7 +47,7 @@ type IFormSupplier = {
 }
 
 export function ListSuppliers() {
-  const { suppliers, updateSupplier } = useSupplier()
+  const { suppliers, updateSupplier, deleteSupplier } = useSupplier()
   const [loading, setLoading] = useState(false)
   const [supplierSelected, setSupplierSelected] = useState<Supplier | null>(
     null
@@ -261,6 +262,38 @@ export function ListSuppliers() {
     },
     [addToast, supplierSelected, updateSupplier]
   )
+
+  const handleDeleteSupplier = useCallback(async () => {
+    if (!supplierSelected) return
+
+    setLoading(true)
+    try {
+      deleteSupplier(supplierSelected.id)
+
+      setSupplierSelected(null)
+
+      addToast({
+        type: 'success',
+        title: 'Fornecedor deletado',
+        description: 'Fornecedor deletado com sucesso.'
+      })
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err)
+
+        formRef.current?.setErrors(errors)
+
+        return
+      }
+
+      addToast({
+        type: 'error',
+        title: 'Erro ao deletar fornecedor',
+        description: 'Ocorreu um erro ao deletar o fornecedor.'
+      })
+    }
+    setLoading(false)
+  }, [addToast, supplierSelected, deleteSupplier])
 
   return (
     <Container>
@@ -537,9 +570,18 @@ export function ListSuppliers() {
                 placeholder="Endereço"
                 defaultValue={supplierSelected.address}
               />
-              <Button type="submit" label="little">
-                Atualizar
-              </Button>
+              <WrapperFormButton>
+                <Button type="submit" label="little">
+                  Atualizar
+                </Button>
+                <Button
+                  type="button"
+                  label="little"
+                  onClick={handleDeleteSupplier}
+                >
+                  Deletar
+                </Button>
+              </WrapperFormButton>
             </Form>
           </ModalRender>
         )}

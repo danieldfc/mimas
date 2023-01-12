@@ -21,6 +21,7 @@ interface SupplierProviderData {
   suppliers: Supplier[]
   addSupplier(supplier: Omit<Supplier, 'id'>): Promise<void>
   updateSupplier(id: string, supplier: Partial<Supplier>): Promise<void>
+  deleteSupplier(id: string): Promise<void>
 }
 
 const SupplierContext = createContext<SupplierProviderData>(
@@ -80,6 +81,20 @@ const SupplierProvider: React.FC = ({ children }) => {
     [suppliers]
   )
 
+  const deleteSupplier = useCallback(
+    async (id: string) => {
+      const supplierIndex = suppliers.findIndex(s => s.id === id)
+      if (supplierIndex < 0) return
+
+      await api.delete(`/suppliers/${id}`)
+
+      setSuppliers(oldSuppliers =>
+        oldSuppliers.filter(supplier => supplier.id !== id)
+      )
+    },
+    [suppliers]
+  )
+
   useEffect(() => {
     async function getSuppliers() {
       const response = await api.get('/suppliers')
@@ -91,7 +106,7 @@ const SupplierProvider: React.FC = ({ children }) => {
 
   return (
     <SupplierContext.Provider
-      value={{ addSupplier, suppliers, updateSupplier }}
+      value={{ addSupplier, suppliers, updateSupplier, deleteSupplier }}
     >
       {children}
     </SupplierContext.Provider>

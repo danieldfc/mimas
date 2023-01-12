@@ -25,10 +25,6 @@ export const ModalContainer = styled(Modal)`
     h2 {
       font-size: 0.9rem;
     }
-
-    form div {
-      padding: 0.7rem;
-    }
   }
 `
 
