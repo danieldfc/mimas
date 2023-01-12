@@ -38,48 +38,24 @@ export const Content = styled.div`
 
   padding: 1rem;
 
-  > h2 {
+  div.order-title {
+    display: flex;
+    justify-content: space-between;
+
     border-bottom: #000 solid 1px;
     margin-bottom: 1rem;
     color: #7f3e98;
-
     padding: 0.5rem 0;
 
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    font-size: 1rem;
+  }
 
-    font-size: 1.3rem;
-    line-height: 1.2rem;
+  a {
+    color: #7f3e98;
+    transition: all 0.3s;
 
-    div {
-      display: flex;
-      justify-content: space-between;
-      width: 60%;
-    }
-
-    a {
-      color: #7f3e98;
-      transition: all 0.3s;
-
-      :hover {
-        color: ${shade(0.2, '#7f3e98')};
-      }
-    }
-
-    @media (max-width: 1280px) {
-      div {
-        width: 62.5%;
-      }
-    }
-
-    @media (max-width: 768px) {
-      font-size: 1rem;
-      line-height: 1.4rem;
-
-      div {
-        flex-direction: column;
-      }
+    :hover {
+      color: ${shade(0.2, '#7f3e98')};
     }
   }
 

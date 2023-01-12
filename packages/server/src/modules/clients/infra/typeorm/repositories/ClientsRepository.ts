@@ -1,5 +1,5 @@
 import { ICreateClientDTO } from '@modules/clients/dtos/ICreateClient'
-import { Repository, getRepository } from 'typeorm'
+import { FindManyOptions, Repository, getRepository } from 'typeorm'
 import { Client } from '../entities/Client'
 import IClientsRepository from './IClientsRepository'
 
@@ -28,8 +28,10 @@ export default class ClientsRepository implements IClientsRepository {
     return client
   }
 
-  public async findAll(): Promise<Client[]> {
-    return this.ormRepository.find()
+  public async findAll(
+    options: FindManyOptions<Client> = {}
+  ): Promise<Client[]> {
+    return this.ormRepository.find(options)
   }
 
   public async findById(clientId: string): Promise<Client | undefined> {

@@ -31,7 +31,8 @@ export default function SelectInput({
   onChange,
   name,
   containerStyle = {},
-  isClearable
+  isClearable,
+  isMulti
 }: SelectInputProps) {
   const selectRef = useRef(null)
 
@@ -94,6 +95,7 @@ export default function SelectInput({
           ref={selectRef}
           isClearable={isClearable}
           noOptionsMessage={() => 'Nenhum cliente encontrado'}
+          isMulti={isMulti}
         />
 
         {error && (

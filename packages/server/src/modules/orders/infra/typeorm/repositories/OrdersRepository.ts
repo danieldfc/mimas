@@ -16,7 +16,7 @@ export default class OrdersRepository implements IOrdersRepository {
     description,
     workmanship,
     priceProducts,
-    client,
+    clients,
     deliveryAt,
     metadado
   }: ICreateOrderDTO): Promise<Order> {
@@ -25,7 +25,7 @@ export default class OrdersRepository implements IOrdersRepository {
       workmanship,
       title,
       description,
-      clients: [client],
+      clients,
       metadado,
       deliveryAt
     })

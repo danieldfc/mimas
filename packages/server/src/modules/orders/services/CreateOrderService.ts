@@ -1,6 +1,7 @@
 import IClientsRepository from '@modules/clients/infra/typeorm/repositories/IClientsRepository'
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
+import { In } from 'typeorm'
 import { IMetadadoProduct, IProductMerged } from '../dtos/ICreateOrderDTO'
 
 import { Order } from '../infra/typeorm/entities/Order'
@@ -12,7 +13,7 @@ interface IRequest {
   description: string
   workmanship: number
   metadado: IMetadadoProduct[]
-  clientId: string
+  clientsId: string[]
   deliveryAt: Date | null
 }
 
@@ -34,13 +35,15 @@ export class CreateOrderService {
     metadado,
     title,
     workmanship,
-    clientId,
+    clientsId,
     deliveryAt
   }: IRequest): Promise<Order> {
-    const client = await this.clientsRepository.findById(clientId)
+    const clients = await this.clientsRepository.findAll({
+      where: { id: In(clientsId) }
+    })
 
-    if (!client) {
-      throw new AppError('Cliente não encontrado.', 404)
+    if (!clients.length) {
+      throw new AppError('Selecione pelo menos 1 cliente existente.', 404)
     }
 
     if (workmanship <= 0) {
@@ -63,7 +66,7 @@ export class CreateOrderService {
       description,
       workmanship,
       priceProducts: priceProductsTotal,
-      client,
+      clients,
       deliveryAt,
       metadado: productsVerified
     })

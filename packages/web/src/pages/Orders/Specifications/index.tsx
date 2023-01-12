@@ -115,15 +115,25 @@ export function Specifications() {
               )}
             </WrapperButtons>
 
-            <h2>
-              <div>
-                {order.title}
-                <Link to={`/clients/${order.clients[0]?.id}`}>
-                  {order.clients[0]?.name ?? 'N/A'}
-                </Link>
-              </div>
-              {formatMoney(parseFloat(order.finalPrice.replace('$', '')))}
-            </h2>
+            <div className="order-title">
+              <h2>{order.title}</h2>
+              <h2>
+                {formatMoney(parseFloat(order.finalPrice.replace('$', '')))}
+              </h2>
+            </div>
+            <p>
+              Clientes:{' '}
+              {!!order.clients.length &&
+                order.clients.map((client, index) => (
+                  <>
+                    <Link key={client.id} to={`/clients/${client.id ?? ''}`}>
+                      {client.name}
+                    </Link>
+                    {index !== order.clients.length - 1 ? ' - ' : ''}
+                  </>
+                ))}
+              {!order.clients.length && <p>N/A</p>}
+            </p>
             <p>Descrição do pedido: {order.description}</p>
 
             <MetadadoProducts>

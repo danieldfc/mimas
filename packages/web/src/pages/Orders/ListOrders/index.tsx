@@ -80,7 +80,7 @@ export default function ListOrders() {
               <thead>
                 <tr>
                   <th> PEDIDO </th>
-                  <th className="center"> CLIENTE </th>
+                  <th className="center"> CLIENTE(S) </th>
                   <th className="center"> ENTREGA </th>
                   <th className="center"> AÇÕES </th>
                   <th />
@@ -93,13 +93,22 @@ export default function ListOrders() {
                       <Link to={`/order/${order.id}`}>{order.title}</Link>
                     </td>
                     <td className="center">
-                      <Link to={`/clients/${order.clients[0]?.id}`}>
-                        {order.clients[0]?.name ?? 'Cliente excluído'}
-                      </Link>
+                      {!!order.clients.length &&
+                        order.clients.map((client, index) => (
+                          <>
+                            <Link
+                              key={client.id}
+                              to={`/clients/${client.id ?? ''}`}
+                            >
+                              {client.name.split(' ')[0]}
+                            </Link>
+                            {index !== order.clients.length - 1 ? ' | ' : ''}
+                          </>
+                        ))}
+                      {!order.clients.length && 'N/A'}
                     </td>
                     <td className="center">
                       {order.deliveryAt ? parseData(order.deliveryAt) : '-'}h
-                      {/* TODO - deveria ser a data de entrega do produto */}
                     </td>
                     <td className="actions">
                       <div>

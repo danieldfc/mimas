@@ -29,7 +29,7 @@ orderRoute.post(
           qtd: Joi.number().required()
         })
         .required(),
-      clientId: Joi.string().uuid().required(),
+      clientsId: Joi.array().items(Joi.string().uuid().required()).required(),
       deliveryAt: Joi.date().default(null)
     }
   }),

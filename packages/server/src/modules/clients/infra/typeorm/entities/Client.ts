@@ -22,7 +22,7 @@ export class Client {
   @Column({ length: 25 })
   phone!: string
 
-  @Column({ length: 255 })
+  @Column({ length: 255, nullable: true })
   address?: string
 
   @CreateDateColumn({ name: 'created_at' })

@@ -27,7 +27,7 @@ export default class FakeClientsRepository implements IClientsRepository {
     return client
   }
 
-  public async findAll(): Promise<Client[]> {
+  public async findAll(_options = {}): Promise<Client[]> {
     return this.clients
   }
 

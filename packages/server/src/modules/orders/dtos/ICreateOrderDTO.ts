@@ -18,7 +18,7 @@ export default interface ICreateOrderDTO {
   description: string
   workmanship: number
   priceProducts: number
-  client: Client
+  clients: Client[]
   deliveryAt: Date | null
   metadado: IProductMerged[]
 }

@@ -51,7 +51,7 @@ export function CreateOrder() {
   const formRef = useRef<FormHandles>(null)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [precoTotal, setPrecoTotal] = useState(0)
-  const [clientId, setClientId] = useState(clients[0]?.id ?? '')
+  const [clientsId, setClientsId] = useState<string[]>([])
   const [products, setProducts] = useState<Product[]>([])
 
   const closeModal = useCallback(() => {
@@ -78,13 +78,15 @@ export function CreateOrder() {
         const order = {
           ...data,
           deliveryAt: new Date(`${data.deliveryAt}:00-00:00`),
-          clientId,
+          clientsId,
           metadado: produtos,
           workmanship: +data.workmanship
         }
 
         const schema = Yup.object().shape({
-          clientId: Yup.string().uuid().required('Cliente é obrigatório'),
+          clientsId: Yup.array()
+            .of(Yup.string().uuid())
+            .required('Selecione pelo menos 1 cliente'),
           metadado: Yup.array().min(1).required('Produtos obrigatórios'),
           workmanship: Yup.number().min(1),
           title: Yup.string().required('Título é obrigatório'),
@@ -115,7 +117,7 @@ export function CreateOrder() {
         })
       }
     },
-    [clientId, addToast, history, products]
+    [clientsId, addToast, history, products]
   )
 
   const productsAdded = products.filter(p => p.add)
@@ -165,16 +167,17 @@ export function CreateOrder() {
                 <SelectInput
                   itens={clients.map(p => ({ label: p.name, value: p.id }))}
                   onChange={(event: any) => {
-                    if (event) {
-                      setClientId(event.value)
+                    if (event?.length) {
+                      setClientsId(() => [...event.map((e: any) => e.value)])
                     } else {
-                      setClientId('')
+                      setClientsId([])
                     }
                   }}
                   title="Cliente"
                   id="form-client-id"
                   name="clientId"
                   isClearable
+                  isMulti
                 />
               </SelectorClient>
 
@@ -182,13 +185,13 @@ export function CreateOrder() {
                 icon={MdTitle}
                 name="title"
                 placeholder="Título"
-                disabled={!clientId.length}
+                disabled={!clientsId.length}
               />
               <Input
                 icon={MdDescription}
                 name="description"
                 placeholder="Descrição"
-                disabled={!clientId.length}
+                disabled={!clientsId.length}
               />
               <Input
                 icon={MdOutlinePriceCheck}
@@ -196,7 +199,7 @@ export function CreateOrder() {
                 placeholder="Preço de mão de obra"
                 type="number"
                 onChange={changeValueMaoObra}
-                disabled={!clientId.length}
+                disabled={!clientsId.length}
               />
               <Input
                 icon={MdDateRange}
@@ -204,7 +207,7 @@ export function CreateOrder() {
                 placeholder="Preço de mão de obra"
                 type="datetime-local"
                 min={new Date().toISOString().slice(0, -8)}
-                disabled={!clientId.length}
+                disabled={!clientsId.length}
               />
             </div>
             <ModalRender
@@ -215,7 +218,7 @@ export function CreateOrder() {
             >
               <CardListProducts products={products} />
             </ModalRender>
-            <Button type="submit" label="little" disabled={!clientId.length}>
+            <Button type="submit" label="little" disabled={!clientsId.length}>
               Cadastrar pedido
             </Button>
           </Form>
@@ -225,7 +228,7 @@ export function CreateOrder() {
             type="button"
             label="small"
             onClick={() => setModalIsOpen(true)}
-            disabled={!clientId.length}
+            disabled={!clientsId.length}
           >
             Adicionar produtos
           </Button>
