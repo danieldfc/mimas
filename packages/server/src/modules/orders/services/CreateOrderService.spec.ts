@@ -1,3 +1,4 @@
+import { v4 as uuidV4 } from 'uuid'
 import FakeClientsRepository from '@modules/clients/infra/typeorm/repositories/fakes/FakeClientsRepository'
 import FakeOrdersRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeOrdersRepository'
 import { AppError } from '@shared/errors/AppError'
@@ -65,7 +66,7 @@ describe('CreateOrder', () => {
           qtd: 12
         }
       ],
-      clientId: client.id,
+      clientsId: [client.id],
       deliveryAt
     })
 
@@ -85,7 +86,7 @@ describe('CreateOrder', () => {
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
         metadado: [],
-        clientId: client.id,
+        clientsId: [client.id],
         deliveryAt: null
       })
     ).rejects.toBeInstanceOf(AppError)
@@ -103,7 +104,7 @@ describe('CreateOrder', () => {
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
         metadado: [],
-        clientId: client.id,
+        clientsId: [client.id],
         deliveryAt: null
       })
     ).rejects.toBeInstanceOf(AppError)
@@ -121,7 +122,7 @@ describe('CreateOrder', () => {
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
         metadado: [],
-        clientId: client.id,
+        clientsId: [client.id],
         deliveryAt: null
       })
     ).rejects.toBeInstanceOf(AppError)
@@ -134,7 +135,7 @@ describe('CreateOrder', () => {
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
         metadado: [],
-        clientId: 'not-found',
+        clientsId: [uuidV4()],
         deliveryAt: null
       })
     ).rejects.toBeInstanceOf(AppError)
@@ -166,7 +167,7 @@ describe('CreateOrder', () => {
             qtd: 12
           }
         ],
-        clientId: client.id,
+        clientsId: [client.id],
         deliveryAt
       })
     ).rejects.toBeInstanceOf(AppError)
@@ -184,7 +185,7 @@ describe('CreateOrder', () => {
             qtd: 12
           }
         ],
-        clientId: client.id,
+        clientsId: [client.id],
         deliveryAt
       })
     ).rejects.toBeInstanceOf(AppError)
@@ -227,7 +228,7 @@ describe('CreateOrder', () => {
             qtd: 12
           }
         ],
-        clientId: client.id,
+        clientsId: [client.id],
         deliveryAt
       })
     ).rejects.toBeInstanceOf(AppError)
@@ -248,7 +249,7 @@ describe('CreateOrder', () => {
             qtd: 12
           }
         ],
-        clientId: client.id,
+        clientsId: [client.id],
         deliveryAt
       })
     ).rejects.toBeInstanceOf(AppError)

@@ -14,7 +14,7 @@ export default class FakeOrdersRepository implements IOrdersRepository {
     workmanship,
     priceProducts,
     deliveryAt,
-    client,
+    clients,
     metadado
   }: ICreateOrderDTO): Promise<Order> {
     const order = new Order()
@@ -25,7 +25,7 @@ export default class FakeOrdersRepository implements IOrdersRepository {
       description,
       finalPrice: workmanship + priceProducts,
       deliveryAt,
-      client,
+      clients,
       metadado,
       workmanship
     })

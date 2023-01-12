@@ -66,7 +66,7 @@ describe('FindOrdersWithProducts', () => {
         }
       ],
       workmanship: 200,
-      clientId: client.id,
+      clientsId: [client.id],
       deliveryAt: null
     })
 

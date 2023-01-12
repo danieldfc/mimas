@@ -70,7 +70,7 @@ describe('UpdateStatusOrder', () => {
           price: priceProducts
         }
       ],
-      client,
+      clients: [client],
       deliveryAt,
       priceProducts: priceProducts * qtdProducts
     })
