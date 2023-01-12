@@ -1,7 +1,9 @@
+import { Order } from '@modules/orders/infra/typeorm/entities/Order'
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
@@ -28,4 +30,7 @@ export class Client {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date
+
+  @ManyToMany(() => Order, order => order.clients)
+  orders: Order[]
 }
