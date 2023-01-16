@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  costura-api:
+    build: .
+    container_name: costura-api
+    volumes:
+      - .:/usr/app
+    ports:
+      - '3333:3333'
+      - '9229:9229'
+    depends_on:
+      - costura-postgres
+    networks:
+      - mimas-network
+  
+  costura-postgres:
+    image: postgres
+    container_name: costura-postgres
+    ports:
+      - '65123:5432'
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - pgdata:/data/postgres
+    networks:
+      - mimas-network
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  mimas-network:
+    driver: bridge
