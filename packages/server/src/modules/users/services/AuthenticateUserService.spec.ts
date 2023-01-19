@@ -1,19 +1,23 @@
 import { AppError } from '@shared/errors/AppError'
 import FakeUsersRepository from '../infra/typeorm/repositories/fakes/FakeUsersRepository'
+import FakeUserTokensRepository from '../infra/typeorm/repositories/fakes/FakeUserTokensRepository'
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider'
 import { AuthenticateUserService } from './AuthenticateUserService'
 
 let fakeUsersRepository: FakeUsersRepository
+let fakeUserTokensRepository: FakeUserTokensRepository
 let fakeHashProvider: FakeHashProvider
 let authenticateUserService: AuthenticateUserService
 
 describe('AuthenticateUser', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository()
+    fakeUserTokensRepository = new FakeUserTokensRepository()
     fakeHashProvider = new FakeHashProvider()
 
     authenticateUserService = new AuthenticateUserService(
       fakeUsersRepository,
+      fakeUserTokensRepository,
       fakeHashProvider
     )
   })
@@ -32,6 +36,7 @@ describe('AuthenticateUser', () => {
     })
 
     expect(response).toHaveProperty('token')
+    expect(response).toHaveProperty('refreshToken')
     expect(response.user).toEqual(user)
   })
 

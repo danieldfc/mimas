@@ -2,26 +2,30 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Generated,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn
 } from 'typeorm'
+import { User } from './User'
 
 @Entity('user_tokens')
 export class UserToken {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
-  @Column()
-  @Generated('uuid')
-  token: string
+  @Column({ name: 'refresh_token' })
+  refreshToken: string
 
   @Column({ name: 'user_id' })
   userId: string
 
+  @Column({ name: 'expires_date' })
+  expiresDate: Date
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date
 
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User
 }

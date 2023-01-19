@@ -2,11 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
 
 import { Exclude } from 'class-transformer'
+import { UserToken } from './UserToken'
 
 @Entity('users')
 export class User {
@@ -34,4 +36,7 @@ export class User {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date
+
+  @OneToMany(() => UserToken, userToken => userToken.user)
+  userTokens: UserToken[]
 }

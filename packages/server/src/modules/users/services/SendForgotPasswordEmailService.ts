@@ -5,6 +5,9 @@ import IUsersRepository from '@modules/users/infra/typeorm/repositories/IUsersRe
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider'
 import { AppError } from '@shared/errors/AppError'
 import IUserTokensRepository from '../infra/typeorm/repositories/IUserTokensRepository'
+import { addDays } from 'date-fns'
+import { sign } from 'jsonwebtoken'
+import { auth } from '@config/auth'
 
 type IRequestDTO = {
   email: string
@@ -30,7 +33,18 @@ export class SendForgotPasswordEmailService {
       throw new AppError('User does not exists.')
     }
 
-    const { token } = await this.userTokensRepository.generate(user.id)
+    const expiresInDaysForgotPassword = 1
+
+    const token = sign({ email }, auth.jwt.secret, {
+      subject: user.id,
+      expiresIn: expiresInDaysForgotPassword
+    })
+
+    const { refreshToken } = await this.userTokensRepository.generate({
+      userId: user.id,
+      expiresDate: addDays(Date.now(), expiresInDaysForgotPassword),
+      refreshToken: token
+    })
 
     const forgotPasswordTemplate = resolve(
       __dirname,
@@ -49,7 +63,7 @@ export class SendForgotPasswordEmailService {
         file: forgotPasswordTemplate,
         variables: {
           name: user.name,
-          link: `${process.env.APP_WEB}/reset_password?token=${token}`
+          link: `${process.env.APP_WEB}/reset_password?token=${refreshToken}`
         }
       }
     })

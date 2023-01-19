@@ -1,9 +1,11 @@
+import jwt from 'jsonwebtoken'
 import FakeUsersRepository from '@modules/users/infra/typeorm/repositories/fakes/FakeUsersRepository'
 import FakeMailProvider from '@shared/container/providers/MailProvider/fakes/FakeMailProvider'
 import { AppError } from '@shared/errors/AppError'
 import { User } from '../infra/typeorm/entities/User'
 import FakeUserTokensRepository from '../infra/typeorm/repositories/fakes/FakeUserTokensRepository'
 import { SendForgotPasswordEmailService } from './SendForgotPasswordEmailService'
+import { generateString } from '@shared/utils/StringUtil'
 
 let fakeUsersRepository: FakeUsersRepository
 let fakeMailProvider: FakeMailProvider
@@ -50,12 +52,26 @@ describe('SendForgotPasswordEmail', () => {
   })
 
   it('should generate a forgot password token', async () => {
+    const date = new Date()
+    date.setDate(date.getDate() + 1)
+
+    const token = generateString(30)
+
+    const signSpy = jest.spyOn(jwt, 'sign').mockImplementation(() => {
+      return token
+    })
+
     const generateToken = jest.spyOn(fakeUserTokensRepository, 'generate')
 
     await sendForgotPasswordEmail.execute({
       email: 'johndoe@example.com'
     })
 
-    expect(generateToken).toHaveBeenCalledWith(user.id)
+    expect(signSpy).toBeCalled()
+    expect(generateToken).toBeCalledWith({
+      userId: user.id,
+      expiresDate: date,
+      refreshToken: token
+    })
   })
 })
