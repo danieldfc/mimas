@@ -8,7 +8,7 @@ import React, {
 } from 'react'
 import { Cookies, useCookies } from 'react-cookie'
 
-import { AxiosError } from 'axios'
+import { AxiosError, AxiosRequestConfig } from 'axios'
 
 import { api } from '../services/api'
 
@@ -42,8 +42,9 @@ interface AuthProviderProps {
   children: ReactNode
 }
 
-const LOCAL_STORAGE_GO_COSTURA = '@GoCostura'
-
+const GO_COSTURA = '@GoCostura'
+const maxAgeToken = 60 * 45 // 45 minutos
+const maxAgeRefreshToken = 60 * 60 * 24 * 30 // 30 dias
 let IS_REFRESHING = false
 let failedRequestsQueue: Array<{
   onSuccess: (token: string) => void
@@ -53,15 +54,15 @@ let failedRequestsQueue: Array<{
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const [cookie, setCookie] = useCookies([
-    `${LOCAL_STORAGE_GO_COSTURA}.token`,
-    `${LOCAL_STORAGE_GO_COSTURA}.refreshToken`
+  const [cookie, setCookie, removeCookie] = useCookies([
+    `${GO_COSTURA}.token`,
+    `${GO_COSTURA}.refreshToken`
   ])
 
   const [data, setData] = useState<AuthState>(() => {
-    const user = localStorage.getItem(`${LOCAL_STORAGE_GO_COSTURA}.user`)
-    const token = cookie[`${LOCAL_STORAGE_GO_COSTURA}.token`]
-    const refreshToken = cookie[`${LOCAL_STORAGE_GO_COSTURA}.refreshToken`]
+    const user = localStorage.getItem(`${GO_COSTURA}.user`)
+    const token = cookie[`${GO_COSTURA}.token`]
+    const refreshToken = cookie[`${GO_COSTURA}.refreshToken`]
 
     if (token && refreshToken && user) {
       api.defaults.headers.authorization = `Bearer ${refreshToken}`
@@ -73,14 +74,14 @@ function AuthProvider({ children }: AuthProviderProps) {
   })
 
   useEffect(() => {
-    const user = localStorage.getItem(`${LOCAL_STORAGE_GO_COSTURA}.user`)
-    const token = cookie[`${LOCAL_STORAGE_GO_COSTURA}.token`]
-    const refreshToken = cookie[`${LOCAL_STORAGE_GO_COSTURA}.refreshToken`]
+    const user = localStorage.getItem(`${GO_COSTURA}.user`)
+    const token = cookie[`${GO_COSTURA}.token`]
+    const refreshToken = cookie[`${GO_COSTURA}.refreshToken`]
 
     if (token && refreshToken && user) {
       api.defaults.headers.authorization = `Bearer ${refreshToken}`
     }
-  }, [])
+  }, [cookie])
 
   const isAuthenticated = !!data.user
 
@@ -94,19 +95,16 @@ function AuthProvider({ children }: AuthProviderProps) {
       const { token, user, refreshToken } = response.data
 
       setCookie('@GoCostura.token', token, {
-        maxAge: 60 * 60 * 24 * 30, // 30 days
+        maxAge: maxAgeToken, // 30 days
         path: '/'
       })
 
       setCookie('@GoCostura.refreshToken', refreshToken, {
-        maxAge: 60 * 60 * 24 * 30, // 30 days
+        maxAge: maxAgeRefreshToken,
         path: '/'
       })
 
-      localStorage.setItem(
-        `${LOCAL_STORAGE_GO_COSTURA}.user`,
-        JSON.stringify(user)
-      )
+      localStorage.setItem(`${GO_COSTURA}.user`, JSON.stringify(user))
 
       api.defaults.headers.authorization = `Bearer ${refreshToken}`
 
@@ -116,19 +114,16 @@ function AuthProvider({ children }: AuthProviderProps) {
   )
 
   const signOut = useCallback(() => {
-    localStorage.removeItem(`${LOCAL_STORAGE_GO_COSTURA}:token`)
-    localStorage.removeItem(`${LOCAL_STORAGE_GO_COSTURA}:refreshToken`)
-    localStorage.removeItem(`${LOCAL_STORAGE_GO_COSTURA}:user`)
+    removeCookie(`${GO_COSTURA}.token`)
+    removeCookie(`${GO_COSTURA}.refreshToken`)
+    localStorage.removeItem(`${GO_COSTURA}:user`)
 
     setData({} as AuthState)
-  }, [])
+  }, [removeCookie])
 
   const updateUser = useCallback(
     (user: User) => {
-      localStorage.setItem(
-        `${LOCAL_STORAGE_GO_COSTURA}:user`,
-        JSON.stringify(user)
-      )
+      localStorage.setItem(`${GO_COSTURA}:user`, JSON.stringify(user))
 
       setData({
         token: data.token,
@@ -158,45 +153,44 @@ function useAuth(): AuthContextData {
   return context
 }
 
+type IResponseRefreshToken = {
+  refreshToken: string
+  token: string
+}
+
 api.interceptors.response.use(
   response => response,
   (error: AxiosError) => {
     if (error.response?.status === 401) {
-      const originalConfig = error.config
+      const originalConfig = error.config as AxiosRequestConfig
 
       if (!IS_REFRESHING) {
         const cookies = new Cookies()
 
-        const refreshToken = cookies.get(
-          `${LOCAL_STORAGE_GO_COSTURA}.refreshToken`
-        )
+        const refreshToken = cookies.get(`${GO_COSTURA}.refreshToken`)
 
         api
-          .post<{ refreshToken: string }>('/refresh-token', {
+          .post<IResponseRefreshToken>('/refresh-token', {
             token: refreshToken
           })
           .then(response => {
             cookies.set(
-              `${LOCAL_STORAGE_GO_COSTURA}.refreshToken`,
+              `${GO_COSTURA}.refreshToken`,
               response.data.refreshToken,
               {
-                maxAge: 60 * 60 * 24 * 30, // 30 days
+                maxAge: maxAgeRefreshToken,
                 path: '/'
               }
             )
-            cookies.set(
-              `${LOCAL_STORAGE_GO_COSTURA}.token`,
-              response.data.refreshToken,
-              {
-                maxAge: 60 * 60 * 24 * 30, // 30 days
-                path: '/'
-              }
-            )
-            api.defaults.headers.authorization = `Bearer ${response.data.refreshToken}`
+            cookies.set(`${GO_COSTURA}.token`, response.data.token, {
+              maxAge: maxAgeToken,
+              path: '/'
+            })
+            api.defaults.headers.authorization = `Bearer ${response.data.token}`
             IS_REFRESHING = true
 
             failedRequestsQueue.forEach(request =>
-              request.onSuccess(response.data.refreshToken)
+              request.onSuccess(response.data.token)
             )
             failedRequestsQueue = []
           })

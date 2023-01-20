@@ -11,6 +11,11 @@ type IRequestDTO = {
   refreshToken: string
 }
 
+type IResponseDTO = {
+  token: string
+  refreshToken: string
+}
+
 type IPayload = {
   sub: string
   email: string
@@ -26,11 +31,13 @@ export class RefreshTokenService {
     private userTokensRepository: IUserTokensRepository
   ) {}
 
-  async execute({ refreshToken }: IRequestDTO): Promise<string> {
+  async execute({ refreshToken }: IRequestDTO): Promise<IResponseDTO> {
     const {
       secretRefreshToken,
       expiresInRefreshToken,
-      expiresInRefreshTokenDays
+      expiresInRefreshTokenDays,
+      secret,
+      expiresIn
     } = auth.jwt
     const { sub: userId, email } = verify(
       refreshToken,
@@ -60,6 +67,16 @@ export class RefreshTokenService {
       refreshToken: refreshTokenUpdated
     })
 
-    return refreshTokenUpdated
+    const newToken = sign({}, secret, {
+      subject: userId,
+      expiresIn
+    })
+
+    console.log('requisitou')
+
+    return {
+      token: newToken,
+      refreshToken
+    }
   }
 }

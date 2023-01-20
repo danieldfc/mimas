@@ -17,6 +17,7 @@ services:
 
   costura-server:
     container_name: costura-server
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile.server
@@ -32,6 +33,7 @@ services:
 
   costura-web:
     container_name: costura-web
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile.web
