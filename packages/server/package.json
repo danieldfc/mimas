@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "start": "yarn build && node dist/shared/infra/http/server.js",
+    "start": "yarn build && cross-env NODE_ENV=production node dist/shared/infra/http/server.js",
     "dev": "npx tsnd -r tsconfig-paths/register --inspect --respawn --exit-child --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "typeorm": "npx tsnd -r tsconfig-paths/register ../../node_modules/typeorm/cli.js",
     "migration:create": "yarn typeorm migration:create -n",
@@ -20,7 +20,6 @@
     "test:coverage": "cross-env NODE_ENV=test npx jest --no-cache --coverage"
   },
   "dependencies": {
-    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "celebrate": "^15.0.1",
     "class-transformer": "^0.5.1",
@@ -60,6 +59,7 @@
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "cross-env": "^7.0.3",
     "ts-node-dev": "^2.0.0",
-    "tsconfig-paths": "^4.1.0"
+    "tsconfig-paths": "^4.1.0",
+    "tsx": "^3.12.2"
   }
 }

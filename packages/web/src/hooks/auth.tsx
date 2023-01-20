@@ -10,7 +10,7 @@ import { Cookies, useCookies } from 'react-cookie'
 
 import { AxiosError } from 'axios'
 
-import api from '@mimas/axios-config'
+import { api } from '../services/api'
 
 interface User {
   id: string

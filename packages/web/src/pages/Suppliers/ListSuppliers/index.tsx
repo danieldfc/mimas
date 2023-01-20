@@ -1,4 +1,4 @@
-import api from '@mimas/axios-config'
+import { api } from '../../../services/api'
 import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
 import React, { useCallback, useRef, useState } from 'react'

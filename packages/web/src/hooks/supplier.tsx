@@ -1,4 +1,5 @@
-import api from '@mimas/axios-config'
+import { api } from '../services/api'
+
 import React, {
   createContext,
   useCallback,

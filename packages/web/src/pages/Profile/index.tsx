@@ -14,7 +14,7 @@ import { useAuth } from '../../hooks/auth'
 import getValidationErrors from '../../utils/getValidationError'
 import removeEmptyFields from '../../utils/removeEmptyFields'
 import { useToast } from '../../hooks/toast'
-import api from '@mimas/axios-config'
+import { api } from '../../services/api'
 import { MdLock } from 'react-icons/md'
 
 type IFormDataProfile = {

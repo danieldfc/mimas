@@ -1,4 +1,4 @@
-import api from '@mimas/axios-config'
+import { api } from '../../../services/api'
 import React, { useCallback, useEffect, useState } from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
 import { Link, useParams } from 'react-router-dom'

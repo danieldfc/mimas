@@ -2,9 +2,8 @@
   "compilerOptions": {
     "target": "es2017",
     "module": "commonjs",
-    "noEmit": true,
-    "strict": true,
     "allowJs": true,
+    "pretty": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -12,5 +11,8 @@
     "moduleResolution": "node",
     "strictPropertyInitialization": false,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "include": [
+    "packages/**/**/*"
+  ]
 }

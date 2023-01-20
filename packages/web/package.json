@@ -9,9 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mimas/axios-config": "*",
     "@unform/core": "^2.1.6",
     "@unform/web": "^2.1.6",
+    "axios": "^1.2.3",
     "polished": "^4.1.4",
     "react": "^16.13.1",
     "react-cookie": "^4.1.1",

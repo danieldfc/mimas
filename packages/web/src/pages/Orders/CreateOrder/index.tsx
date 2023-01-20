@@ -3,7 +3,7 @@ import { Form } from '@unform/web'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import * as Yup from 'yup'
-import api from '@mimas/axios-config'
+import { api } from '../../../services/api'
 
 import {
   MdDateRange,

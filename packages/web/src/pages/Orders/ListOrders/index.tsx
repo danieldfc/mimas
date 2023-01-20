@@ -10,7 +10,7 @@ import {
 
 import { Header } from '../../../components/Header'
 import TableList from '../../../components/TableList'
-import api from '@mimas/axios-config'
+import { api } from '../../../services/api'
 import { useToast } from '../../../hooks/toast'
 import { Order, StatusOrder } from '../../../interfaces/Order'
 
