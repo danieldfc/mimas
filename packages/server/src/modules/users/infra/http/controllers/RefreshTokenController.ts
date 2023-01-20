@@ -14,6 +14,6 @@ export class RefreshTokenController {
       refreshToken
     })
 
-    return response.status(200).json({ refreshToken: refreshTokenUpdated })
+    return response.status(200).json(refreshTokenUpdated)
   }
 }

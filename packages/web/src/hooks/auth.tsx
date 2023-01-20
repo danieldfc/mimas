@@ -1,3 +1,4 @@
+import { AxiosError, AxiosRequestConfig } from 'axios'
 import React, {
   ReactNode,
   createContext,
@@ -7,8 +8,6 @@ import React, {
   useState
 } from 'react'
 import { Cookies, useCookies } from 'react-cookie'
-
-import { AxiosError, AxiosRequestConfig } from 'axios'
 
 import { api } from '../services/api'
 
@@ -65,7 +64,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     const refreshToken = cookie[`${GO_COSTURA}.refreshToken`]
 
     if (token && refreshToken && user) {
-      api.defaults.headers.authorization = `Bearer ${refreshToken}`
+      api.defaults.headers.authorization = `Bearer ${token}`
 
       return { token, user: JSON.parse(user), refreshToken }
     }
@@ -79,7 +78,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     const refreshToken = cookie[`${GO_COSTURA}.refreshToken`]
 
     if (token && refreshToken && user) {
-      api.defaults.headers.authorization = `Bearer ${refreshToken}`
+      api.defaults.headers.authorization = `Bearer ${token}`
     }
   }, [cookie])
 
@@ -94,19 +93,19 @@ function AuthProvider({ children }: AuthProviderProps) {
 
       const { token, user, refreshToken } = response.data
 
-      setCookie('@GoCostura.token', token, {
-        maxAge: maxAgeToken, // 30 days
+      setCookie(`${GO_COSTURA}.token`, token, {
+        maxAge: maxAgeToken,
         path: '/'
       })
 
-      setCookie('@GoCostura.refreshToken', refreshToken, {
+      setCookie(`${GO_COSTURA}.refreshToken`, refreshToken, {
         maxAge: maxAgeRefreshToken,
         path: '/'
       })
 
       localStorage.setItem(`${GO_COSTURA}.user`, JSON.stringify(user))
 
-      api.defaults.headers.authorization = `Bearer ${refreshToken}`
+      api.defaults.headers.authorization = `Bearer ${token}`
 
       setData({ token, user, refreshToken })
     },
