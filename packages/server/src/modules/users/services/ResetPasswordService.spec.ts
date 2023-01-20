@@ -1,5 +1,6 @@
 import FakeUsersRepository from '@modules/users/infra/typeorm/repositories/fakes/FakeUsersRepository'
 import { AppError } from '@shared/errors/AppError'
+import { generateString } from '@shared/utils/StringUtil'
 import { User } from '../infra/typeorm/entities/User'
 import { UserToken } from '../infra/typeorm/entities/UserToken'
 import FakeUserTokensRepository from '../infra/typeorm/repositories/fakes/FakeUserTokensRepository'
@@ -14,6 +15,10 @@ let resetPassword: ResetPasswordService
 describe('ResetPassword', () => {
   let user: User
   let userToken: UserToken
+  const expiresDate: Date = new Date()
+  const amountDays = 3
+
+  expiresDate.setDate(expiresDate.getDate() + amountDays)
 
   beforeEach(async () => {
     fakeUsersRepository = new FakeUsersRepository()
@@ -31,7 +36,11 @@ describe('ResetPassword', () => {
       password: '123456',
       nick: 'jonhdoe'
     })
-    userToken = await fakeUserTokensRepository.generate(user.id)
+    userToken = await fakeUserTokensRepository.generate({
+      userId: user.id,
+      expiresDate,
+      refreshToken: generateString(30)
+    })
   })
 
   it('should be able to reset the password', async () => {
@@ -39,7 +48,7 @@ describe('ResetPassword', () => {
 
     await resetPassword.execute({
       password: '123123',
-      token: userToken.token
+      token: userToken.refreshToken
     })
 
     const userModify = await fakeUsersRepository.findById(user.id)
@@ -58,13 +67,15 @@ describe('ResetPassword', () => {
   })
 
   it('should not be able to reset the password with non-existing user', async () => {
-    const { token } = await fakeUserTokensRepository.generate(
-      'non-existing-user'
-    )
+    const { refreshToken } = await fakeUserTokensRepository.generate({
+      userId: 'non-existing-user',
+      expiresDate,
+      refreshToken: generateString(30)
+    })
 
     await expect(
       resetPassword.execute({
-        token,
+        token: refreshToken,
         password: '123123'
       })
     ).rejects.toBeInstanceOf(AppError)
@@ -78,7 +89,7 @@ describe('ResetPassword', () => {
 
     await expect(
       resetPassword.execute({
-        token: userToken.token,
+        token: userToken.refreshToken,
         password: '123123'
       })
     ).rejects.toBeInstanceOf(AppError)

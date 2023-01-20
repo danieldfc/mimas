@@ -3,8 +3,15 @@ export class AppError {
 
   public readonly statusCode: number
 
-  constructor(message: string, statusCode = 400) {
+  public readonly code: 'token.expired' | 'error'
+
+  constructor(
+    message: string,
+    statusCode = 400,
+    code: 'token.expired' | 'error' = 'error'
+  ) {
     this.message = message
     this.statusCode = statusCode
+    this.code = code
   }
 }

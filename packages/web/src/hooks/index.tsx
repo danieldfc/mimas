@@ -1,4 +1,5 @@
 import React from 'react'
+import { CookiesProvider } from 'react-cookie'
 
 import { AuthProvider } from './auth'
 import { ClientProvider } from './client'
@@ -11,12 +12,14 @@ type AppProviderProps = {
 
 export default function AppProvider({ children }: AppProviderProps) {
   return (
-    <AuthProvider>
-      <ToastProvider>
-        <ClientProvider>
-          <SupplierProvider>{children}</SupplierProvider>
-        </ClientProvider>
-      </ToastProvider>
-    </AuthProvider>
+    <CookiesProvider>
+      <AuthProvider>
+        <ToastProvider>
+          <ClientProvider>
+            <SupplierProvider>{children}</SupplierProvider>
+          </ClientProvider>
+        </ToastProvider>
+      </AuthProvider>
+    </CookiesProvider>
   )
 }

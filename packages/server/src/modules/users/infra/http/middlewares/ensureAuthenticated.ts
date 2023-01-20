@@ -10,11 +10,11 @@ interface ITokenPayload {
   sub: string
 }
 
-export default function ensureAuthenticated(
+export default async function ensureAuthenticated(
   request: Request,
-  _response: Response,
+  _: Response,
   next: NextFunction
-): void {
+): Promise<void> {
   const authHeader = request.headers.authorization
 
   if (!authHeader) {
@@ -25,14 +25,15 @@ export default function ensureAuthenticated(
 
   try {
     const decoded = verify(token, authConfig.jwt.secret)
-    const { sub } = decoded as ITokenPayload
+    const { sub: userId } = decoded as ITokenPayload
 
     request.user = {
-      id: sub
+      id: userId
     }
 
     return next()
   } catch (err) {
+    console.log(err)
     throw new AppError('Invalid JWT token', 401)
   }
 }
