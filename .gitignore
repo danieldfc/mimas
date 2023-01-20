@@ -4,6 +4,5 @@ dist
 .env
 
 yarn-error.*
-.vercel
 
 coverage
