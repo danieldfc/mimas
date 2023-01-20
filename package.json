@@ -6,6 +6,7 @@
   "scripts": {
     "prepare": "husky install",
     "start:server": "cd packages/server && yarn start",
+    "start:web": "cd packages/web && yarn dev",
     "test": "NODE_ENV=test jest --no-cache",
     "test:web": "cd packages/web && yarn test",
     "test:server": "cd packages/server && yarn test"
@@ -19,17 +20,32 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*",
-      "packages/shared/*"
+      "packages/server",
+      "packages/web"
     ]
   },
   "license": "MIT",
   "devDependencies": {
-    "@mimas/eslint-config": "*",
     "@types/jest": "^27.4.1",
     "@types/node": "^12.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "eslint": "^7.12.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
+    "lint-staged": "^12.3.7",
+    "prettier": "^2.6.1",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3"

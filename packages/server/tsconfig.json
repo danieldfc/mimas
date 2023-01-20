@@ -1,6 +1,16 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "lib": ["es6"],
+    "target": "es2021",
+    "allowJs": true,
+    "removeComments": true,
+    "esModuleInterop": true,
+    "skipLibCheck": false,
+    "forceConsistentCasingInFileNames": true,
+    "pretty": true,
+    "resolveJsonModule": true,
+    "types": ["node", "jest"],
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": ".",

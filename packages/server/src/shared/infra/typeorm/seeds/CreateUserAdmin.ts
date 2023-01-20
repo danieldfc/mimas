@@ -1,4 +1,4 @@
-import { hash } from 'bcrypt'
+import { hash } from 'bcryptjs'
 import { Connection } from 'typeorm'
 import { Factory, Seeder } from 'typeorm-seeding'
 import { User } from '@modules/users/infra/typeorm/entities/User'

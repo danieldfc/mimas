@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useState } from 'react'
 
-import api from '@mimas/axios-config'
+import { api } from '../services/api'
 
 interface User {
   id: string
