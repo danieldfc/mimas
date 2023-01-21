@@ -6,8 +6,8 @@ import { User } from '@modules/users/infra/typeorm/entities/User'
 export default class CreateUserAdmin implements Seeder {
   public async run(_: Factory, connection: Connection): Promise<any> {
     const userRepository = connection.getRepository(User)
-    const userAdminIsExists = userRepository.findOne({
-      where: { email: 'daniel.david772@gmail.com' }
+    const userAdminIsExists = await userRepository.findOne({
+      where: { email: 'dacia@bordados.com' }
     })
 
     if (!userAdminIsExists) {
@@ -17,10 +17,10 @@ export default class CreateUserAdmin implements Seeder {
         .into(User)
         .values([
           {
-            name: 'Daniel Felizardo',
-            nick: 'danielfelizardo',
+            name: 'Dacia Felizardo',
+            nick: 'daciafelizardo',
             admin: true,
-            email: 'daniel.david772@gmail.com',
+            email: 'dacia@bordados.com',
             password: await hash('123456', 10)
           }
         ])

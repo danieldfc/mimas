@@ -9,6 +9,7 @@ import {
 
 import { Exclude } from 'class-transformer'
 import { UserToken } from './UserToken'
+import { Notification } from './Notification'
 
 @Entity('users')
 export class User {
@@ -39,4 +40,7 @@ export class User {
 
   @OneToMany(() => UserToken, userToken => userToken.user)
   userTokens: UserToken[]
+
+  @OneToMany(() => Notification, notification => notification.user)
+  notifications: Notification[]
 }
