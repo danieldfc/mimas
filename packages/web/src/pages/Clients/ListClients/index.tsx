@@ -35,25 +35,23 @@ export function ListClients() {
       <Content>
         {clients.length ? (
           <TableList>
-            <>
-              <thead>
-                <tr>
-                  <th> CLIENTE </th>
-                  <th className="center"> TELEFONE </th>
-                  <th />
+            <thead>
+              <tr>
+                <th> CLIENTE </th>
+                <th className="center"> TELEFONE </th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {clients.map((client, key) => (
+                <tr key={client.id || key}>
+                  <td>
+                    <Link to={`/clients/${client.id}`}>{client.name}</Link>
+                  </td>
+                  <td className="center">{client.phone}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {clients.map((client, key) => (
-                  <tr key={client.id || key}>
-                    <td>
-                      <Link to={`/clients/${client.id}`}>{client.name}</Link>
-                    </td>
-                    <td className="center">{client.phone}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </>
+              ))}
+            </tbody>
           </TableList>
         ) : (
           <ContainerWithoutClient>

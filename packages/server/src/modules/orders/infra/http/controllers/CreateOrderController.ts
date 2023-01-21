@@ -6,6 +6,7 @@ export class CreateOrderController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { title, description, metadado, workmanship, clientsId, deliveryAt } =
       request.body
+    const { id: userId } = request.user
 
     const createOrderService = container.resolve(CreateOrderService)
 
@@ -15,7 +16,8 @@ export class CreateOrderController {
       metadado,
       workmanship,
       clientsId,
-      deliveryAt: deliveryAt ?? null
+      deliveryAt: deliveryAt ?? null,
+      userId
     })
 
     return response.status(201).json({ order })

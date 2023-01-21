@@ -72,8 +72,6 @@ export class RefreshTokenService {
       expiresIn
     })
 
-    console.log('requisitou')
-
     return {
       token: newToken,
       refreshToken

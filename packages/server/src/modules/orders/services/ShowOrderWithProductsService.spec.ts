@@ -1,3 +1,4 @@
+import { v4 as uuidV4 } from 'uuid'
 import { Client } from '@modules/clients/infra/typeorm/entities/Client'
 import FakeClientsRepository from '@modules/clients/infra/typeorm/repositories/fakes/FakeClientsRepository'
 import { AppError } from '@shared/errors/AppError'
@@ -9,6 +10,7 @@ import FakeProductsRepository from '../infra/typeorm/repositories/fakes/FakeProd
 import FakeSuppliersRepository from '../infra/typeorm/repositories/fakes/FakeSuppliersRepository'
 import { CreateOrderService } from './CreateOrderService'
 import { ShowOrderWithProductsService } from './ShowOrderWithProductsService'
+import FakeNotificationsRepository from '@modules/users/infra/typeorm/repositories/fakes/FakeNotificationRepository'
 
 let fakeOrdersRepository: FakeOrdersRepository
 let showOrderWithProductsService: ShowOrderWithProductsService
@@ -16,6 +18,7 @@ let showOrderWithProductsService: ShowOrderWithProductsService
 let fakeProductsRepository: FakeProductsRepository
 let fakeClientsRepository: FakeClientsRepository
 let fakeSuppliersRepository: FakeSuppliersRepository
+let fakeNotificationsRepository: FakeNotificationsRepository
 let createOrderService: CreateOrderService
 
 describe('ShowOrderWithProducts', () => {
@@ -24,16 +27,19 @@ describe('ShowOrderWithProducts', () => {
   let supplier: Supplier
   let order: Order
   const qtdProduct = 12
+  const userId = uuidV4()
 
   beforeEach(async () => {
     fakeSuppliersRepository = new FakeSuppliersRepository()
     fakeOrdersRepository = new FakeOrdersRepository()
     fakeProductsRepository = new FakeProductsRepository()
     fakeClientsRepository = new FakeClientsRepository()
+    fakeNotificationsRepository = new FakeNotificationsRepository()
     createOrderService = new CreateOrderService(
       fakeOrdersRepository,
       fakeProductsRepository,
-      fakeClientsRepository
+      fakeClientsRepository,
+      fakeNotificationsRepository
     )
 
     supplier = await fakeSuppliersRepository.create({
@@ -70,7 +76,8 @@ describe('ShowOrderWithProducts', () => {
       ],
       workmanship: 200,
       clientsId: [client.id],
-      deliveryAt: null
+      deliveryAt: null,
+      userId
     })
 
     fakeOrdersRepository.associateClient(order.id, client)

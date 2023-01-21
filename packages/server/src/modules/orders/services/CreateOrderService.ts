@@ -1,4 +1,7 @@
+import { env } from '@config/env'
+
 import IClientsRepository from '@modules/clients/infra/typeorm/repositories/IClientsRepository'
+import INotificationsRepository from '@modules/users/infra/typeorm/repositories/INotificationsRepository'
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
 import { In } from 'typeorm'
@@ -15,6 +18,7 @@ interface IRequest {
   metadado: IMetadadoProduct[]
   clientsId: string[]
   deliveryAt: Date | null
+  userId: string
 }
 
 @injectable()
@@ -27,10 +31,14 @@ export class CreateOrderService {
     private productsRepository: IProductsRepository,
 
     @inject('ClientsRepository')
-    private clientsRepository: IClientsRepository
+    private clientsRepository: IClientsRepository,
+
+    @inject('NotificationsRepository')
+    private notificationsRepository: INotificationsRepository
   ) {}
 
   async execute({
+    userId,
     description,
     metadado,
     title,
@@ -61,7 +69,7 @@ export class CreateOrderService {
     const productsVerified = await this.getProducts(metadado)
     const priceProductsTotal = this.getPriceTotalProducts(productsVerified)
 
-    return this.ordersRepository.create({
+    const order = await this.ordersRepository.create({
       title,
       description,
       workmanship,
@@ -70,6 +78,15 @@ export class CreateOrderService {
       deliveryAt,
       metadado: productsVerified
     })
+
+    await this.notificationsRepository.create({
+      userId,
+      title: 'Pedido criado',
+      description: `Um novo pedido chamado de '${order.title}' foi criado com sucesso.`,
+      url: `${env.linkWeb}/orders/${order.id}`
+    })
+
+    return order
   }
 
   private verifyDeliveryDate(deliveryAt: Date): void {

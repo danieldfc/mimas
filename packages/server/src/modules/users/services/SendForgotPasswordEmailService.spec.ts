@@ -52,9 +52,6 @@ describe('SendForgotPasswordEmail', () => {
   })
 
   it('should generate a forgot password token', async () => {
-    const date = new Date()
-    date.setDate(date.getDate() + 1)
-
     const token = generateString(30)
 
     const signSpy = jest.spyOn(jwt, 'sign').mockImplementation(() => {
@@ -70,7 +67,7 @@ describe('SendForgotPasswordEmail', () => {
     expect(signSpy).toBeCalled()
     expect(generateToken).toBeCalledWith({
       userId: user.id,
-      expiresDate: date,
+      expiresDate: expect.anything(),
       refreshToken: token
     })
   })

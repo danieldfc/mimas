@@ -3,7 +3,7 @@ import React from 'react'
 import { Container, StyledTable, TableWrapper } from './styles'
 
 type IProps = {
-  children: JSX.Element
+  children: React.ReactNode
   loading?: boolean
 }
 

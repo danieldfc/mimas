@@ -40,8 +40,13 @@ export default function ListOrders() {
         await api.patch(`/orders/${orderId}`, {
           status
         })
-        const response = await api.get('/orders')
-        setOrders([...response.data.orders])
+        setOrders(oldOrders => {
+          const findIndexOrder = oldOrders.findIndex(old => old.id === orderId)
+          if (findIndexOrder >= 0) {
+            oldOrders[findIndexOrder].status = status
+          }
+          return oldOrders
+        })
         const statusName = status === 'finish' ? 'finalizado' : 'cancelado'
 
         addToast({
@@ -66,7 +71,7 @@ export default function ListOrders() {
 
       <HeaderWrapper>
         <h3>Meus pedidos</h3>
-        <Link to="/order">Cadastrar novo pedido</Link>
+        <Link to="/create-order">Cadastrar novo pedido</Link>
       </HeaderWrapper>
 
       <Content>
@@ -76,74 +81,72 @@ export default function ListOrders() {
           </ContainerWithoutOrder>
         ) : (
           <TableList>
-            <>
-              <thead>
-                <tr>
-                  <th> PEDIDO </th>
-                  <th className="center"> CLIENTE(S) </th>
-                  <th className="center"> ENTREGA </th>
-                  <th className="center"> AÇÕES </th>
-                  <th />
+            <thead>
+              <tr>
+                <th> PEDIDO </th>
+                <th className="center"> CLIENTE(S) </th>
+                <th className="center"> ENTREGA </th>
+                <th className="center"> AÇÕES </th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map(order => (
+                <tr key={order.id}>
+                  <td>
+                    <Link to={`/orders/${order.id}`}>{order.title}</Link>
+                  </td>
+                  <td className="center">
+                    {!!order.clients.length &&
+                      order.clients.map((client, index) => (
+                        <>
+                          <Link
+                            key={client.id}
+                            to={`/clients/${client.id ?? ''}`}
+                          >
+                            {client.name.split(' ')[0]}
+                          </Link>
+                          {index !== order.clients.length - 1 ? ' | ' : ''}
+                        </>
+                      ))}
+                    {!order.clients.length && 'N/A'}
+                  </td>
+                  <td className="center">
+                    {order.deliveryAt ? parseData(order.deliveryAt) : '-'}h
+                  </td>
+                  <td className="actions">
+                    <div>
+                      {order.status === 'open' ? (
+                        <>
+                          <button
+                            type="button"
+                            className="finish"
+                            onClick={() =>
+                              finalizarCancelarPedido(order.id, 'finish')
+                            }
+                          >
+                            Finalizar
+                          </button>
+                          <button
+                            type="button"
+                            className="cancel"
+                            onClick={() =>
+                              finalizarCancelarPedido(order.id, 'cancel')
+                            }
+                          >
+                            Cancelar
+                          </button>
+                        </>
+                      ) : order.status === 'cancel' ? (
+                        <strong className="cancel">Cancelado</strong>
+                      ) : (
+                        <strong className="finish">Finalizado</strong>
+                      )}
+                    </div>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {orders.map((order, key) => (
-                  <tr key={order.id || key}>
-                    <td>
-                      <Link to={`/order/${order.id}`}>{order.title}</Link>
-                    </td>
-                    <td className="center">
-                      {!!order.clients.length &&
-                        order.clients.map((client, index) => (
-                          <>
-                            <Link
-                              key={client.id}
-                              to={`/clients/${client.id ?? ''}`}
-                            >
-                              {client.name.split(' ')[0]}
-                            </Link>
-                            {index !== order.clients.length - 1 ? ' | ' : ''}
-                          </>
-                        ))}
-                      {!order.clients.length && 'N/A'}
-                    </td>
-                    <td className="center">
-                      {order.deliveryAt ? parseData(order.deliveryAt) : '-'}h
-                    </td>
-                    <td className="actions">
-                      <div>
-                        {order.status === 'open' ? (
-                          <>
-                            <button
-                              type="button"
-                              className="finish"
-                              onClick={() =>
-                                finalizarCancelarPedido(order.id, 'finish')
-                              }
-                            >
-                              Finalizar
-                            </button>
-                            <button
-                              type="button"
-                              className="cancel"
-                              onClick={() =>
-                                finalizarCancelarPedido(order.id, 'cancel')
-                              }
-                            >
-                              Cancelar
-                            </button>
-                          </>
-                        ) : order.status === 'cancel' ? (
-                          <strong className="cancel">Cancelado</strong>
-                        ) : (
-                          <strong className="finish">Finalizado</strong>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </>
+              ))}
+            </tbody>
           </TableList>
         )}
       </Content>

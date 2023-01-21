@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "start": "yarn build && cross-env NODE_ENV=production node dist/shared/infra/http/server.js",
-    "dev": "npx tsnd -r tsconfig-paths/register --inspect --respawn --exit-child --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "dev": "yarn build && cross-env NODE_ENV=production node dist/shared/infra/http/server.js",
+    "start": "npx tsnd -r tsconfig-paths/register --inspect --respawn --exit-child --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "typeorm": "npx tsnd -r tsconfig-paths/register ../../node_modules/typeorm/cli.js",
     "migration:create": "yarn typeorm migration:create -n",
     "migration:run": "yarn typeorm migration:run",

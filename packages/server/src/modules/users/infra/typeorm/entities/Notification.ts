@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn
@@ -36,5 +37,6 @@ export class Notification {
   updatedAt: Date
 
   @ManyToOne(() => User, user => user.notifications)
+  @JoinColumn({ name: 'user_id' })
   user: User
 }

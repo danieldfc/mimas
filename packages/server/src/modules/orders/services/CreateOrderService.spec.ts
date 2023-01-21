@@ -6,24 +6,30 @@ import { Supplier } from '../infra/typeorm/entities/Supplier'
 import FakeProductsRepository from '../infra/typeorm/repositories/fakes/FakeProductsRepository'
 import FakeSuppliersRepository from '../infra/typeorm/repositories/fakes/FakeSuppliersRepository'
 import { CreateOrderService } from './CreateOrderService'
+import FakeNotificationsRepository from '@modules/users/infra/typeorm/repositories/fakes/FakeNotificationRepository'
 
 let fakeOrdersRepository: FakeOrdersRepository
 let fakeProductsRepository: FakeProductsRepository
 let fakeClientsRepository: FakeClientsRepository
 let fakeSuppliersRepository: FakeSuppliersRepository
+let fakeNotificationsRepository: FakeNotificationsRepository
 let createOrderService: CreateOrderService
 
 describe('CreateOrder', () => {
   let supplier: Supplier
+  const userId = uuidV4()
+
   beforeEach(async () => {
     fakeOrdersRepository = new FakeOrdersRepository()
     fakeSuppliersRepository = new FakeSuppliersRepository()
     fakeProductsRepository = new FakeProductsRepository()
     fakeClientsRepository = new FakeClientsRepository()
+    fakeNotificationsRepository = new FakeNotificationsRepository()
     createOrderService = new CreateOrderService(
       fakeOrdersRepository,
       fakeProductsRepository,
-      fakeClientsRepository
+      fakeClientsRepository,
+      fakeNotificationsRepository
     )
 
     supplier = await fakeSuppliersRepository.create({
@@ -57,6 +63,7 @@ describe('CreateOrder', () => {
     )
 
     const order = await createOrderService.execute({
+      userId,
       workmanship: 200,
       title: 'Meu novo pedido',
       description: 'Minha descrição de pedido',
@@ -70,6 +77,11 @@ describe('CreateOrder', () => {
       deliveryAt
     })
 
+    const notifications = await fakeNotificationsRepository.findAllByUserId(
+      userId
+    )
+    expect(notifications.length).toEqual(1)
+
     expect(order).toHaveProperty('id')
     expect(order.workmanship).toEqual(200)
   })
@@ -82,6 +94,7 @@ describe('CreateOrder', () => {
 
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: 200,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -100,6 +113,7 @@ describe('CreateOrder', () => {
 
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: 0,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -118,6 +132,7 @@ describe('CreateOrder', () => {
 
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: -1,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -131,6 +146,7 @@ describe('CreateOrder', () => {
   it('should not be able to create a new order without client', async () => {
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: -1,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -158,6 +174,7 @@ describe('CreateOrder', () => {
 
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: 100,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -176,6 +193,7 @@ describe('CreateOrder', () => {
 
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: 100,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -219,6 +237,7 @@ describe('CreateOrder', () => {
 
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: 100,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -240,6 +259,7 @@ describe('CreateOrder', () => {
 
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: 100,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',

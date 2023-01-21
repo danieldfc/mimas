@@ -447,54 +447,52 @@ export function ListSuppliers() {
               </Form>
 
               <TableList>
-                <>
-                  <thead>
-                    <tr>
-                      <th> PRODUTO </th>
-                      <th className="center"> DESCRIÇÃO </th>
-                      <th className="center"> PREÇO </th>
-                      <th className="center"> AÇÕES </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {(supplierSelected?.products ?? []).map(
-                      (product: Product) => (
-                        <tr key={product.id}>
-                          <td> {product.title}</td>
-                          <td className="center">
-                            {product.description ?? 'N/A'}
-                          </td>
-                          <td className="center">{product.price}</td>
-                          <td className="actions">
-                            <button
-                              type="button"
-                              className="finish"
-                              onClick={() =>
-                                handleDeleteProduct(
-                                  product.id,
-                                  supplierSelected as Supplier
-                                )
-                              }
-                            >
-                              Remover
-                            </button>
-                            <button
-                              type="button"
-                              className="cancel"
-                              onClick={() => {
-                                setProductSelected(product)
-                                setModalIsOpen(false)
-                                setModalProductIsOpen(true)
-                              }}
-                            >
-                              Editar
-                            </button>
-                          </td>
-                        </tr>
-                      )
-                    )}
-                  </tbody>
-                </>
+                <thead>
+                  <tr>
+                    <th> PRODUTO </th>
+                    <th className="center"> DESCRIÇÃO </th>
+                    <th className="center"> PREÇO </th>
+                    <th className="center"> AÇÕES </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(supplierSelected?.products ?? []).map(
+                    (product: Product) => (
+                      <tr key={product.id}>
+                        <td> {product.title}</td>
+                        <td className="center">
+                          {product.description ?? 'N/A'}
+                        </td>
+                        <td className="center">{product.price}</td>
+                        <td className="actions">
+                          <button
+                            type="button"
+                            className="finish"
+                            onClick={() =>
+                              handleDeleteProduct(
+                                product.id,
+                                supplierSelected as Supplier
+                              )
+                            }
+                          >
+                            Remover
+                          </button>
+                          <button
+                            type="button"
+                            className="cancel"
+                            onClick={() => {
+                              setProductSelected(product)
+                              setModalIsOpen(false)
+                              setModalProductIsOpen(true)
+                            }}
+                          >
+                            Editar
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
               </TableList>
             </ModalRender>
 

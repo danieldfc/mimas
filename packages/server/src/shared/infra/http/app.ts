@@ -25,7 +25,6 @@ app.use(async (err: Error, req: Request, res: Response, _: NextFunction) => {
       .json({ message: err.message, status: 'error' })
   }
 
-  console.log(err)
   logger.error(err.message)
 
   return res
