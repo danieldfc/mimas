@@ -61,4 +61,8 @@ export default class FakeOrdersRepository implements IOrdersRepository {
 
     this.orders[findIndex] = order
   }
+
+  public async fetchAllOpenOrdersScheduledForToday(): Promise<Order[]> {
+    return this.orders
+  }
 }

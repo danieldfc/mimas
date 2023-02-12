@@ -1,29 +1,38 @@
 import { v4 as uuidV4 } from 'uuid'
+import { AppError } from '@shared/errors/AppError'
+
 import FakeClientsRepository from '@modules/clients/infra/typeorm/repositories/fakes/FakeClientsRepository'
 import FakeOrdersRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeOrdersRepository'
-import { AppError } from '@shared/errors/AppError'
-import { Supplier } from '../infra/typeorm/entities/Supplier'
-import FakeProductsRepository from '../infra/typeorm/repositories/fakes/FakeProductsRepository'
-import FakeSuppliersRepository from '../infra/typeorm/repositories/fakes/FakeSuppliersRepository'
+import { Supplier } from '@modules/orders/infra/typeorm/entities/Supplier'
+import FakeProductsRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeProductsRepository'
+import FakeSuppliersRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeSuppliersRepository'
+import FakeNotificationsRepository from '@modules/notifications/infra/typeorm/repositories/fakes/FakeNotificationRepository'
+
 import { CreateOrderService } from './CreateOrderService'
+import { padStart } from '@shared/utils/StringUtil'
 
 let fakeOrdersRepository: FakeOrdersRepository
 let fakeProductsRepository: FakeProductsRepository
 let fakeClientsRepository: FakeClientsRepository
 let fakeSuppliersRepository: FakeSuppliersRepository
+let fakeNotificationsRepository: FakeNotificationsRepository
 let createOrderService: CreateOrderService
 
 describe('CreateOrder', () => {
   let supplier: Supplier
+  const userId = uuidV4()
+
   beforeEach(async () => {
     fakeOrdersRepository = new FakeOrdersRepository()
     fakeSuppliersRepository = new FakeSuppliersRepository()
     fakeProductsRepository = new FakeProductsRepository()
     fakeClientsRepository = new FakeClientsRepository()
+    fakeNotificationsRepository = new FakeNotificationsRepository()
     createOrderService = new CreateOrderService(
       fakeOrdersRepository,
       fakeProductsRepository,
-      fakeClientsRepository
+      fakeClientsRepository,
+      fakeNotificationsRepository
     )
 
     supplier = await fakeSuppliersRepository.create({
@@ -57,6 +66,7 @@ describe('CreateOrder', () => {
     )
 
     const order = await createOrderService.execute({
+      userId,
       workmanship: 200,
       title: 'Meu novo pedido',
       description: 'Minha descrição de pedido',
@@ -70,6 +80,11 @@ describe('CreateOrder', () => {
       deliveryAt
     })
 
+    const notifications = await fakeNotificationsRepository.findAllByUserId(
+      userId
+    )
+    expect(notifications.length).toEqual(1)
+
     expect(order).toHaveProperty('id')
     expect(order.workmanship).toEqual(200)
   })
@@ -82,6 +97,7 @@ describe('CreateOrder', () => {
 
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: 200,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -100,6 +116,7 @@ describe('CreateOrder', () => {
 
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: 0,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -118,6 +135,7 @@ describe('CreateOrder', () => {
 
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: -1,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -131,6 +149,7 @@ describe('CreateOrder', () => {
   it('should not be able to create a new order without client', async () => {
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: -1,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -158,6 +177,7 @@ describe('CreateOrder', () => {
 
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: 100,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -176,6 +196,7 @@ describe('CreateOrder', () => {
 
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: 100,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -201,24 +222,26 @@ describe('CreateOrder', () => {
 
     const client = await fakeClientsRepository.create({
       name: 'John Doe',
-      phone: '+5583999999999'
+      phone: '+5583999999999',
+      address: 'Rua tal',
+      email: 'johndoe@email.com'
     })
-
-    const padStart = (str: string, tam: number, preenchimento: string) =>
-      str.padStart(tam, preenchimento)
 
     const now = new Date()
     const twoDayInFuture = 2
-    let hoursAvailable = '06'
-    const month = padStart(String(now.getMonth() + 1), 2, '0')
-    const day = padStart(String(now.getDate() + twoDayInFuture), 2, '0')
+    now.setDate(now.getDate() + twoDayInFuture)
 
+    const month = padStart(String(now.getMonth() + 1), 2, '0')
+    const day = padStart(String(now.getDate()), 2, '0')
+
+    let hoursAvailable = '06'
     let deliveryAt = new Date(
       `${now.getFullYear()}-${month}-${day}T${hoursAvailable}:00:00-00:00`
     )
 
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: 100,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -240,6 +263,7 @@ describe('CreateOrder', () => {
 
     await expect(
       createOrderService.execute({
+        userId,
         workmanship: 100,
         title: 'Meu novo pedido',
         description: 'Minha descrição de pedido',
@@ -253,5 +277,24 @@ describe('CreateOrder', () => {
         deliveryAt
       })
     ).rejects.toBeInstanceOf(AppError)
+
+    deliveryAt = new Date(`${now.getFullYear()}-${month}-${day}T16:59:59-00:00`)
+
+    const order = await createOrderService.execute({
+      userId,
+      workmanship: 100,
+      title: 'Meu novo pedido',
+      description: 'Minha descrição de pedido',
+      metadado: [
+        {
+          productId: product.id,
+          qtd: 12
+        }
+      ],
+      clientsId: [client.id],
+      deliveryAt
+    })
+
+    expect(order).toBeTruthy()
   })
 })

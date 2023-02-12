@@ -1,10 +1,12 @@
+import { v4 as uuidV4 } from 'uuid'
 import { Client } from '@modules/clients/infra/typeorm/entities/Client'
 import FakeClientsRepository from '@modules/clients/infra/typeorm/repositories/fakes/FakeClientsRepository'
-import { Product } from '../infra/typeorm/entities/Product'
-import { Supplier } from '../infra/typeorm/entities/Supplier'
-import FakeOrdersRepository from '../infra/typeorm/repositories/fakes/FakeOrdersRepository'
-import FakeProductsRepository from '../infra/typeorm/repositories/fakes/FakeProductsRepository'
-import FakeSuppliersRepository from '../infra/typeorm/repositories/fakes/FakeSuppliersRepository'
+import FakeNotificationsRepository from '@modules/notifications/infra/typeorm/repositories/fakes/FakeNotificationRepository'
+import { Product } from '@modules/orders/infra/typeorm/entities/Product'
+import { Supplier } from '@modules/orders/infra/typeorm/entities/Supplier'
+import FakeOrdersRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeOrdersRepository'
+import FakeProductsRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeProductsRepository'
+import FakeSuppliersRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeSuppliersRepository'
 import { CreateOrderService } from './CreateOrderService'
 import { FindOrdersWithProductsService } from './FindOrdersWithProductsService'
 
@@ -14,6 +16,7 @@ let findOrdersWithProductsService: FindOrdersWithProductsService
 let fakeProductsRepository: FakeProductsRepository
 let fakeClientsRepository: FakeClientsRepository
 let fakeSuppliersRepository: FakeSuppliersRepository
+let fakeNotificationsRepository: FakeNotificationsRepository
 let createOrderService: CreateOrderService
 
 describe('FindOrdersWithProducts', () => {
@@ -21,16 +24,19 @@ describe('FindOrdersWithProducts', () => {
   let product: Product
   let supplier: Supplier
   const qtdProduct = 12
+  const userId = uuidV4()
 
   beforeEach(async () => {
     fakeSuppliersRepository = new FakeSuppliersRepository()
     fakeOrdersRepository = new FakeOrdersRepository()
     fakeProductsRepository = new FakeProductsRepository()
     fakeClientsRepository = new FakeClientsRepository()
+    fakeNotificationsRepository = new FakeNotificationsRepository()
     createOrderService = new CreateOrderService(
       fakeOrdersRepository,
       fakeProductsRepository,
-      fakeClientsRepository
+      fakeClientsRepository,
+      fakeNotificationsRepository
     )
 
     supplier = await fakeSuppliersRepository.create({
@@ -67,7 +73,8 @@ describe('FindOrdersWithProducts', () => {
       ],
       workmanship: 200,
       clientsId: [client.id],
-      deliveryAt: null
+      deliveryAt: null,
+      userId
     })
 
     fakeOrdersRepository.associateClient(order.id, client)

@@ -1,10 +1,13 @@
 import FakeClientsRepository from '@modules/clients/infra/typeorm/repositories/fakes/FakeClientsRepository'
 import FakeOrdersRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeOrdersRepository'
 import { AppError } from '@shared/errors/AppError'
-import { Order, StatusOrder } from '../infra/typeorm/entities/Order'
-import { Supplier } from '../infra/typeorm/entities/Supplier'
-import FakeProductsRepository from '../infra/typeorm/repositories/fakes/FakeProductsRepository'
-import FakeSuppliersRepository from '../infra/typeorm/repositories/fakes/FakeSuppliersRepository'
+import {
+  Order,
+  StatusOrder
+} from '@modules/orders/infra/typeorm/entities/Order'
+import { Supplier } from '@modules/orders/infra/typeorm/entities/Supplier'
+import FakeProductsRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeProductsRepository'
+import FakeSuppliersRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeSuppliersRepository'
 import { UpdateStatusOrderService } from './UpdateStatusOrderService'
 
 let fakeOrdersRepository: FakeOrdersRepository

@@ -20,8 +20,8 @@ const Routes: React.FC = () => (
     <Route path="/profile" component={Profile} isPrivate />
     <Route path="/dashboard" component={ListOrders} isPrivate />
 
-    <Route path="/order" exact component={CreateOrder} isPrivate />
-    <Route path="/order/:orderId" component={Specifications} isPrivate />
+    <Route path="/create-order" exact component={CreateOrder} isPrivate />
+    <Route path="/orders/:orderId" component={Specifications} isPrivate />
 
     <Route path="/clients" exact component={ListClients} isPrivate />
     <Route path="/clients/:clientId" component={ShowClient} isPrivate />

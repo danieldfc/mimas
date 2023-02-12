@@ -1,5 +1,5 @@
 import fs from 'fs'
-import handlebars from 'handlebars'
+import Handlebars from 'handlebars'
 import IParseMailTemplateDTO from '../dtos/IParseMailTemplateDTO'
 import IMailTemplateProvider from '../models/IMailTemplateProvider'
 
@@ -14,8 +14,16 @@ export default class HandlebarsMailTemplateProvider
       encoding: 'utf-8'
     })
 
-    const parseTemplate = handlebars.compile(templateFileContent)
+    this.registerHelpers(Handlebars)
+
+    const parseTemplate = Handlebars.compile(templateFileContent)
 
     return parseTemplate(variables)
+  }
+
+  private registerHelpers(handlebars: typeof Handlebars): void {
+    handlebars.registerHelper('inc', (value: string) => {
+      return parseInt(value) + 1
+    })
   }
 }

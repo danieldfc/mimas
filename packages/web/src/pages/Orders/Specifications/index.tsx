@@ -121,19 +121,21 @@ export function Specifications() {
                 {formatMoney(parseFloat(order.finalPrice.replace('$', '')))}
               </h2>
             </div>
-            <p>
+            <div>
               Clientes:{' '}
-              {!!order.clients.length &&
+              {order.clients.length ? (
                 order.clients.map((client, index) => (
-                  <>
-                    <Link key={client.id} to={`/clients/${client.id ?? ''}`}>
+                  <p key={client.id}>
+                    <Link to={`/clients/${client.id ?? ''}`}>
                       {client.name}
                     </Link>
-                    {index !== order.clients.length - 1 ? ' - ' : ''}
-                  </>
-                ))}
-              {!order.clients.length && <p>N/A</p>}
-            </p>
+                    {index !== order.clients.length - 1 && ' - '}
+                  </p>
+                ))
+              ) : (
+                <p>N/A</p>
+              )}
+            </div>
             <p>Descrição do pedido: {order.description}</p>
 
             <MetadadoProducts>

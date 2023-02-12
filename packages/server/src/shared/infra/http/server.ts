@@ -4,6 +4,6 @@ import { app } from './app'
 
 app
   .listen(config.port)
-  .on('listening', () =>
+  .once('listening', () =>
     logger.info(`🚀 Server started on port ${config.port}!`)
   )

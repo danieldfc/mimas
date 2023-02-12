@@ -11,5 +11,6 @@ export default interface IOrdersRepository {
     options?: FindOneOptions<Order>
   ): Promise<Order | undefined>
   findAll(options?: IFindOrdersDTO): Promise<Order[]>
+  fetchAllOpenOrdersScheduledForToday(): Promise<Order[]>
   save(order: Order): Promise<void>
 }

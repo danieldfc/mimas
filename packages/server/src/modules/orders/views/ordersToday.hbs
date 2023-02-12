@@ -1,0 +1,57 @@
+<style>
+  .message-content {
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 600px;
+    font-size: 18px;
+    line-height: 21px;
+  }
+
+  .order {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .clients {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
+<div class="message-content">
+    <p>Olá, {{ username }}</p>
+    <div class="order">
+      Gostaríamos de informar que existe pedidos para serem entregues hoje.</p>
+      {{#each orders}}
+        <div>
+          <a href="{{ url }}" target="_blank">#{{inc @index}} {{ name }}</a>
+          <p>Preço final: {{ price }}</p>
+          <p>Horário: {{ deliveryAt }}</p>
+        </div>
+        Clientes:
+        <ol class="clients">
+          {{#clientes}}
+            <li>{{ name }} - {{ phone }} - {{ email }}</li>
+          {{/clientes}}
+        </ol>
+      {{/each}}
+    <div>
+      Obrigado!<br/>
+      <strong>Equipe Dacia Bordados</strong>
+    </p>
+  </div>
+
+{{!--
+type ClienteTemplate = {
+  name: string
+  phone: string
+  email: string
+}
+
+inicio type ITemplateDataOrder = {
+  name: string
+  price: number
+  cliente: ClienteTemplate[]
+  url: string
+  deliveryAt: string
+}
+ --}}

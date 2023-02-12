@@ -2,7 +2,7 @@ import { Joi, Segments, celebrate } from 'celebrate'
 import { Router } from 'express'
 import { CreateUserController } from '../controllers/CreateUserController'
 import { ProfileController } from '../controllers/ProfileController'
-import ensureAuthenticated from '../middlewares/ensureAuthenticated'
+import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated'
 
 const userRouter = Router()
 

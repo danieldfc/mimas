@@ -159,7 +159,7 @@ export function ShowClient() {
             {client?.phone && (
               <LinkWhatsapp
                 role="button"
-                href={`https://api.whatsapp.com/send?phone=${client?.phone}`}
+                href={`https://wa.me/${client?.phone}`}
                 target="_blank"
                 rel="noreferrer"
               >

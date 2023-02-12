@@ -7,6 +7,7 @@ import { CreateOrderController } from '../controllers/CreateOrderController'
 import { FindOrdersWithProductsController } from '../controllers/FindOrdersWithProductsController'
 import { UpdateStatusOrderController } from '../controllers/UpdateStatusOrderController'
 import { FindOrderController } from '../controllers/FindOrderController'
+import { OrdersTodayController } from '../controllers/OrdersTodayController'
 
 const orderRoute = Router()
 
@@ -14,10 +15,12 @@ const createOrderController = new CreateOrderController()
 const findOrdersWithProductsController = new FindOrdersWithProductsController()
 const updateStatusOrderController = new UpdateStatusOrderController()
 const findOrderController = new FindOrderController()
+const ordersTodayController = new OrdersTodayController()
+
+orderRoute.use(ensureAuthenticated)
 
 orderRoute.post(
   '/',
-  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       title: Joi.string().required(),
@@ -36,17 +39,12 @@ orderRoute.post(
   createOrderController.handle
 )
 
-orderRoute.get(
-  '/',
-  ensureAuthenticated,
-  findOrdersWithProductsController.handle
-)
+orderRoute.get('/', findOrdersWithProductsController.handle)
 
-orderRoute.get('/:id', ensureAuthenticated, findOrderController.handle)
+orderRoute.get('/:id', findOrderController.handle)
 
 orderRoute.patch(
   '/:id',
-  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       status: Joi.string().required()
@@ -54,5 +52,7 @@ orderRoute.patch(
   }),
   updateStatusOrderController.handle
 )
+
+orderRoute.get('/notifications/today', ordersTodayController.handle)
 
 export { orderRoute }
