@@ -65,4 +65,11 @@ export default class FakeOrdersRepository implements IOrdersRepository {
   public async fetchAllOpenOrdersScheduledForToday(): Promise<Order[]> {
     return this.orders
   }
+
+  public async destroy(order: Order): Promise<void> {
+    const findIndex = this.orders.findIndex(o => o.id === order.id)
+    if (findIndex >= 0) {
+      this.orders.splice(findIndex, 1)
+    }
+  }
 }

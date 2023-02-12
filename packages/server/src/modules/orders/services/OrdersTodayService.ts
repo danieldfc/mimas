@@ -103,9 +103,9 @@ export class OrdersTodayService {
   private getClientes(order: Order): ClienteTemplate[] {
     if (!order.clients?.length) return []
     return order.clients.map(client => ({
-      name: client?.name ?? 'N/A',
+      name: client.name,
       email: client?.email ?? 'N/A',
-      phone: client?.phone ?? 'N/A'
+      phone: client.phone
     }))
   }
 

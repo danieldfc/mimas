@@ -14,6 +14,14 @@ export default {
     '^.+\\.(ts|tsx)$': 'ts-jest',
     '\\.js$': 'babel-jest'
   },
+  coverageThreshold: {
+    global: {
+      branches: 100,
+      functions: 100,
+      lines: 100,
+      statements: 100
+    }
+  },
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>'
   })
