@@ -1,4 +1,7 @@
-import { ICreateNotification, IFindNotification } from '@modules/users/dtos'
+import {
+  ICreateNotification,
+  IFindNotification
+} from '@modules/notifications/dtos'
 
 import { Notification } from '../entities/Notification'
 
@@ -8,6 +11,7 @@ export default interface INotificationsRepository {
     userId: string,
     options: IFindNotification
   ): Promise<Notification[]>
+  findByTitleToday(title: string): Promise<Notification | undefined>
   findById(id: string): Promise<Notification | undefined>
   save(notification: Notification): Promise<void>
 }

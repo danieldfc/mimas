@@ -3,7 +3,7 @@ import { inject, injectable } from 'tsyringe'
 import { AppError } from '@shared/errors/AppError'
 
 import IUsersRepository from '@modules/users/infra/typeorm/repositories/IUsersRepository'
-import INotificationsRepository from '@modules/users/infra/typeorm/repositories/INotificationsRepository'
+import INotificationsRepository from '@modules/notifications/infra/typeorm/repositories/INotificationsRepository'
 
 type IRequestDTO = {
   id: string

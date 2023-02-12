@@ -1,7 +1,10 @@
 import { v4 as uuidV4 } from 'uuid'
-import { ICreateNotification, IFindNotification } from '@modules/users/dtos'
-import INotificationsRepository from '../INotificationsRepository'
-import { Notification } from '../../entities/Notification'
+import {
+  ICreateNotification,
+  IFindNotification
+} from '@modules/notifications/dtos'
+import INotificationsRepository from '@modules/notifications/infra/typeorm/repositories/INotificationsRepository'
+import { Notification } from '@modules/notifications/infra/typeorm/entities/Notification'
 
 export default class FakeNotificationsRepository
   implements INotificationsRepository
@@ -48,6 +51,10 @@ export default class FakeNotificationsRepository
     const offset = options.skip ?? 1
 
     return notifications.slice((offset - 1) * limit, offset * limit)
+  }
+
+  async findByTitleToday(_title: string): Promise<Notification | undefined> {
+    return this.notifications[0]
   }
 
   public async save(notification: Notification): Promise<void> {

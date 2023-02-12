@@ -1,8 +1,13 @@
-import IFindOrdersDTO from '@modules/orders/dtos/IFindOrdersDTO'
 import { FindOneOptions, Repository, getRepository } from 'typeorm'
-import ICreateOrderDTO from '../../../dtos/ICreateOrderDTO'
-import { Order } from '../entities/Order'
+
+import IFindOrdersDTO from '@modules/orders/dtos/IFindOrdersDTO'
+import ICreateOrderDTO from '@modules/orders/dtos/ICreateOrderDTO'
+import {
+  Order,
+  StatusOrder
+} from '@modules/orders/infra/typeorm/entities/Order'
 import IOrdersRepository from './IOrdersRepository'
+import { padStart } from '@shared/utils/StringUtil'
 
 export default class OrdersRepository implements IOrdersRepository {
   private ormRepository: Repository<Order>
@@ -41,6 +46,23 @@ export default class OrdersRepository implements IOrdersRepository {
       skip: options?.offset || 0,
       relations: ['clients']
     })
+  }
+
+  public async fetchAllOpenOrdersScheduledForToday(): Promise<Order[]> {
+    const now = new Date()
+    const month = padStart(String(now.getMonth() + 1), 2, '0')
+    const day = padStart(String(now.getDate()), 2, '0')
+    const dataComplete = `${now.getFullYear()}-${month}-${day}`
+
+    const idsOrders: Array<{ id: string }> =
+      await this.ormRepository.manager.query(
+        `
+        SELECT id FROM orders WHERE status = $1 AND created_at::date = $2
+      `,
+        [StatusOrder.OPEN, dataComplete]
+      )
+
+    return this.ormRepository.findByIds(idsOrders.map(i => i.id))
   }
 
   public findById(

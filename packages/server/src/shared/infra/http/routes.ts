@@ -9,7 +9,7 @@ import { supplierRoute } from '@modules/orders/infra/http/routes/supplier.routes
 import { passwordRouter } from '@modules/users/infra/http/routes/password.routes'
 import { profileRouter } from '@modules/users/infra/http/routes/profile.routes'
 import { refreshTokensRouter } from '@modules/users/infra/http/routes/refresh-token.routes'
-import { notificationRouter } from '@modules/users/infra/http/routes/notification.routes'
+import { notificationRouter } from '@modules/notifications/infra/http/routes/notification.routes'
 
 const routes = Router()
 

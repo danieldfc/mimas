@@ -2,15 +2,16 @@ import { v4 as uuidV4 } from 'uuid'
 import { Client } from '@modules/clients/infra/typeorm/entities/Client'
 import FakeClientsRepository from '@modules/clients/infra/typeorm/repositories/fakes/FakeClientsRepository'
 import { AppError } from '@shared/errors/AppError'
-import { Order } from '../infra/typeorm/entities/Order'
-import { Product } from '../infra/typeorm/entities/Product'
-import { Supplier } from '../infra/typeorm/entities/Supplier'
-import FakeOrdersRepository from '../infra/typeorm/repositories/fakes/FakeOrdersRepository'
-import FakeProductsRepository from '../infra/typeorm/repositories/fakes/FakeProductsRepository'
-import FakeSuppliersRepository from '../infra/typeorm/repositories/fakes/FakeSuppliersRepository'
+import { Order } from '@modules/orders/infra/typeorm/entities/Order'
+import { Product } from '@modules/orders/infra/typeorm/entities/Product'
+import { Supplier } from '@modules/orders/infra/typeorm/entities/Supplier'
+import FakeOrdersRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeOrdersRepository'
+import FakeProductsRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeProductsRepository'
+import FakeSuppliersRepository from '@modules/orders/infra/typeorm/repositories/fakes/FakeSuppliersRepository'
+import FakeNotificationsRepository from '@modules/notifications/infra/typeorm/repositories/fakes/FakeNotificationRepository'
+
 import { CreateOrderService } from './CreateOrderService'
 import { ShowOrderWithProductsService } from './ShowOrderWithProductsService'
-import FakeNotificationsRepository from '@modules/users/infra/typeorm/repositories/fakes/FakeNotificationRepository'
 
 let fakeOrdersRepository: FakeOrdersRepository
 let showOrderWithProductsService: ShowOrderWithProductsService

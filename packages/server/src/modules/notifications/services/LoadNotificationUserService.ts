@@ -2,10 +2,10 @@ import { inject, injectable } from 'tsyringe'
 
 import { AppError } from '@shared/errors/AppError'
 
-import { Notification } from '@modules/users/infra/typeorm/entities/Notification'
+import { Notification } from '@modules/notifications/infra/typeorm/entities/Notification'
 
+import INotificationsRepository from '@modules/notifications/infra/typeorm/repositories/INotificationsRepository'
 import IUsersRepository from '@modules/users/infra/typeorm/repositories/IUsersRepository'
-import INotificationsRepository from '@modules/users/infra/typeorm/repositories/INotificationsRepository'
 
 type IRequestDTO = {
   userId: string

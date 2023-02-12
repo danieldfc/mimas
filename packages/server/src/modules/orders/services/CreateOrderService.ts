@@ -1,15 +1,21 @@
-import { env } from '@config/env'
-
-import IClientsRepository from '@modules/clients/infra/typeorm/repositories/IClientsRepository'
-import INotificationsRepository from '@modules/users/infra/typeorm/repositories/INotificationsRepository'
-import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
 import { In } from 'typeorm'
-import { IMetadadoProduct, IProductMerged } from '../dtos/ICreateOrderDTO'
 
-import { Order } from '../infra/typeorm/entities/Order'
-import IOrdersRepository from '../infra/typeorm/repositories/IOrdersRepository'
-import IProductsRepository from '../infra/typeorm/repositories/IProductsRepository'
+import { env } from '@config/env'
+
+import { AppError } from '@shared/errors/AppError'
+
+import {
+  IMetadadoProduct,
+  IProductMerged
+} from '@modules/orders/dtos/ICreateOrderDTO'
+
+import { Order } from '@modules/orders/infra/typeorm/entities/Order'
+
+import IOrdersRepository from '@modules/orders/infra/typeorm/repositories/IOrdersRepository'
+import IProductsRepository from '@modules/orders/infra/typeorm/repositories/IProductsRepository'
+import IClientsRepository from '@modules/clients/infra/typeorm/repositories/IClientsRepository'
+import INotificationsRepository from '@modules/notifications/infra/typeorm/repositories/INotificationsRepository'
 
 interface IRequest {
   title: string

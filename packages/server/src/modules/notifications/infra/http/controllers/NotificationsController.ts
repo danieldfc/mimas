@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 
-import { LoadNotificationUserService } from '@modules/users/services/LoadNotificationUserService'
-import { ReadNotificationUserService } from '@modules/users/services/ReadNotificationUserService'
+import { LoadNotificationUserService } from '@modules/notifications/services/LoadNotificationUserService'
+import { ReadNotificationUserService } from '@modules/notifications/services/ReadNotificationUserService'
 
 export class NotificationsController {
   public async list(request: Request, response: Response): Promise<Response> {

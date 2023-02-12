@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { NotificationsController } from '../controllers/NotificationsController'
 
-import ensureAuthenticated from '../middlewares/ensureAuthenticated'
+import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated'
 
 const notificationRouter = Router()
 

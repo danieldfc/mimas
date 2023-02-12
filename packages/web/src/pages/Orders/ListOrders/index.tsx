@@ -75,11 +75,7 @@ export default function ListOrders() {
       </HeaderWrapper>
 
       <Content>
-        {!orders.length ? (
-          <ContainerWithoutOrder>
-            Você não possui pedidos cadastrados
-          </ContainerWithoutOrder>
-        ) : (
+        {orders.length ? (
           <TableList>
             <thead>
               <tr>
@@ -97,19 +93,16 @@ export default function ListOrders() {
                     <Link to={`/orders/${order.id}`}>{order.title}</Link>
                   </td>
                   <td className="center">
-                    {!!order.clients.length &&
-                      order.clients.map((client, index) => (
-                        <>
-                          <Link
-                            key={client.id}
-                            to={`/clients/${client.id ?? ''}`}
-                          >
-                            {client.name.split(' ')[0]}
-                          </Link>
-                          {index !== order.clients.length - 1 ? ' | ' : ''}
-                        </>
-                      ))}
-                    {!order.clients.length && 'N/A'}
+                    {order.clients.length
+                      ? order.clients.map((client, index) => (
+                          <div key={client.id}>
+                            <Link to={`/clients/${client.id ?? ''}`}>
+                              {client.name.split(' ')[0]}
+                            </Link>
+                            {index !== order.clients.length - 1 ? ' | ' : ''}
+                          </div>
+                        ))
+                      : 'N/A'}
                   </td>
                   <td className="center">
                     {order.deliveryAt ? parseData(order.deliveryAt) : '-'}h
@@ -148,6 +141,10 @@ export default function ListOrders() {
               ))}
             </tbody>
           </TableList>
+        ) : (
+          <ContainerWithoutOrder>
+            Você não possui pedidos cadastrados
+          </ContainerWithoutOrder>
         )}
       </Content>
     </Container>

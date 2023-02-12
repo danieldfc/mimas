@@ -9,7 +9,7 @@ import {
 
 import { Exclude } from 'class-transformer'
 import { UserToken } from './UserToken'
-import { Notification } from './Notification'
+import { Notification } from '@modules/notifications/infra/typeorm/entities/Notification'
 
 @Entity('users')
 export class User {

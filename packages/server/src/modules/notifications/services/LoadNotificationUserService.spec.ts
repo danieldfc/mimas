@@ -1,9 +1,9 @@
 // import { AppError } from '@shared/errors/AppError'
 
-import { User } from '../infra/typeorm/entities/User'
+import { User } from '@modules/users/infra/typeorm/entities/User'
 
 import FakeUsersRepository from '@modules/users/infra/typeorm/repositories/fakes/FakeUsersRepository'
-import FakeNotificationsRepository from '../infra/typeorm/repositories/fakes/FakeNotificationRepository'
+import FakeNotificationsRepository from '@modules/notifications/infra/typeorm/repositories/fakes/FakeNotificationRepository'
 
 import { LoadNotificationUserService } from './LoadNotificationUserService'
 import { AppError } from '@shared/errors/AppError'
