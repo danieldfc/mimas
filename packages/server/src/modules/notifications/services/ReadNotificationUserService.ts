@@ -4,6 +4,7 @@ import { AppError } from '@shared/errors/AppError'
 
 import IUsersRepository from '@modules/users/infra/typeorm/repositories/IUsersRepository'
 import INotificationsRepository from '@modules/notifications/infra/typeorm/repositories/INotificationsRepository'
+import { Notification } from '../infra/typeorm/entities/Notification'
 
 type IRequestDTO = {
   id: string
@@ -20,7 +21,7 @@ export class ReadNotificationUserService {
     private notificationRepository: INotificationsRepository
   ) {}
 
-  async execute({ id, userId }: IRequestDTO): Promise<void> {
+  async execute({ id, userId }: IRequestDTO): Promise<Notification> {
     const user = await this.userRepository.findById(userId)
 
     if (!user) {
@@ -36,5 +37,7 @@ export class ReadNotificationUserService {
     notification.isReaded = true
 
     await this.notificationRepository.save(notification)
+
+    return notification
   }
 }

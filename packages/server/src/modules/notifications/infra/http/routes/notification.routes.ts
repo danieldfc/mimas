@@ -11,7 +11,7 @@ notificationRouter.use(ensureAuthenticated)
 
 notificationRouter.get('/', notificationsController.list)
 
-notificationRouter.patch('/:id', notificationsController.read)
+notificationRouter.get('/:id', notificationsController.read)
 
 notificationRouter.put('/', notificationsController.readAll)
 

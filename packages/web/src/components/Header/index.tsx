@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FiPower } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 
@@ -18,6 +18,8 @@ import {
 import { navigateLink } from './util'
 
 export function Header() {
+  const [isOpenNotification, setIsOpenNotification] = useState(false)
+
   const { signOut, user } = useAuth()
   return (
     <Container>
@@ -41,7 +43,10 @@ export function Header() {
           </Navigation>
         </Wrapper>
         <WrapperButtons>
-          <NotificationHeader />
+          <NotificationHeader
+            isOpenNotification={isOpenNotification}
+            onClick={() => setIsOpenNotification(!isOpenNotification)}
+          />
           <button type="button" onClick={signOut}>
             <FiPower />
           </button>

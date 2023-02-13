@@ -34,7 +34,7 @@ export function ListClients() {
 
       <Content>
         {clients.length ? (
-          <TableList total={clients.length}>
+          <TableList>
             <thead>
               <tr>
                 <th> CLIENTE </th>

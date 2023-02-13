@@ -366,10 +366,7 @@ export function ListSuppliers() {
                     Cadastrar novos produtos
                   </Button>
                 </WrapperButton>
-                <TableList
-                  total={(supplierSelected?.products ?? []).length}
-                  loading={loading}
-                >
+                <TableList loading={loading}>
                   <>
                     <thead>
                       <tr>
@@ -449,7 +446,7 @@ export function ListSuppliers() {
                 </Button>
               </Form>
 
-              <TableList total={(supplierSelected?.products ?? []).length}>
+              <TableList>
                 <thead>
                   <tr>
                     <th> PRODUTO </th>

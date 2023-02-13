@@ -21,7 +21,8 @@ export interface Notification {
 
 interface NotificationProviderData {
   notifications: Notification[]
-  readAllNotifications(): Promise<void>
+  read(id: string): Promise<void>
+  readAll(): Promise<void>
 }
 
 const NotificationContext = createContext<NotificationProviderData>(
@@ -33,6 +34,7 @@ const NotificationProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     async function getNotifications() {
+      await api.get('/orders/notifications/today')
       const response = await api.get('/notifications')
       setNotifications([...response.data.notifications])
       return response.data.notifications as Notification[]
@@ -40,14 +42,40 @@ const NotificationProvider: React.FC = ({ children }) => {
     getNotifications()
   }, [])
 
-  const readAllNotifications = useCallback(async () => {
+  const readAll = useCallback(async () => {
     await api.put('/notifications')
+
+    setNotifications(oldNotifications => {
+      oldNotifications.forEach(oldNotification => {
+        oldNotification.isReaded = true
+      })
+      return [...oldNotifications]
+    })
   }, [])
 
+  const read = useCallback(
+    async (id: string) => {
+      const notificationIndex = notifications.findIndex(
+        notification => notification.id === id
+      )
+      if (notificationIndex < 0) return
+
+      await api.patch(`/notifications/${id}`)
+
+      setNotifications(oldNotifications => {
+        oldNotifications[notificationIndex] = {
+          ...oldNotifications[notificationIndex],
+          isReaded: true
+        }
+
+        return oldNotifications
+      })
+    },
+    [notifications]
+  )
+
   return (
-    <NotificationContext.Provider
-      value={{ notifications, readAllNotifications }}
-    >
+    <NotificationContext.Provider value={{ notifications, readAll, read }}>
       {children}
     </NotificationContext.Provider>
   )

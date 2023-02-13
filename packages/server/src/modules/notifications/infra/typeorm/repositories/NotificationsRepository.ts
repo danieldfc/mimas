@@ -54,12 +54,19 @@ export default class NotificationsRepository
     const day = padStart(String(now.getDate()), 2, '0')
     const dataComplete = `${now.getFullYear()}-${month}-${day}`
 
-    return this.ormRepository.manager.query(
-      `
-        SELECT * FROM notifications WHERE title = $1 AND created_at::date = $2
+    const notificationIds: Array<{ id: string }> =
+      await this.ormRepository.manager.query(
+        `
+        SELECT id FROM notifications WHERE title = $1 AND created_at::date = $2
       `,
-      [title, dataComplete]
-    )
+        [title, dataComplete]
+      )
+
+    if (!notificationIds.length) return undefined
+
+    return this.ormRepository.findOne({
+      where: { id: notificationIds[0].id }
+    })
   }
 
   async save(notification: Notification): Promise<void> {

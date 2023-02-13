@@ -57,7 +57,7 @@ export default class OrdersRepository implements IOrdersRepository {
     const idsOrders: Array<{ id: string }> =
       await this.ormRepository.manager.query(
         `
-        SELECT id FROM orders WHERE status = $1 AND created_at::date = $2
+        SELECT id FROM orders WHERE status = $1 AND delivery_at::date = $2
       `,
         [StatusOrder.OPEN, dataComplete]
       )

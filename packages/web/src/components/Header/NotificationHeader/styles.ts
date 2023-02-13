@@ -84,13 +84,14 @@ export const Content = styled.div`
   }
 `
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ isOpen: boolean }>`
   position: absolute;
   right: 0px;
   top: calc(100% + 13px);
   width: 448px;
   box-shadow: rgb(0 0 0 / 60%) 0px 5px 20px;
   display: block;
+  overflow: hidden;
 
   header {
     display: flex;

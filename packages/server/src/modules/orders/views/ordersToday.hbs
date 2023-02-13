@@ -1,57 +1,81 @@
 <style>
-  .message-content {
-    font-family: Arial, Helvetica, sans-serif;
-    max-width: 600px;
-    font-size: 18px;
-    line-height: 21px;
+  * {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
   }
 
-  .order {
+  .message-content {
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 700px;
+    font-size: 18px;
+    line-height: 21px;
+
+    padding: 20px;
+  }
+
+  .orders {
     display: flex;
     flex-direction: column;
+    margin: 0;
+  }
+
+  .orders > :nth-child(2) {
+    margin-top: 20px;
+  }
+
+  .order + .order {
+    border-top: 1px solid gray;
+    padding-top: 10px;
   }
 
   .clients {
     display: flex;
     flex-direction: column;
   }
+
+  .not-clients {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+
+    margin-bottom: 10px;
+
+    font-style: italic;
+  }
+
+  .footer {
+    margin: 35px 0;
+  }
 </style>
 
 <div class="message-content">
-    <p>Olá, {{ username }}</p>
-    <div class="order">
-      Gostaríamos de informar que existe pedidos para serem entregues hoje.</p>
-      {{#each orders}}
+  <p>Olá, {{ username }}</p>
+  <div class="orders">
+    <p>Gostaríamos de informar que existe pedidos para serem entregues hoje.</p><br />
+    {{#each orders}}
+      <div class="order">
         <div>
           <a href="{{ url }}" target="_blank">#{{inc @index}} {{ name }}</a>
           <p>Preço final: {{ price }}</p>
           <p>Horário: {{ deliveryAt }}</p>
         </div>
-        Clientes:
-        <ol class="clients">
-          {{#clientes}}
-            <li>{{ name }} - {{ phone }} - {{ email }}</li>
-          {{/clientes}}
-        </ol>
-      {{/each}}
-    <div>
-      Obrigado!<br/>
-      <strong>Equipe Dacia Bordados</strong>
-    </p>
+        {{#if clientes.length }}
+          Clientes:
+          <ol class="clients">
+            {{#each clientes}}
+              <li>{{ name }} - {{ phone }} - {{ email }}</li>
+            {{/each}}
+          </ol>
+        {{else}}
+          <p class="not-clients">Não possui cliente(s) vinculado(s) ao pedido.</p>
+        {{/if}}
+      </div>
+    {{/each}}
   </div>
-
-{{!--
-type ClienteTemplate = {
-  name: string
-  phone: string
-  email: string
-}
-
-inicio type ITemplateDataOrder = {
-  name: string
-  price: number
-  cliente: ClienteTemplate[]
-  url: string
-  deliveryAt: string
-}
- --}}
+  <div class="footer">
+    Obrigado!<br/>
+    <strong>Equipe Dacia Bordados</strong>
+  </div>
+</div>

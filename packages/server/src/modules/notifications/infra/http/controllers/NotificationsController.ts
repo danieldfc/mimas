@@ -27,12 +27,12 @@ export class NotificationsController {
 
     const readNotificationUser = container.resolve(ReadNotificationUserService)
 
-    await readNotificationUser.execute({
+    const notification = await readNotificationUser.execute({
       id,
       userId
     })
 
-    return response.status(204).json()
+    return response.status(200).json({ notification })
   }
 
   public async readAll(

@@ -56,7 +56,7 @@ export class OrdersTodayService {
       await this.notificationsRepository.create({
         title: this.titleNotification,
         userId: userAdmin.id,
-        description: `Verifique seu e-mail, existe ${orders.length} em aberto.`
+        description: `Verifique seu e-mail, existe ${orders.length} pedidos em aberto.`
       })
       const ordersTodayTemplate = resolve(
         __dirname,
@@ -64,15 +64,15 @@ export class OrdersTodayService {
         'views',
         'ordersToday.hbs'
       )
-      const data = new Date()
+      const now = new Date()
+      const day = padStart(String(now.getDate()), 2, '0')
+      const month = padStart(String(now.getMonth() + 1), 2, '0')
       this.mailProvider.sendMail({
         to: {
           email: userAdmin.email,
           name: userAdmin.name
         },
-        subject: `[BORDADOS] Seus pedidos para hoje ${data.getDate()}/${
-          data.getMonth() + 1
-        }`,
+        subject: `[BORDADOS] Seus pedidos para hoje ${day}/${month}/${now.getFullYear()}`,
         templateData: {
           file: ordersTodayTemplate,
           variables: {
