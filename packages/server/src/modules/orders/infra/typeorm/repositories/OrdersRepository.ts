@@ -42,8 +42,8 @@ export default class OrdersRepository implements IOrdersRepository {
 
   public async findAll(options?: IFindOrdersDTO): Promise<Order[]> {
     return this.ormRepository.find({
-      take: options?.first || 10,
-      skip: options?.offset || 0,
+      ...(options?.first && { take: options.first }),
+      skip: options?.offset ?? 0,
       relations: ['clients']
     })
   }

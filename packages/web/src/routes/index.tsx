@@ -13,6 +13,7 @@ import { ListSuppliers } from '../pages/Suppliers/ListSuppliers'
 import { CreateSupplier } from '../pages/Suppliers/CreateSupplier'
 import Profile from '../pages/Profile'
 import { ShowClient } from '../pages/Clients/ShowClient'
+import Notifications from '../pages/Notifications'
 
 const Routes: React.FC = () => (
   <Switch>
@@ -29,6 +30,8 @@ const Routes: React.FC = () => (
 
     <Route path="/suppliers" component={ListSuppliers} isPrivate />
     <Route path="/create-supplier" component={CreateSupplier} isPrivate />
+
+    <Route path="/notifications" component={Notifications} isPrivate />
   </Switch>
 )
 

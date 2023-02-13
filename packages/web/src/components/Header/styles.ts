@@ -30,18 +30,6 @@ export const Content = styled.div`
     border-radius: 50%;
   }
 
-  button {
-    margin-left: auto;
-    background: transparent;
-    border: 0;
-
-    svg {
-      color: #000;
-      width: 24px;
-      height: 24px;
-    }
-  }
-
   @media (max-width: 1280px) {
     width: 75%;
 
@@ -65,6 +53,27 @@ export const Content = styled.div`
       margin-right: 0;
       height: 2rem;
       border-radius: 50%;
+    }
+  }
+`
+
+export const WrapperButtons = styled.div`
+  max-width: 1280px;
+  margin: 0 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  button {
+    background: none;
+    border: 0;
+    display: flex;
+
+    > svg {
+      color: #000;
+      width: 24px;
+      height: 24px;
     }
   }
 `

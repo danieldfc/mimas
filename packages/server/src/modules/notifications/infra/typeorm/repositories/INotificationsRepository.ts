@@ -9,7 +9,7 @@ export default interface INotificationsRepository {
   create(data: ICreateNotification): Promise<Notification>
   findAllByUserId(
     userId: string,
-    options: IFindNotification
+    options?: IFindNotification
   ): Promise<Notification[]>
   findByTitleToday(title: string): Promise<Notification | undefined>
   findById(id: string): Promise<Notification | undefined>

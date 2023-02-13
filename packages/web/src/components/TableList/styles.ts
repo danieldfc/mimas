@@ -133,8 +133,8 @@ export const StyledTable = styled.table`
 `
 
 export const TableWrapper = styled.div`
+  max-width: 1240px;
   width: 100%;
-  background: red;
   padding: 1.5rem;
   border-radius: 0.4rem;
   background: #fff;

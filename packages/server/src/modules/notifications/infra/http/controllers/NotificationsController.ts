@@ -3,6 +3,7 @@ import { container } from 'tsyringe'
 
 import { LoadNotificationUserService } from '@modules/notifications/services/LoadNotificationUserService'
 import { ReadNotificationUserService } from '@modules/notifications/services/ReadNotificationUserService'
+import { ReadAllNotificationUserService } from '@modules/notifications/services/ReadAllNotificationUserService'
 
 export class NotificationsController {
   public async list(request: Request, response: Response): Promise<Response> {
@@ -28,6 +29,23 @@ export class NotificationsController {
 
     await readNotificationUser.execute({
       id,
+      userId
+    })
+
+    return response.status(204).json()
+  }
+
+  public async readAll(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
+    const { id: userId } = request.user
+
+    const readAllNotificationUser = container.resolve(
+      ReadAllNotificationUserService
+    )
+
+    await readAllNotificationUser.execute({
       userId
     })
 

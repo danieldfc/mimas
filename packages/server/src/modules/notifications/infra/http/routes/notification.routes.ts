@@ -13,4 +13,6 @@ notificationRouter.get('/', notificationsController.list)
 
 notificationRouter.patch('/:id', notificationsController.read)
 
+notificationRouter.put('/', notificationsController.readAll)
+
 export { notificationRouter }

@@ -4,14 +4,14 @@ import { container } from 'tsyringe'
 
 export class FindOrdersWithProductsController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { first, offset } = request.query
+    const { first = null, offset = 0 } = request.query
 
     const findOrdersWithProductsService = container.resolve(
       FindOrdersWithProductsService
     )
 
     const orders = await findOrdersWithProductsService.execute({
-      first: parseInt(first as string),
+      first: first ? parseInt(first as string) : null,
       offset: parseInt(offset as string)
     })
 

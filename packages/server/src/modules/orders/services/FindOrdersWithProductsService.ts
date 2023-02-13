@@ -10,7 +10,7 @@ export class FindOrdersWithProductsService {
     private ordersRepository: IOrdersRepository
   ) {}
 
-  async execute({ first = 10, offset = 0 }: IFindOrdersDTO): Promise<Order[]> {
+  async execute({ first, offset }: IFindOrdersDTO): Promise<Order[]> {
     return this.ordersRepository.findAll({
       first,
       offset

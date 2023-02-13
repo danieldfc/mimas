@@ -1,4 +1,4 @@
 export default interface IFindOrdersDTO {
-  first?: number
+  first?: number | null
   offset?: number
 }
