@@ -38,7 +38,7 @@ const notificationTypeRead = {
   `
 }
 
-export const NotificationItem = styled.div<NotificationItemProps>`
+export const NotificationItem = styled.a<NotificationItemProps>`
   background: white;
   color: #7f3e98;
   padding: 1rem;
