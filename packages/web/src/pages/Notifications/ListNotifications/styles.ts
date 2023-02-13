@@ -17,6 +17,15 @@ export const HeaderWrapper = styled.header`
     align-items: center;
     color: #cfbaf0;
   }
+
+  button {
+    display: flex;
+    align-items: center;
+    color: #cfbaf0;
+
+    background: none;
+    border: none;
+  }
 `
 
 export const Content = styled.main`

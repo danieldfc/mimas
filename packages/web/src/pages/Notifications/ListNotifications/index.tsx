@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Header } from '../../../components/Header'
 import { useNotification } from '../../../hooks/notification'
 import { useToast } from '../../../hooks/toast'
@@ -15,6 +15,7 @@ import {
 export default function ListNotifications() {
   const { notifications, read } = useNotification()
   const { addToast } = useToast()
+  const history = useHistory()
 
   const readNotification = useCallback(
     async (id: string) => {
@@ -42,10 +43,10 @@ export default function ListNotifications() {
       <HeaderWrapper>
         <h3>Notificações</h3>
 
-        <Link to="/dashboard">
+        <button type="button" onClick={history.goBack}>
           <FiArrowLeft />
           Voltar
-        </Link>
+        </button>
       </HeaderWrapper>
 
       <Content>

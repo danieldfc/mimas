@@ -13,5 +13,6 @@ export default interface INotificationsRepository {
   ): Promise<Notification[]>
   findByTitleToday(title: string): Promise<Notification | undefined>
   findById(id: string): Promise<Notification | undefined>
+  saveAllRead(userId: string): Promise<void>
   save(notification: Notification): Promise<void>
 }

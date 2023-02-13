@@ -64,4 +64,12 @@ export default class FakeNotificationsRepository
 
     this.notifications[findIndex] = notification
   }
+
+  public async saveAllRead(userId: string): Promise<void> {
+    this.notifications.forEach(n => {
+      if (n.userId === userId) {
+        n.isReaded = true
+      }
+    })
+  }
 }

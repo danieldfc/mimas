@@ -26,13 +26,6 @@ export class ReadAllNotificationUserService {
       throw new AppError('User not found', 404)
     }
 
-    const notifications = await this.notificationRepository.findAllByUserId(
-      userId
-    )
-
-    notifications.forEach(async notification => {
-      notification.isReaded = true
-      await this.notificationRepository.save(notification)
-    })
+    await this.notificationRepository.saveAllRead(user.id)
   }
 }

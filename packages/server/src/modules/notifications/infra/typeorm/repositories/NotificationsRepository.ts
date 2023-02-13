@@ -72,4 +72,8 @@ export default class NotificationsRepository
   async save(notification: Notification): Promise<void> {
     await this.ormRepository.save(notification)
   }
+
+  async saveAllRead(userId: string): Promise<void> {
+    await this.ormRepository.update({ userId }, { isReaded: true })
+  }
 }
