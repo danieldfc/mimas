@@ -18,7 +18,7 @@
     "test": "cross-env NODE_ENV=test npx jest --no-cache",
     "test:dev": "cross-env NODE_ENV=test npx jest --no-cache --watchAll",
     "test:coverage": "cross-env NODE_ENV=test npx jest --no-cache --coverage",
-    "vercel-build: "yarn typeorm migration:run && yarn seed:run"
+    "vercel-build": "yarn typeorm migration:run && yarn seed:run"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
