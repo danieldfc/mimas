@@ -4,14 +4,15 @@
   "outputDirectory": "dist",
   "builds": [
     {
-      "src": "dist/shared/infra/http/server.js",
+      "src": "src/shared/infra/http/server.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "dist/shared/infra/http/server.js"
+      "dest": "src/shared/infra/http/server.ts"
     }
-  ]
+  ],
+  "rewrites": [{ "source": "/(.*)", "destination": "/dist/shared/infra/http/server.js" }]
 }
