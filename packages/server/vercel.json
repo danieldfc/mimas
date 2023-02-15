@@ -3,7 +3,8 @@
   "builds": [
     {
       "src": "dist/shared/infra/http/server.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": { "includeFiles": ["dist/**"] }
     }
   ],
   "routes": [
