@@ -1,10 +1,4 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "src/*",
-      "use": "@vercel/node"
-    }
-  ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/dist/shared/infra/http/server.js" }]
+  "rewrites": [{ "source": "/(.*)", "destination": "dist/shared/infra/http/server.js" }]
 }
