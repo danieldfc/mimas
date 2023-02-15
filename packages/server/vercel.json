@@ -1,17 +1,9 @@
 {
-  "name": "mimas-server",
   "version": 2,
-  "outputDirectory": "dist",
   "builds": [
     {
       "src": "src/shared/infra/http/server.ts",
       "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "src/shared/infra/http/server.ts"
     }
   ],
   "rewrites": [{ "source": "/(.*)", "destination": "/dist/shared/infra/http/server.js" }]
