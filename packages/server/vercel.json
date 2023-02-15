@@ -3,13 +3,12 @@
   "builds": [
     {
       "src": "dist/shared/infra/http/server.js",
-      "use": "@now/node@canary",
-      "config": { "includeFiles": ["dist/**"] }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "(.*)",
+      "src": "/(.*)",
       "dest": "dist/shared/infra/http/server.js"
     }
   ]
