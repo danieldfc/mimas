@@ -2,8 +2,8 @@
   "version": 2,
   "builds": [
     {
-      "src": "src/shared/infra/http/server.ts",
-      "use": "@vercel/node",
+      "src": "dist/shared/infra/http/server.js",
+      "use": "@now/node@canary",
       "config": { "includeFiles": ["dist/**"] }
     }
   ],
