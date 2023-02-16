@@ -33,7 +33,7 @@ body {
 }
 
 body, button, input {
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px;
   line-height: 22px;
 

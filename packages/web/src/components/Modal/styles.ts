@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Modal from 'react-modal'
-import { lighten } from 'polished'
+import { shade } from 'polished'
 
 export const ModalContainer = styled(Modal)`
   display: flex;
@@ -9,7 +9,7 @@ export const ModalContainer = styled(Modal)`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1;
+  z-index: 2;
 
   h2 {
     color: var(--black-color);
@@ -105,18 +105,18 @@ export const ModalFooter = styled.footer`
     border-radius: 0.5rem;
     border: none;
 
-    background-color: ${lighten(0.2, '#5e00a3')};
+    background-color: var(--secondary-color);
     color: var(--white-color);
     transition: background-color 0.2s;
 
     :hover {
-      background-color: var(--secondary-color);
+      background-color: ${shade(0.2, '#5e00a3')};
     }
   }
 `
 
 export const ModalClosed = styled.button`
-  background: ${lighten(0.15, '#5e00a3')};
+  background: var(--secondary-color);
   border: none;
   padding: 0.15rem 0.5rem;
   height: 50%;
@@ -125,6 +125,6 @@ export const ModalClosed = styled.button`
   transition: background-color 0.2s;
 
   :hover {
-    background: ${lighten(0.05, '#5e00a3')};
+    background: ${shade(0.2, '#5e00a3')};
   }
 `

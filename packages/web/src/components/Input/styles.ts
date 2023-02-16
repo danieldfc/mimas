@@ -43,12 +43,17 @@ export const Container = styled.div.attrs({
     border: 0;
     background: transparent;
     color: var(--dark-color);
+    width: 100%;
     &::placeholder {
       color: var(--gray-color);
     }
   }
   svg {
     margin-right: 16px;
+  }
+
+  & + & {
+    margin-top: 1rem;
   }
 
   @media (max-width: 425px) {
@@ -71,5 +76,21 @@ export const Error = styled(Tooltip)`
     &::before {
       border-color: var(--error-color) transparent;
     }
+  }
+`
+
+export const Wrapper = styled.div`
+  label {
+    display: inline;
+    background-color: var(--white-color);
+    position: absolute;
+    margin-bottom: 15px;
+    font-size: 0.8rem;
+    padding: 0 10px;
+    transform: translate(1rem, -7px);
+  }
+
+  & + & {
+    margin-top: 0.5rem;
   }
 `

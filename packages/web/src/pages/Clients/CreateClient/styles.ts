@@ -1,4 +1,3 @@
-import { shade } from 'polished'
 import styled from 'styled-components'
 
 export const Container = styled.div``
@@ -27,14 +26,6 @@ export const Content = styled.div`
   max-width: 1240px;
   margin: 2.5rem auto;
   padding: 0 2.5rem;
-
-  button {
-    background-color: var(--secondary-color);
-
-    &:hover {
-      background-color: ${shade(0.2, '#561482')};
-    }
-  }
 
   form > button:last-child {
     width: 100%;

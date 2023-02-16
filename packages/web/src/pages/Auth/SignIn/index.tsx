@@ -14,7 +14,7 @@ import { useToast } from '../../../hooks/toast'
 import LogoImg from '../../../assets/logo.png'
 
 import getValidationErrors from '../../../utils/getValidationError'
-import { Container, Content, Header, WrapperArticle } from './styles'
+import { Container, Content, Header, Separator, WrapperArticle } from './styles'
 
 interface SignInFormData {
   email: string
@@ -96,6 +96,7 @@ export default function SignIn() {
             {/* <Link to="/forgot-password">Esqueci minha senha</Link> */}
           </Form>
         </WrapperArticle>
+        <Separator />
         <WrapperArticle className="login-right">
           <img src={LogoImg} alt="Dacia Bordados" />
         </WrapperArticle>
