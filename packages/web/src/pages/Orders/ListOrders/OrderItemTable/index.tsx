@@ -77,7 +77,7 @@ export default function OrderItemTable({
       </td>
       <td className="actions">
         <div>
-          {order.status === 'open' ? (
+          {order.status === 'open' && (
             <>
               <button
                 type="button"
@@ -94,9 +94,13 @@ export default function OrderItemTable({
                 Cancelar
               </button>
             </>
-          ) : order.status === 'cancel' ? (
+          )}
+
+          {order.status === 'cancel' && (
             <strong className="cancel">Cancelado</strong>
-          ) : (
+          )}
+
+          {order.status === 'finish' && (
             <strong className="finish">Finalizado</strong>
           )}
         </div>

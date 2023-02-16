@@ -1,14 +1,16 @@
 import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import * as Yup from 'yup'
+import { isAfter } from 'date-fns'
 import { api } from '../../../services/api'
 
 import {
   MdDateRange,
   MdDescription,
   MdOutlinePriceCheck,
+  MdTimer,
   MdTitle
 } from 'react-icons/md'
 import { FiArrowLeft } from 'react-icons/fi'
@@ -18,14 +20,6 @@ import { Header } from '../../../components/Header'
 import Input from '../../../components/Input'
 import { useClient } from '../../../hooks/client'
 
-import {
-  Container,
-  Content,
-  HeaderWrapper,
-  InfoPedido,
-  SelectorClient,
-  WrapperContent
-} from './styles'
 import { CardListProducts } from '../../../components/CardListProducts'
 import SelectInput from '../../../components/SelectInput'
 import ModalRender from '../../../components/Modal'
@@ -34,10 +28,22 @@ import getValidationErrors from '../../../utils/getValidationError'
 import ListProductsAdd from '../../../components/ListProductsAdded'
 import { Product } from '../../../interfaces/Product'
 
+import {
+  Container,
+  Content,
+  HeaderWrapper,
+  InfoPedido,
+  SelectorClient,
+  WrapperContent,
+  WrapperDate
+} from './styles'
+import { padStart } from '../../../utils/formatDate'
+
 type IFormDataOrder = {
   title: string
   description?: string
-  deliveryAt: Date
+  deliveryDate: string
+  deliveryTime: string
   workmanship: number
   clientId: string
   products: Product[]
@@ -58,6 +64,13 @@ export function CreateOrder() {
     setModalIsOpen(false)
   }, [])
 
+  const minDateNow = useMemo(() => {
+    const now = new Date()
+    const month = padStart(String(now.getMonth() + 1), 2, '0')
+    const day = padStart(String(now.getDate()), 2, '0')
+    return `${now.getFullYear()}-${month}-${day}`
+  }, [])
+
   const handleSubmit = useCallback(
     async (data: IFormDataOrder) => {
       try {
@@ -75,9 +88,36 @@ export function CreateOrder() {
             ]
           }, [])
 
+        if (!data.deliveryDate || !data.deliveryTime) {
+          addToast({
+            type: 'error',
+            title: 'Data e horário de entrega obrigatório',
+            description:
+              'Informe uma data e horário de entrega, e tente novamente.'
+          })
+          return
+        }
+
+        if (
+          !isAfter(
+            new Date(`${data.deliveryDate}T${data.deliveryTime}:00`),
+            new Date()
+          )
+        ) {
+          addToast({
+            type: 'error',
+            title: 'Data e horário de entrega',
+            description:
+              'Informe uma data e horário de entrega no futuro, e tente novamente.'
+          })
+          return
+        }
+
         const order = {
           ...data,
-          deliveryAt: new Date(`${data.deliveryAt}:00-00:00`),
+          deliveryAt: new Date(
+            `${data.deliveryDate}T${data.deliveryTime}:00-00:00`
+          ).toISOString(),
           clientsId,
           metadado: produtos,
           workmanship: +data.workmanship
@@ -87,8 +127,13 @@ export function CreateOrder() {
           clientsId: Yup.array()
             .of(Yup.string().uuid())
             .required('Selecione pelo menos 1 cliente'),
-          metadado: Yup.array().min(1).required('Produtos obrigatórios'),
-          workmanship: Yup.number().min(1),
+          metadado: Yup.array()
+            .min(1, 'Adicione pelo menos 1 produto')
+            .required('Produtos obrigatórios'),
+          workmanship: Yup.number().min(
+            1,
+            'Preço de mão de obra é obrigatório'
+          ),
           title: Yup.string().required('Título é obrigatório'),
           description: Yup.string().notRequired(),
           deliveryAt: Yup.date()
@@ -104,6 +149,7 @@ export function CreateOrder() {
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)
+          console.log(errors)
 
           formRef.current?.setErrors(errors)
 
@@ -162,54 +208,66 @@ export function CreateOrder() {
       <Content>
         <InfoPedido>
           <Form ref={formRef} onSubmit={handleSubmit} id="form-create-order">
-            <div>
-              <SelectorClient>
-                <SelectInput
-                  itens={clients.map(p => ({ label: p.name, value: p.id }))}
-                  onChange={(event: any) => {
-                    if (event?.length) {
-                      setClientsId(() => [...event.map((e: any) => e.value)])
-                    } else {
-                      setClientsId([])
-                    }
-                  }}
-                  title="Cliente"
-                  id="form-client-id"
-                  name="clientId"
-                  isClearable
-                  isMulti
-                />
-              </SelectorClient>
+            <SelectorClient>
+              <SelectInput
+                itens={clients.map(p => ({ label: p.name, value: p.id }))}
+                onChange={(event: any) => {
+                  if (event?.length) {
+                    setClientsId(() => [...event.map((e: any) => e.value)])
+                  } else {
+                    setClientsId([])
+                  }
+                }}
+                title="Clientes"
+                id="form-client-id"
+                name="clientId"
+                isClearable
+                isMulti
+              />
+            </SelectorClient>
 
-              <Input
-                icon={MdTitle}
-                name="title"
-                placeholder="Título"
-                disabled={!clientsId.length}
-              />
-              <Input
-                icon={MdDescription}
-                name="description"
-                placeholder="Descrição"
-                disabled={!clientsId.length}
-              />
-              <Input
-                icon={MdOutlinePriceCheck}
-                name="workmanship"
-                placeholder="Preço de mão de obra"
-                type="number"
-                onChange={changeValueMaoObra}
-                disabled={!clientsId.length}
-              />
+            <Input
+              icon={MdTitle}
+              name="title"
+              placeholder="Título"
+              disabled={!clientsId.length}
+            />
+            <Input
+              icon={MdDescription}
+              name="description"
+              placeholder="Descrição"
+              disabled={!clientsId.length}
+            />
+            <Input
+              icon={MdOutlinePriceCheck}
+              name="workmanship"
+              placeholder="Preço de mão de obra"
+              type="number"
+              onChange={changeValueMaoObra}
+              disabled={!clientsId.length}
+            />
+            <WrapperDate>
               <Input
                 icon={MdDateRange}
-                name="deliveryAt"
-                placeholder="Preço de mão de obra"
-                type="datetime-local"
-                min={new Date().toISOString().slice(0, -8)}
+                name="deliveryDate"
+                placeholder="Data de entrega"
+                type="date"
+                min={minDateNow}
                 disabled={!clientsId.length}
               />
-            </div>
+              <Input
+                icon={MdTimer}
+                name="deliveryTime"
+                placeholder="Horário de entrega"
+                type="time"
+                disabled={!clientsId.length}
+              />
+            </WrapperDate>
+
+            <Button type="submit" label="little" disabled={!clientsId.length}>
+              Cadastrar pedido
+            </Button>
+
             <ModalRender
               isOpen={modalIsOpen}
               onAfterClose={() => changeValueMaoObra()}
@@ -218,9 +276,6 @@ export function CreateOrder() {
             >
               <CardListProducts products={products} />
             </ModalRender>
-            <Button type="submit" label="little" disabled={!clientsId.length}>
-              Cadastrar pedido
-            </Button>
           </Form>
         </InfoPedido>
         <WrapperContent>

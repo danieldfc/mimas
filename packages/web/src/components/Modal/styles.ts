@@ -12,7 +12,7 @@ export const ModalContainer = styled(Modal)`
   z-index: 1;
 
   h2 {
-    color: black;
+    color: var(--black-color);
   }
 
   @media (max-width: 1280px) {
@@ -31,7 +31,7 @@ export const ModalContainer = styled(Modal)`
 export const ModalContent = styled.div`
   width: 50%;
   height: auto;
-  background-color: #fff;
+  background-color: var(--white-color);
   border-radius: 8px;
   padding: 0.8rem 1.4rem;
 
@@ -93,7 +93,7 @@ export const ModalMain = styled.main`
 `
 
 export const ModalFooter = styled.footer`
-  border-top: 1px solid #000;
+  border-top: 1px solid var(--dark-color);
   margin-top: 1rem;
   padding: 1rem;
   display: flex;
@@ -105,26 +105,26 @@ export const ModalFooter = styled.footer`
     border-radius: 0.5rem;
     border: none;
 
-    background-color: ${lighten(0.2, '#7f3e98')};
-    color: #fff;
+    background-color: ${lighten(0.2, '#5e00a3')};
+    color: var(--white-color);
     transition: background-color 0.2s;
 
     :hover {
-      background-color: #7f3e98;
+      background-color: var(--secondary-color);
     }
   }
 `
 
 export const ModalClosed = styled.button`
-  background: ${lighten(0.15, '#7f3e98')};
+  background: ${lighten(0.15, '#5e00a3')};
   border: none;
   padding: 0.15rem 0.5rem;
   height: 50%;
   border-radius: 50%;
-  color: #fff;
+  color: var(--white-color);
   transition: background-color 0.2s;
 
   :hover {
-    background: ${lighten(0.05, '#7f3e98')};
+    background: ${lighten(0.05, '#5e00a3')};
   }
 `

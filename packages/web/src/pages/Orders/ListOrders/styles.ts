@@ -30,7 +30,7 @@ export const HeaderWrapper = styled.div`
   a {
     display: flex;
     align-items: center;
-    color: #cfbaf0;
+    color: var(--lighten-color);
   }
 `
 
@@ -43,8 +43,8 @@ export const ContainerWithoutOrder = styled.div`
   height: 3rem;
   margin: 0 auto;
 
-  background-color: white;
-  color: black;
+  background-color: var(--white-color);
+  color: var(--black-color);
   padding: 3rem;
 
   border-radius: 1rem;

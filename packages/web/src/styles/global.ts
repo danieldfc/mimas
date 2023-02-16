@@ -8,9 +8,27 @@ export default createGlobalStyle`
   box-sizing: border-box;
 }
 
+:root {
+  --primary-color: #2a0d41;
+  --secondary-color: #5e00a3;
+  --secondary-hover-color: #c5abd5;
+  --white-color: #ffffff;
+  --black-color: #000000;
+  --orange-color: #f09000;
+  --gray-color: #666360;
+  --gray-dark-color: #333;
+  --lighten-color: #e2d4ea;
+  --dark-color: #271f39;
+  --success-color: #008200;
+  --error-color: #82001b;
+  --info-color: #002982;
+  --btn-color-delete: #e0144c;
+  --ping-notification-color: #e02e2e;
+}
+
 body {
-  background: #7f3e98;
-  color: #fff;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  color: var(--white-color);
   -webkit-font-smoothing: antialiased;
 }
 

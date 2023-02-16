@@ -19,18 +19,18 @@ export const Container = styled.div.attrs({
   ${props =>
     props.isErrored &&
     css`
-      border-color: #c53030;
+      border-color: var(--error-color);
     `}
   ${props =>
     props.isFocused &&
     css`
-      color: #7f3e98;
-      border-color: #7f3e98;
+      color: var(--secondary-color);
+      border-color: var(--secondary-color);
     `}
   ${props =>
     props.isFilled &&
     css`
-      color: #7f3e98;
+      color: var(--secondary-color);
     `}
 
   input {
@@ -42,7 +42,7 @@ export const Container = styled.div.attrs({
 `
 
 export const Content = styled.div`
-  background-color: #fff;
+  background-color: var(--white-color);
   display: flex;
   align-items: center;
   border-radius: 0.2rem;
@@ -54,12 +54,13 @@ export const Error = styled(Tooltip)`
 
   svg {
     margin: 0;
+    color: var(--error-color);
   }
   span {
-    background: #c53030;
-    color: #fff;
+    background: var(--error-color);
+    color: var(--white-color);
     &::before {
-      border-color: #c53030 transparent;
+      border-color: var(--error-color) transparent;
     }
   }
 `

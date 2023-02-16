@@ -15,13 +15,13 @@ export const HeaderWrapper = styled.header`
   a {
     display: flex;
     align-items: center;
-    color: #cfbaf0;
+    color: var(--lighten-color);
   }
 
   button {
     display: flex;
     align-items: center;
-    color: #cfbaf0;
+    color: var(--lighten-color);
 
     background: none;
     border: none;
@@ -43,13 +43,13 @@ const notificationTypeRead = {
     border: 0.15rem solid #2e656a;
   `,
   'is-not-readed': css`
-    border: 0.15rem solid #c53030;
+    border: 0.15rem solid var(--error-color);
   `
 }
 
 export const NotificationItem = styled.a<NotificationItemProps>`
-  background: white;
-  color: #7f3e98;
+  background: var(--white-color);
+  color: var(--secondary-color);
   padding: 1rem;
   border-radius: 0.5rem;
   display: flex;
@@ -61,23 +61,23 @@ export const NotificationItem = styled.a<NotificationItemProps>`
   }
 
   a {
-    color: #7f3e98;
+    color: var(--secondary-color);
     transition: color 0.2s ease 0s;
 
     :hover {
-      color: ${lighten(0.2, '#7f3e98')};
+      color: ${lighten(0.2, '#5e00a3')};
     }
   }
 
   button {
     border: none;
     background: none;
-    color: #7f3e98;
+    color: var(--secondary-color);
     font-size: 1.2rem;
     transition: color 0.2s ease 0s;
 
     :hover {
-      color: ${lighten(0.2, '#7f3e98')};
+      color: ${lighten(0.2, '#5e00a3')};
     }
   }
 
@@ -94,8 +94,8 @@ export const ContainerWithoutNotification = styled.div`
   height: 3rem;
   margin: 0 auto;
 
-  background-color: white;
-  color: black;
+  background-color: var(--white-color);
+  color: var(--black-color);
   padding: 3rem;
 
   border-radius: 1rem;

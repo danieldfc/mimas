@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import { animated } from 'react-spring'
+import { lighten } from 'polished'
 
 interface ContainerProps {
   type?: 'success' | 'error' | 'info'
@@ -8,16 +9,16 @@ interface ContainerProps {
 
 const toastTypeVariations = {
   info: css`
-    background: #ebf8ff;
-    color: #3172b7;
+    background: ${lighten(0.7, '#002982')};
+    color: var(--info-color);
   `,
   success: css`
-    background: #e6fffa;
-    color: #2e656a;
+    background: ${lighten(0.7, '#008200')};
+    color: var(--success-color);
   `,
   error: css`
-    background: #fddede;
-    color: #c53030;
+    background: ${lighten(0.7, '#82001b')};
+    color: var(--error-color);
   `
 }
 

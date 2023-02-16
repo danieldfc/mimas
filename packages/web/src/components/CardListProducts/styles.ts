@@ -13,6 +13,6 @@ export const Container = styled.ul`
 
   h3 {
     margin-bottom: 1rem;
-    color: #000;
+    color: var(--dark-color);
   }
 `

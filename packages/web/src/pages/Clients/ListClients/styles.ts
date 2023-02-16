@@ -14,7 +14,7 @@ export const HeaderWrapper = styled.div`
   a {
     display: flex;
     align-items: center;
-    color: #cfbaf0;
+    color: var(--lighten-color);
   }
 
   div {
@@ -24,7 +24,7 @@ export const HeaderWrapper = styled.div`
     margin-top: 2rem;
 
     > :last-child {
-      color: #cfbaf0;
+      color: var(--lighten-color);
       text-decoration: underline;
     }
   }
@@ -63,8 +63,8 @@ export const ContainerWithoutClient = styled.div`
   height: 3rem;
   margin: 0 auto;
 
-  background-color: white;
-  color: black;
+  background-color: var(--white-color);
+  color: var(--black-color);
   padding: 3rem;
 
   border-radius: 1rem;

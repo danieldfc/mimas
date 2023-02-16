@@ -21,12 +21,16 @@ export const HeaderWrapper = styled.aside`
   a {
     display: flex;
     align-items: center;
-    color: #cfbaf0;
+    color: var(--lighten-color);
   }
 `
 
 export const SelectorClient = styled.div`
   display: flex;
+
+  label {
+    color: var(--white-color);
+  }
 
   > :first-child {
     width: 100%;
@@ -49,10 +53,10 @@ export const InfoPedido = styled.aside`
   width: 70%;
 
   button {
-    background-color: #561482;
+    background-color: var(--secondary-color);
 
     &:hover {
-      background-color: ${shade(0.2, '#561482')};
+      background-color: ${shade(0.2, '#5e00a3')};
     }
   }
 
@@ -65,14 +69,14 @@ export const InfoPedido = styled.aside`
     padding: 10px;
     border-radius: 5%;
     border: none;
-    color: #fff;
+    color: var(--white-color);
     transition: all 0.2s ease-in-out;
-    background-color: #561482;
+    background-color: var(--secondary-color);
 
     option {
       padding: 8px;
-      background-color: #f2f2f2;
-      color: #000;
+      background-color: var(--lighten-color);
+      color: var(--dark-color);
     }
   }
 
@@ -90,10 +94,10 @@ export const WrapperContent = styled.aside`
   margin-left: 1rem;
   padding-left: 1rem;
 
-  border-left: 2px solid #fff;
+  border-left: 2px solid var(--white-color);
 
   button {
-    background-color: #561482;
+    background-color: var(--secondary-color);
     width: 100%;
     font-size: 0.9rem;
   }
@@ -105,7 +109,7 @@ export const WrapperContent = styled.aside`
     margin-top: 1rem;
     padding-left: 0;
 
-    border-top: 2px solid #fff;
+    border-top: 2px solid var(--white-color);
 
     button {
       height: 3.5rem;
@@ -117,5 +121,15 @@ export const WrapperContent = styled.aside`
     button {
       font-size: 0.7rem;
     }
+  }
+`
+
+export const WrapperDate = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  div {
+    margin: 0;
   }
 `

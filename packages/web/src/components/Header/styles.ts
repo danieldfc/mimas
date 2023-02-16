@@ -6,8 +6,8 @@ export const Container = styled.header`
   height: 6rem;
 
   padding: 24px 0;
-  background: #ffffff;
-  color: #000;
+  background: var(--white-color);
+  color: var(--dark-color);
 
   @media (max-width: 768px) {
     padding: 12px 0;
@@ -71,7 +71,7 @@ export const WrapperButtons = styled.div`
     display: flex;
 
     > svg {
-      color: #000;
+      color: var(--dark-color);
       width: 24px;
       height: 24px;
     }
@@ -89,12 +89,12 @@ export const Profile = styled.div`
   line-height: 24px;
 
   span {
-    color: #000;
+    color: var(--dark-color);
   }
 
   a {
     text-decoration: none;
-    color: #7f3e98;
+    color: var(--secondary-color);
     &:hover {
       opacity: 0.8;
     }
@@ -121,7 +121,8 @@ export const Navigation = styled.nav`
 
       a {
         text-decoration: none;
-        color: #7f3e98;
+        color: var(--secondary-color);
+        color: var(--secondary-color);
         &:hover {
           opacity: 0.8;
         }

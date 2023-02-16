@@ -46,46 +46,46 @@ const lableTypeVariations = {
 
 const typeButtonVariation = {
   finish: css`
-    color: green;
-    background-color: white;
-    border: #000 solid 1px;
+    color: var(--success-color);
+    background-color: var(--white-color);
+    border: var(--dark-color) solid 1px;
     &:hover {
-      color: white;
+      color: var(--white-color);
     }
   `,
   cancel: css`
-    color: red;
-    background-color: white;
-    border: #000 solid 1px;
+    color: var(--error-color);
+    background-color: var(--white-color);
+    border: var(--dark-color) solid 1px;
     &:hover {
-      color: white;
+      color: var(--white-color);
     }
   `,
   open: css`
-    color: blue;
-    background-color: white;
-    border: #000 solid 1px;
+    color: var(--info-color);
+    background-color: var(--white-color);
+    border: var(--dark-color) solid 1px;
     &:hover {
-      color: white;
+      color: var(--white-color);
     }
   `,
   default: css``
 }
 
 export const Container = styled.button<ButtonProps>`
-  background: #7f3e98;
+  background: var(--secondary-color);
   height: 56px;
   border-radius: 10px;
   border: 0;
   padding: 0 16px;
   max-width: 100%;
-  color: #eee;
+  color: var(--lighten-color);
   font-weight: 500;
   margin-top: 16px;
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: ${shade(0.2, '#7f3e98')};
+    background-color: ${shade(0.2, '#5e00a3')};
   }
 
   &:disabled {

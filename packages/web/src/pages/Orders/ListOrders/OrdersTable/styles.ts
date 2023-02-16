@@ -1,4 +1,3 @@
-import { darken } from 'polished'
 import styled, { css } from 'styled-components'
 
 export const Pagination = styled.div`
@@ -27,7 +26,7 @@ export const PaginationItem = styled.div<PaginationItemProps>`
   ${props =>
     props.isSelect &&
     css`
-      background: ${darken(0.1, '#7f3e98')};
+      background: var(--primary-color);
       padding: 0.6rem;
       border-radius: 0.3rem;
     `}
@@ -41,7 +40,7 @@ export const PaginationItem = styled.div<PaginationItemProps>`
       border-radius: 0.3rem;
       margin: 0 0.5rem;
       :hover {
-        background: ${darken(0.05, '#7f3e98')};
+        background: var(--primary-color);
       }
     `}
 
@@ -55,7 +54,7 @@ export const PaginationItem = styled.div<PaginationItemProps>`
       transition: all 0.2s ease 0s;
 
       :hover {
-        background: ${darken(0.05, '#7f3e98')};
+        background: var(--primary-color);
       }
     `}
 `

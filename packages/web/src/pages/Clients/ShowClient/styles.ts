@@ -15,7 +15,7 @@ export const HeaderWrapper = styled.aside`
   button {
     display: flex;
     align-items: center;
-    color: #cfbaf0;
+    color: var(--lighten-color);
 
     background: none;
     border: none;
@@ -38,10 +38,10 @@ export const Content = styled.div`
     height: 2rem;
     margin: 0 0 1rem 0;
 
-    background-color: #e0144c;
+    background-color: var(--btn-color-delete);
 
     :hover {
-      background-color: ${shade(0.2, '#E0144C')};
+      background-color: ${shade(0.2, '#e0144c')};
     }
   }
 `
@@ -52,10 +52,10 @@ export const WrapperButton = styled.section`
   button {
     width: 13rem;
     height: 3rem;
-    background-color: #561482;
+    background-color: var(--secondary-color);
 
     :hover {
-      background-color: ${shade(0.2, '#561482')};
+      background-color: ${shade(0.2, '#5e00a3')};
     }
   }
 
@@ -65,8 +65,8 @@ export const WrapperButton = styled.section`
 `
 
 export const LinkWhatsapp = styled.a`
-  background-color: #25d366bb;
-  color: #fff;
+  background-color: var(--success-color);
+  color: var(--white-color);
   padding: 0.5rem;
   margin-top: 1rem;
   display: flex;
@@ -83,6 +83,6 @@ export const LinkWhatsapp = styled.a`
   text-align: center;
 
   :hover {
-    background-color: ${shade(0.2, '#25d366bb')};
+    background-color: ${shade(0.2, '#008200')};
   }
 `

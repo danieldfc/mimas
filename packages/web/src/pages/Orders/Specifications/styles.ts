@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   justify-content: space-between;
 
   a {
-    color: #cfbaf0;
+    color: var(--lighten-color);
     display: flex;
     align-items: center;
   }
@@ -31,8 +31,8 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
 
-  background-color: white;
-  color: #000;
+  background-color: var(--white-color);
+  color: var(--dark-color);
 
   border-radius: 5px;
 
@@ -42,25 +42,25 @@ export const Content = styled.div`
     display: flex;
     justify-content: space-between;
 
-    border-bottom: #000 solid 1px;
+    border-bottom: var(--dark-color) solid 1px;
     margin-bottom: 1rem;
-    color: #7f3e98;
+    color: var(--secondary-color);
     padding: 0.5rem 0;
 
     font-size: 1rem;
   }
 
   a {
-    color: #7f3e98;
+    color: var(--secondary-color);
     transition: all 0.3s;
 
     :hover {
-      color: ${shade(0.2, '#7f3e98')};
+      color: ${shade(0.2, '#5e00a3')};
     }
   }
 
   > p {
-    color: #222;
+    color: var(--gray-dark-color);
     margin-bottom: 0.5rem;
   }
 `
@@ -88,6 +88,6 @@ export const WrapperButtons = styled.div`
 export const MetadadoProducts = styled.ul`
   li + li {
     margin: 0.5rem 0;
-    border-top: #000 solid 1px;
+    border-top: var(--dark-color) solid 1px;
   }
 `

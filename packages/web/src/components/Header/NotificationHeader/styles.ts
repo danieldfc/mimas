@@ -1,4 +1,3 @@
-import { lighten } from 'polished'
 import styled, { css } from 'styled-components'
 
 export const Container = styled.div`
@@ -13,9 +12,10 @@ export const Container = styled.div`
   border: none;
   border-radius: 5px;
   transition: background 0.2s ease 0s;
+  z-index: 1;
 
   svg {
-    color: #000;
+    color: var(--dark-color);
     width: 24px;
     height: 24px;
     margin-right: 1.5rem;
@@ -41,7 +41,7 @@ export const ButtonIcon = styled.button<ButtonIconProps>`
         height: 0px;
         border-style: solid;
         border-width: 0px 7.5px 8px;
-        border-color: transparent transparent #7f3e98;
+        border-color: transparent transparent var(--primary-color);
         z-index: 2;
       }
     `}
@@ -56,7 +56,7 @@ export const ButtonIcon = styled.button<ButtonIconProps>`
         right: 1.55rem;
         top: 0.8rem;
         border-radius: 50%;
-        background: rgb(232, 63, 91);
+        background: var(--ping-notification-color);
         width: 8px;
         height: 8px;
       }
@@ -68,14 +68,13 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: ${lighten(0.2, '#7f3e98')};
+    color: var(--secondary-color);
     align-items: center;
-    background: white;
+    background: var(--lighten-color);
     transition: all 0.2s ease 0s;
     padding: 16px 20px;
     :hover {
-      background-color: ${lighten(0.5, '#7f3e98')};
-      color: ${lighten(0, '#7f3e98')};
+      background-color: var(--secondary-hover-color);
     }
 
     h3 {
@@ -99,20 +98,20 @@ export const Wrapper = styled.div<{ isOpen: boolean }>`
     align-items: center;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    background: #7f3e98;
-    color: #fff;
+    background: var(--primary-color);
+    color: var(--white-color);
     height: 50px;
     padding: 0px 20px;
     border-radius: 5px 5px 0px 0px;
 
     button {
-      color: white;
+      color: var(--white-color);
       background-color: none;
       border: none;
       transition: color 0.2s ease 0s;
 
       :hover {
-        color: ${lighten(0.4, '#7f3e98')};
+        color: var(--secondary-hover-color);
       }
     }
   }
@@ -127,14 +126,14 @@ export const Wrapper = styled.div<{ isOpen: boolean }>`
     font-size: 12px;
     font-weight: bold;
     text-transform: uppercase;
-    color: ${lighten(0.5, '#7f3e98')};
-    background: #7f3e98;
+    color: var(--white-color);
+    background: var(--primary-color);
     border-radius: 0px 0px 5px 5px;
     transition: color 0.2s ease 0s;
     text-decoration: none;
 
     :hover {
-      color: ${lighten(0.2, 'white')};
+      color: var(--secondary-hover-color);
     }
   }
 `
@@ -143,8 +142,8 @@ export const NotExistNotification = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: ${lighten(0.2, '#7f3e98')};
+  color: var(--secondary-hover-color);
   align-items: center;
-  background: white;
+  background: var(--white-color);
   padding: 20px;
 `

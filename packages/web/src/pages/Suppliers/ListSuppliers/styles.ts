@@ -25,7 +25,7 @@ export const Wrapper = styled.div`
   a {
     display: flex;
     align-items: center;
-    color: #cfbaf0;
+    color: var(--lighten-color);
   }
 
   div {
@@ -35,7 +35,7 @@ export const Wrapper = styled.div`
     margin-top: 2rem;
 
     > :last-child {
-      color: #cfbaf0;
+      color: var(--lighten-color);
       text-decoration: underline;
     }
   }
@@ -52,8 +52,8 @@ export const SelectSupplier = styled.ul`
   width: 15%;
   height: 50vh;
 
-  background-color: white;
-  color: #000;
+  background-color: var(--white-color);
+  color: var(--dark-color);
   padding: 0.7rem;
 
   border-radius: 0.4rem;
@@ -141,13 +141,15 @@ export const WrapperButton = styled.div`
   justify-content: right;
 
   button {
-    background-color: orange;
+    background-color: var(--orange-color);
     transition: all 0.4s;
     width: 30%;
     margin-top: 0;
+    color: var(--dark-color);
+    font-size: 0.9rem;
 
     :hover {
-      background-color: ${shade(0.1, 'orange')};
+      background-color: ${shade(0.1, '#f09000')};
     }
   }
 
@@ -188,8 +190,8 @@ export const ContainerWithoutSupplier = styled.div`
   height: 3rem;
   margin: 0 auto;
 
-  background-color: white;
-  color: black;
+  background-color: var(--white-color);
+  color: var(--black-color);
   padding: 3rem;
 
   border-radius: 1rem;

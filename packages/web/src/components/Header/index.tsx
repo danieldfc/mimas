@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FiPower } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 
-import logoImg from '../../assets/machine.png'
+import logoImg from '../../assets/logo.png'
 
 import { useAuth } from '../../hooks/auth'
 import NotificationHeader from './NotificationHeader'

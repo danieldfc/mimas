@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.li`
   p {
     font-size: 0.9rem;
-    color: #333;
+    color: var(--gray-dark-color);
   }
 
   @media (max-width: 768px) {

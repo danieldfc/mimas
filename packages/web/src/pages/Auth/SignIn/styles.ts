@@ -6,8 +6,8 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  color: #333333;
+  overflow: hidden;
+  min-height: calc(100vh - 2.5rem * 2);
 
   @media (max-width: 625px) {
     font-size: 14px;
@@ -15,16 +15,30 @@ export const Container = styled.div`
   }
 `
 
-export const Content = styled.div`
-  background-color: #fff;
+export const Header = styled.header``
+
+export const Content = styled.section`
+  display: flex;
+  width: 95vw;
+  height: 95vh;
+  /* background-color: var(--white-color); */
+  border-radius: 0.9rem;
+  padding: 1.5rem;
+  gap: 1rem;
+
+  img {
+    width: 100%;
+  }
+
+  /*
   width: 23vw;
   height: 45vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0px 30px;
 
-  border-radius: 0.9rem;
+
+
 
   form {
     height: 80%;
@@ -32,9 +46,9 @@ export const Content = styled.div`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-  }
+  } */
 
-  @media (max-width: 1280px) {
+  /* @media (max-width: 1280px) {
     width: 45%;
   }
 
@@ -44,5 +58,14 @@ export const Content = styled.div`
 
   @media (max-width: 425px) {
     width: 100%;
+  } */
+`
+
+export const WrapperArticle = styled.article`
+  &.login-left {
+    background-color: var(--white-color);
+  }
+
+  &.login-right {
   }
 `

@@ -5,13 +5,13 @@ export const Container = styled.div`
   p.loading {
     font-size: 1rem;
     font-weight: bold;
-    color: #444;
+    color: var(--gray-color);
   }
 `
 
 export const StyledTable = styled.table`
   border: none;
-  background: #fff;
+  background: var(--white-color);
   width: 100%;
   border-radius: 0.4rem;
   padding: 1.5rem;
@@ -19,7 +19,7 @@ export const StyledTable = styled.table`
 
   tr {
     & + tr {
-      border-top: 1px solid #eee;
+      border-top: 1px solid var(--lighten-color);
     }
     &:last-child {
       padding-bottom: 2rem;
@@ -78,21 +78,21 @@ export const StyledTable = styled.table`
       font-size: 1rem;
       transition: color 0.5s;
       &.info {
-        color: #4d85ee;
+        color: var(--info-color);
         &:hover {
-          color: ${darken(0.3, '#4d85ee')};
+          color: ${darken(0.3, '#002982')};
         }
       }
       &.cancel {
-        color: #de3b3b;
+        color: var(--error-color);
         &:hover {
-          color: ${darken(0.3, '#de3b3b')};
+          color: ${darken(0.3, '#82001b')};
         }
       }
       &.finish {
-        color: #78bc61;
+        color: var(--success-color);
         &:hover {
-          color: ${darken(0.3, '#78bc61')};
+          color: ${darken(0.3, '#008200')};
         }
       }
       @media (max-width: 768px) {
@@ -124,7 +124,7 @@ export const StyledTable = styled.table`
         transition: all 0.2s;
 
         &:hover {
-          color: #000;
+          color: var(--dark-color);
           text-decoration: underline;
         }
       }
@@ -137,7 +137,7 @@ export const TableWrapper = styled.div`
   width: 100%;
   padding: 1.5rem;
   border-radius: 0.4rem;
-  background: #fff;
+  background: var(--white-color);
 
   @media (max-width: 768px) {
     padding: 0.5rem;

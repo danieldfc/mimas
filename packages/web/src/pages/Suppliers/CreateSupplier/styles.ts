@@ -15,7 +15,7 @@ export const HeaderWrapper = styled.aside`
   a {
     display: flex;
     align-items: center;
-    color: #cfbaf0;
+    color: var(--lighten-color);
   }
 
   @media (max-width: 425px) {
@@ -36,11 +36,11 @@ export const Content = styled.section`
   }
 
   button {
-    background-color: #561482;
+    background-color: var(--secondary-color);
     width: 100%;
 
     &:hover {
-      background-color: ${shade(0.2, '#561482')};
+      background-color: ${shade(0.2, '#5e00a3')};
     }
   }
 

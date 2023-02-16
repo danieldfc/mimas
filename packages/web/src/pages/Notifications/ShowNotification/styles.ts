@@ -14,13 +14,13 @@ export const HeaderWrapper = styled.header`
   a {
     display: flex;
     align-items: center;
-    color: #cfbaf0;
+    color: var(--lighten-color);
   }
 
   button {
     display: flex;
     align-items: center;
-    color: #cfbaf0;
+    color: var(--lighten-color);
 
     background: none;
     border: none;
@@ -32,8 +32,8 @@ export const Content = styled.main`
   margin: 2.5rem auto;
   padding: 2.5rem;
 
-  background-color: #fff;
-  color: #000;
+  background-color: var(--white-color);
+  color: var(--dark-color);
   border-radius: 0.5rem;
 
   height: 20rem;
@@ -47,13 +47,13 @@ export const Content = styled.main`
   height: auto;
 
   > p {
-    background-color: #cfbaf0;
+    background-color: var(--lighten-color);
     display: flex;
     width: 85%;
     margin-top: 2rem;
     border-radius: 0.5rem;
     padding: 1rem;
-    color: #000;
+    color: var(--dark-color);
     justify-content: center;
     align-items: center;
   }

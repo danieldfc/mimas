@@ -15,7 +15,7 @@ export const HeaderWrapper = styled.div`
   a {
     display: flex;
     align-items: center;
-    color: #cfbaf0;
+    color: var(--lighten-color);
   }
 
   @media (max-width: 425px) {
@@ -29,7 +29,7 @@ export const Content = styled.div`
   padding: 0 2.5rem;
 
   button {
-    background-color: #561482;
+    background-color: var(--secondary-color);
 
     &:hover {
       background-color: ${shade(0.2, '#561482')};

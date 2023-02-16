@@ -7,14 +7,14 @@ export const Container = styled.li`
   padding: 0 8px;
   border-width: 1px;
   border-style: solid;
-  border-color: #000;
+  border-color: var(--dark-color);
   border-radius: 5px;
-  color: #000;
+  color: var(--dark-color);
   padding: 0.3rem 0.5rem;
   margin-bottom: 0.6rem;
 
   input {
-    border: 1px solid #000;
+    border: 1px solid var(--dark-color);
     border-radius: 8px;
     padding: 5px;
     width: 62px;

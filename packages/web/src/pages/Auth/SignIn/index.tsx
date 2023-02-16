@@ -11,8 +11,10 @@ import Input from '../../../components/Input'
 import { useAuth } from '../../../hooks/auth'
 import { useToast } from '../../../hooks/toast'
 
+import LogoImg from '../../../assets/logo.png'
+
 import getValidationErrors from '../../../utils/getValidationError'
-import { Container, Content } from './styles'
+import { Container, Content, Header, WrapperArticle } from './styles'
 
 interface SignInFormData {
   email: string
@@ -67,26 +69,36 @@ export default function SignIn() {
   return (
     <Container>
       <Content>
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <h1>Faça seu login</h1>
-
-          <div>
-            <Input icon={FiMail} name="email" placeholder="E-mail" />
+        <WrapperArticle className="login-left">
+          <Header>
+            <h1>Seja bem vindo</h1>
+            <p>Por favor, faça o login para usar a plataforma</p>
+          </Header>
+          <Form ref={formRef} onSubmit={handleSubmit}>
+            <Input
+              icon={FiMail}
+              label="Enter Email"
+              name="email"
+              placeholder="E-mail"
+            />
 
             <Input
+              label="Enter Password"
               icon={FiLock}
               name="password"
               type="password"
               placeholder="Senha"
             />
-          </div>
 
-          <Button type="submit" label="little">
-            Entrar
-          </Button>
-
-          {/* <Link to="/forgot-password">Esqueci minha senha</Link> */}
-        </Form>
+            <Button type="submit" label="little">
+              Entrar
+            </Button>
+            {/* <Link to="/forgot-password">Esqueci minha senha</Link> */}
+          </Form>
+        </WrapperArticle>
+        <WrapperArticle className="login-right">
+          <img src={LogoImg} alt="Dacia Bordados" />
+        </WrapperArticle>
       </Content>
     </Container>
   )
