@@ -52,10 +52,6 @@ export const Container = styled.div.attrs({
     margin-right: 16px;
   }
 
-  & + & {
-    margin-top: 1rem;
-  }
-
   @media (max-width: 425px) {
     svg {
       display: none;

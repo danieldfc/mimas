@@ -124,12 +124,36 @@ export const WrapperContent = styled.aside`
   }
 `
 
-export const WrapperDate = styled.div`
+export const WrapperDate = styled.aside`
   display: flex;
   align-items: center;
   gap: 0.3rem;
 
-  div {
-    margin: 0;
+  & > div {
+    &:first-child {
+      width: 50%;
+      margin-top: 0.3rem;
+    }
+
+    &:last-child {
+      width: 50%;
+      margin-top: 0.3rem;
+    }
+  }
+
+  @media (max-width: 425px) {
+    flex-direction: column;
+
+    & > div {
+      &:first-child {
+        width: 100%;
+        margin-top: 0.3rem;
+      }
+
+      &:last-child {
+        width: 100%;
+        margin-top: 0;
+      }
+    }
   }
 `
