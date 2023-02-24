@@ -114,7 +114,8 @@ export function CreateOrder() {
         }
 
         const order = {
-          ...data,
+          title: data.title,
+          description: data.description,
           deliveryAt: new Date(
             `${data.deliveryDate}T${data.deliveryTime}:00-00:00`
           ).toISOString(),
