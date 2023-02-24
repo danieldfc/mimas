@@ -22,9 +22,6 @@
     "vercel-build": "yarn build && yarn typeorm migration:run && yarn seed:run",
     "prepare": "yarn build"
   },
-  "engines": {
-    "node": "16.x"
-  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "celebrate": "^15.0.1",
