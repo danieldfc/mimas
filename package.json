@@ -5,11 +5,7 @@
   "author": "Daniel Felizardo <daniel.david772@gmail.com>",
   "scripts": {
     "prepare": "husky install",
-    "start:server": "cd packages/server && yarn start",
-    "start:web": "cd packages/web && yarn dev",
-    "test": "NODE_ENV=test jest --no-cache",
-    "test:web": "cd packages/web && yarn test",
-    "test:server": "cd packages/server && yarn test"
+    "test": "NODE_ENV=test jest --no-cache"
   },
   "engines": {
     "node": ">=16.16.0"
@@ -21,7 +17,8 @@
   "workspaces": {
     "packages": [
       "packages/server",
-      "packages/web"
+      "packages/web",
+      "packages/client"
     ]
   },
   "license": "MIT",
