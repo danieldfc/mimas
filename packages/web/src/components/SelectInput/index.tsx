@@ -21,7 +21,8 @@ interface SelectInputProps extends Props {
   title: string
   containerStyle?: object
   name: string
-  value?: string
+  value?: ItemSelect
+  hasLabel?: boolean
 }
 
 export default function SelectInput({
@@ -32,7 +33,11 @@ export default function SelectInput({
   name,
   containerStyle = {},
   isClearable,
-  isMulti
+  isMulti,
+  placeholder,
+  noOptionsMessage,
+  hasLabel = true,
+  value
 }: SelectInputProps) {
   const selectRef = useRef(null)
 
@@ -79,13 +84,15 @@ export default function SelectInput({
       isFilled={isFilled}
       style={containerStyle}
     >
-      <label style={style.label} id="aria-label" htmlFor="aria-example-input">
-        {title}:
-      </label>
+      {hasLabel && (
+        <label style={style.label} id="aria-label" htmlFor="aria-example-input">
+          {title}:
+        </label>
+      )}
 
       <Content>
         <Select
-          placeholder="Selecione um cliente..."
+          placeholder={placeholder}
           inputId={id}
           options={itens}
           onChange={onChange}
@@ -94,8 +101,22 @@ export default function SelectInput({
           defaultValue={defaultValue}
           ref={selectRef}
           isClearable={isClearable}
-          noOptionsMessage={() => 'Nenhum cliente encontrado'}
+          noOptionsMessage={noOptionsMessage}
           isMulti={isMulti}
+          menuPortalTarget={document.body}
+          menuPosition={'fixed'}
+          value={value}
+          styles={{
+            control: baseStyles => ({
+              ...baseStyles,
+              height: '3.5rem'
+            }),
+            menuPortal: baseStyles => ({
+              ...baseStyles,
+              color: 'var(--black-color)',
+              zIndex: 2
+            })
+          }}
         />
 
         {error && (

@@ -9,7 +9,7 @@ import { CreateOrder } from '../pages/Orders/CreateOrder'
 import { ListClients } from '../pages/Clients/ListClients'
 import { CreateClient } from '../pages/Clients/CreateClient'
 import { Specifications } from '../pages/Orders/Specifications'
-import { ListSuppliers } from '../pages/Suppliers/ListSuppliers'
+import Suppliers from '../pages/Suppliers'
 import { CreateSupplier } from '../pages/Suppliers/CreateSupplier'
 import Profile from '../pages/Profile'
 import { ShowClient } from '../pages/Clients/ShowClient'
@@ -29,7 +29,7 @@ const Routes: React.FC = () => (
     <Route path="/clients/:clientId" component={ShowClient} isPrivate />
     <Route path="/create-client" component={CreateClient} isPrivate />
 
-    <Route path="/suppliers" component={ListSuppliers} isPrivate />
+    <Route path="/suppliers" component={Suppliers} isPrivate />
     <Route path="/create-supplier" component={CreateSupplier} isPrivate />
 
     <Route

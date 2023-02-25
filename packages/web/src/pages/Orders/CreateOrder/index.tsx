@@ -33,7 +33,6 @@ import {
   Content,
   HeaderWrapper,
   InfoPedido,
-  SelectorClient,
   WrapperContent,
   WrapperDate
 } from './styles'
@@ -209,23 +208,23 @@ export function CreateOrder() {
       <Content>
         <InfoPedido>
           <Form ref={formRef} onSubmit={handleSubmit} id="form-create-order">
-            <SelectorClient>
-              <SelectInput
-                itens={clients.map(p => ({ label: p.name, value: p.id }))}
-                onChange={(event: any) => {
-                  if (event?.length) {
-                    setClientsId(() => [...event.map((e: any) => e.value)])
-                  } else {
-                    setClientsId([])
-                  }
-                }}
-                title="Clientes"
-                id="form-client-id"
-                name="clientId"
-                isClearable
-                isMulti
-              />
-            </SelectorClient>
+            <SelectInput
+              itens={clients.map(p => ({ label: p.name, value: p.id }))}
+              onChange={(event: any) => {
+                if (event?.length) {
+                  setClientsId(() => [...event.map((e: any) => e.value)])
+                } else {
+                  setClientsId([])
+                }
+              }}
+              placeholder="Selecione um cliente..."
+              title="Clientes"
+              id="form-client-id"
+              name="clientId"
+              isClearable
+              isMulti
+              noOptionsMessage={() => 'Nenhum cliente encontrado'}
+            />
 
             <Input
               icon={MdTitle}
@@ -246,6 +245,7 @@ export function CreateOrder() {
               type="number"
               onChange={changeValueMaoObra}
               disabled={!clientsId.length}
+              min="1"
             />
             <WrapperDate>
               <Input

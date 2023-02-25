@@ -20,9 +20,11 @@ export type Supplier = {
 
 interface SupplierProviderData {
   suppliers: Supplier[]
+  supplierSelected?: Supplier
   addSupplier(supplier: Omit<Supplier, 'id'>): Promise<void>
   updateSupplier(id: string, supplier: Partial<Supplier>): Promise<void>
   deleteSupplier(id: string): Promise<void>
+  selectSupplierId(id?: string): void
 }
 
 const SupplierContext = createContext<SupplierProviderData>(
@@ -31,6 +33,9 @@ const SupplierContext = createContext<SupplierProviderData>(
 
 const SupplierProvider: React.FC = ({ children }) => {
   const [suppliers, setSuppliers] = useState<Supplier[]>([])
+  const [supplierSelected, setSupplierSelected] = useState<
+    Supplier | undefined
+  >()
 
   const addSupplier = useCallback(
     async ({
@@ -71,15 +76,13 @@ const SupplierProvider: React.FC = ({ children }) => {
 
       const response = await api.put(`/suppliers/${id}`, supplier)
 
-      setSuppliers(oldSuppliers => {
-        oldSuppliers[supplierIndex] = {
-          ...suppliers[supplierIndex],
-          ...response.data
-        }
-        return oldSuppliers
-      })
+      setSuppliers(suppliers.map(sup => (sup.id === id ? response.data : sup)))
+
+      if (supplierSelected) {
+        setSupplierSelected(response.data)
+      }
     },
-    [suppliers]
+    [suppliers, supplierSelected]
   )
 
   const deleteSupplier = useCallback(
@@ -96,6 +99,15 @@ const SupplierProvider: React.FC = ({ children }) => {
     [suppliers]
   )
 
+  const selectSupplierId = useCallback(
+    (id: string) => {
+      const supplierIndex = suppliers.findIndex(s => s.id === id)
+      if (supplierIndex < 0) setSupplierSelected(undefined)
+      else setSupplierSelected(suppliers[supplierIndex])
+    },
+    [suppliers]
+  )
+
   useEffect(() => {
     async function getSuppliers() {
       const response = await api.get('/suppliers')
@@ -107,7 +119,14 @@ const SupplierProvider: React.FC = ({ children }) => {
 
   return (
     <SupplierContext.Provider
-      value={{ addSupplier, suppliers, updateSupplier, deleteSupplier }}
+      value={{
+        addSupplier,
+        suppliers,
+        updateSupplier,
+        deleteSupplier,
+        selectSupplierId,
+        supplierSelected
+      }}
     >
       {children}
     </SupplierContext.Provider>

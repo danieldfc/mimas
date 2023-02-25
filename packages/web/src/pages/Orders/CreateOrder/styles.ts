@@ -25,18 +25,6 @@ export const HeaderWrapper = styled.aside`
   }
 `
 
-export const SelectorClient = styled.div`
-  display: flex;
-
-  label {
-    color: var(--white-color);
-  }
-
-  > :first-child {
-    width: 100%;
-  }
-`
-
 export const Content = styled.section`
   max-width: 1240px;
   margin: 2.5rem auto;
@@ -61,23 +49,13 @@ export const InfoPedido = styled.aside`
   }
 
   label {
-    margin-right: 5px;
+    color: var(--white-color);
   }
 
-  select {
-    margin-bottom: 16px;
-    padding: 10px;
-    border-radius: 5%;
-    border: none;
-    color: var(--white-color);
-    transition: all 0.2s ease-in-out;
-    background-color: var(--secondary-color);
-
-    option {
-      padding: 8px;
-      background-color: var(--lighten-color);
-      color: var(--dark-color);
-    }
+  form > :first-child {
+    height: auto;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0;
   }
 
   form > :last-child {

@@ -1,6 +1,6 @@
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
-import { Product } from '../infra/typeorm/entities/Product'
+import { Product, ProductType } from '../infra/typeorm/entities/Product'
 import IProductsRepository from '../infra/typeorm/repositories/IProductsRepository'
 import ISuppliersRepository from '../infra/typeorm/repositories/ISuppliersRepository'
 
@@ -8,6 +8,8 @@ interface IRequestDTO {
   title: string
   description: string
   price: number
+  type: ProductType
+  maximumAmount: number
   supplierId: string
 }
 
@@ -25,6 +27,8 @@ export class CreateProductService {
     description,
     price,
     title,
+    maximumAmount,
+    type,
     supplierId
   }: IRequestDTO): Promise<Product> {
     if (price <= 0) {
@@ -41,6 +45,8 @@ export class CreateProductService {
       title,
       description,
       price,
+      maximumAmount,
+      type,
       supplier
     })
 

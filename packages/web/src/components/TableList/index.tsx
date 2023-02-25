@@ -2,16 +2,20 @@ import React from 'react'
 
 import { Container, StyledTable, TableWrapper } from './styles'
 
-type IProps = {
+type IProps = React.InputHTMLAttributes<HTMLTableElement> & {
   children: React.ReactNode
   loading?: boolean
 }
 
-export default function TableList({ children, loading = false }: IProps) {
+export default function TableList({
+  children,
+  loading = false,
+  ...props
+}: IProps) {
   return (
     <Container>
       {!loading ? (
-        <TableWrapper>
+        <TableWrapper {...props}>
           <StyledTable>{children}</StyledTable>
         </TableWrapper>
       ) : (

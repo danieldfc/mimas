@@ -7,6 +7,7 @@ import { CreateSupplierController } from '../controllers/CreateSupplierControlle
 import { ListSuppliersController } from '../controllers/ListSuppliersController'
 import { DeleteSupplierController } from '../controllers/DeleteSupplierController'
 import { UpdateSupplierController } from '../controllers/UpdateSupplierController'
+import { ShowSupplierController } from '../controllers/ShowSupplierController'
 
 const supplierRoute = Router()
 
@@ -14,10 +15,12 @@ const createSupplierController = new CreateSupplierController()
 const listSuppliersController = new ListSuppliersController()
 const deleteSupplierController = new DeleteSupplierController()
 const updateSupplierController = new UpdateSupplierController()
+const showSupplierController = new ShowSupplierController()
+
+supplierRoute.use(ensureAuthenticated)
 
 supplierRoute.post(
   '/',
-  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
@@ -29,14 +32,11 @@ supplierRoute.post(
   createSupplierController.handle
 )
 
-supplierRoute.get('/', ensureAuthenticated, listSuppliersController.handle)
+supplierRoute.get('/', listSuppliersController.handle)
+supplierRoute.get('/:id', showSupplierController.handle)
 
-supplierRoute.delete(
-  '/:id',
-  ensureAuthenticated,
-  deleteSupplierController.handle
-)
+supplierRoute.delete('/:id', deleteSupplierController.handle)
 
-supplierRoute.put('/:id', ensureAuthenticated, updateSupplierController.handle)
+supplierRoute.put('/:id', updateSupplierController.handle)
 
 export { supplierRoute }

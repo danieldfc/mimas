@@ -9,6 +9,11 @@ import {
 } from 'typeorm'
 import { Supplier } from './Supplier'
 
+export enum ProductType {
+  METERS = 'meters',
+  GRAMS = 'grams'
+}
+
 @Entity('products')
 export class Product {
   @PrimaryGeneratedColumn('uuid')
@@ -25,6 +30,12 @@ export class Product {
 
   @Column({ type: 'money' })
   price: string
+
+  @Column({ type: 'enum', enumName: 'products_type_enum' })
+  type: ProductType
+
+  @Column({ type: 'double precision', name: 'maximum_amount' })
+  maximumAmount: number
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date

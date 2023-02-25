@@ -40,7 +40,8 @@ export default class SuppliersRepository implements ISuppliersRepository {
 
   findById(id: string): Promise<Supplier | undefined> {
     return this.ormRepository.findOne({
-      where: { id }
+      where: { id },
+      relations: ['products']
     })
   }
 
