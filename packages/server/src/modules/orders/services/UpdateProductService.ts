@@ -1,6 +1,6 @@
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
-import { Product } from '../infra/typeorm/entities/Product'
+import { Product, ProductType } from '../infra/typeorm/entities/Product'
 import IProductsRepository from '../infra/typeorm/repositories/IProductsRepository'
 
 interface IRequestDTO {
@@ -9,6 +9,8 @@ interface IRequestDTO {
   title?: string
   description?: string
   price?: string
+  maximumAmount?: number
+  type?: ProductType
 }
 
 @injectable()
@@ -23,7 +25,9 @@ export class UpdateProductService {
     supplierId,
     title,
     description,
-    price
+    price,
+    maximumAmount,
+    type
   }: IRequestDTO): Promise<Product> {
     const product = await this.productsRepository.findById(productId)
 
@@ -38,7 +42,9 @@ export class UpdateProductService {
     Object.assign(product, {
       title,
       description,
-      price
+      price,
+      maximumAmount,
+      type
     })
 
     await this.productsRepository.save(product)

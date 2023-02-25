@@ -15,6 +15,7 @@ export const Container = styled.div.attrs({
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  height: 3.5rem;
 
   ${props =>
     props.isErrored &&
@@ -42,10 +43,30 @@ export const Container = styled.div.attrs({
 `
 
 export const Content = styled.div`
-  background-color: var(--white-color);
   display: flex;
   align-items: center;
   border-radius: 0.2rem;
+
+  color: var(--secondary-color);
+
+  label {
+    color: var(--secondary-color);
+  }
+
+  width: 100%;
+
+  div {
+    border-color: var(--black-color);
+    border-radius: 0.5rem;
+
+    &::placeholder {
+      color: var(--gray-color);
+    }
+
+    :hover {
+      border-color: var(--secondary-color);
+    }
+  }
 `
 
 export const Error = styled(Tooltip)`
@@ -67,4 +88,7 @@ export const Error = styled(Tooltip)`
 
 export const Select = styled(SelectCreatable)`
   flex: 1;
+  input {
+    z-index: 999;
+  }
 `

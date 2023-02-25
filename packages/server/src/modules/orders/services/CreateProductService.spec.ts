@@ -1,4 +1,5 @@
 import { AppError } from '@shared/errors/AppError'
+import { ProductType } from '../infra/typeorm/entities/Product'
 import FakeProductsRepository from '../infra/typeorm/repositories/fakes/FakeProductsRepository'
 import FakeSuppliersRepository from '../infra/typeorm/repositories/fakes/FakeSuppliersRepository'
 import { CreateProductService } from './CreateProductService'
@@ -32,7 +33,9 @@ describe('CreateProduct', () => {
       description: 'Minha descrição do produto',
       title: 'Meu título do produto',
       price: 200,
-      supplierId
+      supplierId,
+      maximumAmount: 20,
+      type: ProductType.METERS
     })
 
     expect(product).toHaveProperty('id')
@@ -44,7 +47,9 @@ describe('CreateProduct', () => {
         description: 'Minha descrição do produto',
         title: 'Meu título do produto',
         price: 0,
-        supplierId
+        supplierId,
+        maximumAmount: 20,
+        type: ProductType.METERS
       })
     ).rejects.toBeInstanceOf(AppError)
   })
@@ -55,7 +60,9 @@ describe('CreateProduct', () => {
         description: 'Minha descrição do produto',
         title: 'Meu título do produto',
         price: -1,
-        supplierId
+        supplierId,
+        maximumAmount: 20,
+        type: ProductType.METERS
       })
     ).rejects.toBeInstanceOf(AppError)
   })
@@ -66,7 +73,9 @@ describe('CreateProduct', () => {
         description: 'Minha descrição do produto',
         title: 'Meu título do produto',
         price: 1,
-        supplierId: 'non-id'
+        supplierId: 'non-id',
+        maximumAmount: 20,
+        type: ProductType.METERS
       })
     ).rejects.toBeInstanceOf(AppError)
   })

@@ -10,6 +10,7 @@ import FakeNotificationsRepository from '@modules/notifications/infra/typeorm/re
 
 import { CreateOrderService } from './CreateOrderService'
 import { padStart } from '@shared/utils/StringUtil'
+import { ProductType } from '../infra/typeorm/entities/Product'
 
 let fakeOrdersRepository: FakeOrdersRepository
 let fakeProductsRepository: FakeProductsRepository
@@ -48,7 +49,9 @@ describe('CreateOrder', () => {
       title: 'meu novo produto',
       description: 'Meu item incrível',
       price: 200,
-      supplier
+      supplier,
+      maximumAmount: 20,
+      type: ProductType.METERS
     })
 
     const client = await fakeClientsRepository.create({

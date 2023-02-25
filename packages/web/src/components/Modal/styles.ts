@@ -35,6 +35,12 @@ export const ModalContent = styled.div`
   border-radius: 8px;
   padding: 0.8rem 1.4rem;
 
+  form {
+    > button {
+      width: 100%;
+    }
+  }
+
   @media (min-width: 1280px) {
     width: 60%;
 
@@ -45,16 +51,6 @@ export const ModalContent = styled.div`
 
   @media (max-width: 768px) {
     width: 75%;
-  }
-
-  @media (max-width: 768px) {
-    width: 75%;
-
-    form {
-      > button {
-        width: 100%;
-      }
-    }
 
     > div:last-child {
       display: flex;

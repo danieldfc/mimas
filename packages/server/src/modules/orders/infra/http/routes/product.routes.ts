@@ -24,6 +24,8 @@ productRoute.post(
       title: Joi.string().required(),
       description: Joi.string().required(),
       price: Joi.number().min(0).required(),
+      type: Joi.string().default('meters'),
+      maximumAmount: Joi.number().min(0).required(),
       supplierId: Joi.string().uuid().required()
     }
   }),

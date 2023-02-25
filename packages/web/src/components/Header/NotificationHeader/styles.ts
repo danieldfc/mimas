@@ -136,6 +136,10 @@ export const Wrapper = styled.div<{ isOpen: boolean }>`
       color: var(--secondary-hover-color);
     }
   }
+
+  @media (max-width: 768px) {
+    width: 19.3rem;
+  }
 `
 
 export const NotExistNotification = styled.div`

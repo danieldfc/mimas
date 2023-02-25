@@ -14,7 +14,7 @@ export const Container = styled.div.attrs({
   background: var(--white-color);
   border-radius: 10px;
   border: 1.7px solid var(--dark-color);
-  padding: 16px;
+  padding: 1rem;
   width: 100%;
   display: flex;
   align-items: center;

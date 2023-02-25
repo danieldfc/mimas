@@ -16,7 +16,19 @@ import '@shared/container'
 
 const app = express()
 
-app.use(cors({ origin: process.env.APP_WEB }))
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (
+        [process.env.APP_WEB, process.env.APP_CLIENT].indexOf(origin) !== -1
+      ) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    }
+  })
+)
 app.use(express.json())
 app.use(routes)
 app.use(async (err: Error, _req: Request, res: Response, _: NextFunction) => {

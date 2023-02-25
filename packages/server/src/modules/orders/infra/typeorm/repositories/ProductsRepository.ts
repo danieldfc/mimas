@@ -14,13 +14,17 @@ export default class ProductsRepository implements IProductsRepository {
     title,
     description,
     price,
-    supplier
+    supplier,
+    maximumAmount,
+    type
   }: ICreateProductDTO): Promise<Product> {
     const product = this.ormRepository.create({
       title,
       description,
       price: price.toString(),
-      supplier
+      supplier,
+      maximumAmount,
+      type
     })
 
     await this.save(product)

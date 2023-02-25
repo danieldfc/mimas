@@ -5,7 +5,8 @@ import { container } from 'tsyringe'
 export class UpdateProductController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { productId } = request.params
-    const { title, description, price, supplierId } = request.body
+    const { title, description, price, maximumAmount, type, supplierId } =
+      request.body
     const updateProduct = container.resolve(UpdateProductService)
 
     const product = await updateProduct.execute({
@@ -13,7 +14,9 @@ export class UpdateProductController {
       title,
       description,
       price,
-      supplierId
+      supplierId,
+      maximumAmount,
+      type
     })
 
     return response.status(200).json({ product })

@@ -1,5 +1,8 @@
 import ICreateProductDTO from '@modules/orders/dtos/ICreateProductDTO'
-import { Product } from '@modules/orders/infra/typeorm/entities/Product'
+import {
+  Product,
+  ProductType
+} from '@modules/orders/infra/typeorm/entities/Product'
 import { v4 as uuidV4 } from 'uuid'
 import IProductsRepository from '../IProductsRepository'
 
@@ -10,7 +13,9 @@ export default class FakeProductsRepository implements IProductsRepository {
     title,
     description,
     price,
-    supplier
+    supplier,
+    maximumAmount,
+    type
   }: ICreateProductDTO): Promise<Product> {
     const product = new Product()
 
@@ -20,6 +25,8 @@ export default class FakeProductsRepository implements IProductsRepository {
       description,
       price: `$${price}`,
       supplier,
+      maximumAmount: maximumAmount || 0,
+      type: type || ProductType.METERS,
       supplierId: supplier.id
     })
 
