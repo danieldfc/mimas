@@ -1,11 +1,11 @@
 name: CI Production
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-    # paths:
-    #   - 'packages/server/**'
+    paths:
+      - 'packages/server/**'
 
 jobs:
   deploy:
@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
@@ -22,6 +22,18 @@ jobs:
 
       - name: Install dependencies
         run: yarn
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v1
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Build
         run: yarn --cwd packages/server build
