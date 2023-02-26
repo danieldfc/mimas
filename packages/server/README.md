@@ -16,3 +16,7 @@ Para controle de autenticação
 ### Pedidos (orders)
 
 Para controle de pedidos do sistema, assim como produtos e fornecedores.
+
+### Clientes (clients)
+
+Para controle de clientes do sistema
