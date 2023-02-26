@@ -9,6 +9,10 @@
 
 ## Módulos
 
-### Usuários
+### Usuários (users)
 
 Para controle de autenticação
+
+### Pedidos (orders)
+
+Para controle de pedidos do sistema, assim como produtos e fornecedores.
