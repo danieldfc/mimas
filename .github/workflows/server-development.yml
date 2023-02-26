@@ -24,4 +24,4 @@ jobs:
         run: yarn
 
       - name: Run Tests
-        run: yarn test:server
+        run: yarn --cwd packages/server test

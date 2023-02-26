@@ -2,4 +2,4 @@
 
 ## Camadas
 
--
+- shared -> Providers compartilhados
