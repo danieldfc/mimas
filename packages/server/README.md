@@ -26,3 +26,5 @@ Para controle de clientes do sistema
 ### Notificações (notifications)
 
 Para controle de notificações do sistema
+
+- Acionado quando é criado um novo pedido

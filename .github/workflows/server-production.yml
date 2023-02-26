@@ -2,8 +2,7 @@ name: CI Production
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
     paths:
       - 'packages/server/**'
 
@@ -23,10 +22,10 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Run Tests
+      - name: Run tests
         run: yarn --cwd packages/server test
 
-      - name: Build
+      - name: Run build
         run: yarn --cwd packages/server build
 
       - name: Copy code to Digital Ocean
@@ -49,6 +48,6 @@ jobs:
           script: |
             cd ~/www/mimas
             yarn
-            ./packages/server/node_modules/.bin/typeorm migration:run
-            ./packages/server/node_modules/.bin/typeorm-seeding/dist/cli.js seed
+            cd ./packages/server
+            ./node_modules/.bin/typeorm migration:run
             pm2 restart costura-api
