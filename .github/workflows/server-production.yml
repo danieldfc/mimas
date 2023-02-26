@@ -39,8 +39,8 @@ jobs:
           source: "packages/server/*,!node_modules"
           target: "www/mimas"
 
-      - name: Restart server production
-        uses: appleboy/ssh-action@master
+      - name: Run production scripts
+        uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -49,5 +49,6 @@ jobs:
           script: |
             cd ~/www/mimas
             yarn
-            ./node_modules/.bin/typeorm migration:run
+            ./packages/server/node_modules/.bin/typeorm migration:run
+            ./packages/server/node_modules/.bin/typeorm-seeding/dist/cli.js seed
             pm2 restart costura-api

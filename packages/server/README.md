@@ -17,6 +17,8 @@ Para controle de autenticação
 
 Para controle de pedidos do sistema, assim como produtos e fornecedores.
 
+- Aciona controle de estoque ao criar pedido
+
 ### Clientes (clients)
 
 Para controle de clientes do sistema
