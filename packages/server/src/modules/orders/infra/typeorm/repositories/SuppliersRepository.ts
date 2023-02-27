@@ -14,13 +14,19 @@ export default class SuppliersRepository implements ISuppliersRepository {
     name,
     email,
     address,
-    phone
+    phone,
+    typePix,
+    keyPix,
+    phoneSecondary
   }: ICreateSuppliersDTO): Promise<Supplier> {
     const supplier = this.ormRepository.create({
       name,
       email,
       address,
-      phone
+      phone,
+      typePix,
+      keyPix,
+      phoneSecondary
     })
 
     await this.save(supplier)

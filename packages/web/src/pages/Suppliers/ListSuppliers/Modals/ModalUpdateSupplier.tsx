@@ -1,25 +1,31 @@
 import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { FaRegAddressCard } from 'react-icons/fa'
 import { FiMail, FiPhone } from 'react-icons/fi'
 import { GoPerson } from 'react-icons/go'
 import Button from '../../../../components/Button'
 import Input from '../../../../components/Input'
 import ModalRender from '../../../../components/Modal'
-import { useSupplier } from '../../../../hooks/supplier'
+import { TypePix, useSupplier } from '../../../../hooks/supplier'
 import { useToast } from '../../../../hooks/toast'
 import getValidationErrors from '../../../../utils/getValidationError'
 import removeEmptyFields from '../../../../utils/removeEmptyFields'
-import { WrapperFormButton } from '../styles'
+import { WrapperFormButton, WrapperPix } from '../styles'
 
 import * as Yup from 'yup'
+import SelectInput from '../../../../components/SelectInput'
+import { MdVpnKey } from 'react-icons/md'
+import { typesPix } from '../../CreateSupplier/util'
 
 type IFormSupplier = {
   name: string
   email: string
   phone: string
   address: string
+  phoneSecondary: string | null
+  typePix: TypePix | null
+  keyPix: string | null
 }
 
 type Props = {
@@ -33,6 +39,9 @@ export function ModalUpdateSupplier({
 }: Props) {
   const { supplierSelected, updateSupplier, deleteSupplier, selectSupplierId } =
     useSupplier()
+  const [selectTypePix, setSelectTypePix] = useState<TypePix | null>(
+    supplierSelected?.typePix ?? null
+  )
   const { addToast } = useToast()
   const formRef = useRef<FormHandles>(null)
 
@@ -50,7 +59,12 @@ export function ModalUpdateSupplier({
             .email('Digite um e-mail válido')
             .required('E-mail obrigatório'),
           phone: Yup.string().required('Telefone obrigatório'),
-          address: Yup.string().nullable()
+          address: Yup.string().nullable(),
+          phoneSecondary: Yup.string().nullable(),
+          typePix: Yup.mixed<TypePix>()
+            .oneOf(Object.values(TypePix))
+            .nullable(),
+          keyPix: Yup.string().nullable()
         })
         await schema.validate(fields, { abortEarly: false })
 
@@ -58,7 +72,10 @@ export function ModalUpdateSupplier({
           email: fields.email ?? '',
           name: fields.name ?? '',
           phone: fields.phone ?? '',
-          address: fields.address ?? ''
+          address: fields.address ?? '',
+          keyPix: fields.keyPix ?? null,
+          phoneSecondary: fields.phoneSecondary ?? null,
+          typePix: selectTypePix
         })
 
         addToast({
@@ -83,7 +100,7 @@ export function ModalUpdateSupplier({
         })
       }
     },
-    [addToast, supplierSelected, updateSupplier]
+    [addToast, supplierSelected, updateSupplier, selectTypePix]
   )
 
   const handleDeleteSupplier = useCallback(async () => {
@@ -144,11 +161,40 @@ export function ModalUpdateSupplier({
           defaultValue={supplierSelected?.phone}
         />
         <Input
+          icon={FiPhone}
+          type="tel"
+          name="phoneSecondary"
+          placeholder="Telefone secundário (opcional)"
+          defaultValue={supplierSelected?.phoneSecondary ?? ''}
+        />
+        <Input
           icon={FaRegAddressCard}
           name="address"
           placeholder="Endereço"
           defaultValue={supplierSelected?.address}
         />
+        <WrapperPix>
+          <SelectInput
+            placeholder="Selecione o tipo de pix (opcional)"
+            onChange={(newValue: any) =>
+              setSelectTypePix(newValue?.value ?? null)
+            }
+            itens={typesPix}
+            title="Tipo"
+            id="form-type-pix"
+            name="typePix"
+            isClearable
+            noOptionsMessage={() => 'Nenhum tipo cadastrado'}
+            hasLabel={false}
+            value={typesPix.find(t => t.value === selectTypePix)}
+          />
+          <Input
+            icon={MdVpnKey}
+            name="keyPix"
+            placeholder="Chave pix (opcional)"
+            defaultValue={supplierSelected?.keyPix ?? ''}
+          />
+        </WrapperPix>
         <WrapperFormButton>
           <Button type="submit" label="little">
             Atualizar

@@ -1,4 +1,4 @@
-export class CheckFone {
+export class CheckPhone {
   constructor(private readonly phone: string) {}
 
   verify(): boolean {

@@ -109,7 +109,7 @@ export default function SelectInput({
           styles={{
             control: baseStyles => ({
               ...baseStyles,
-              height: '3.5rem'
+              height: '3rem'
             }),
             menuPortal: baseStyles => ({
               ...baseStyles,

@@ -4,15 +4,19 @@ import { container } from 'tsyringe'
 
 export class CreateSupplierController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { name, email, phone, address } = request.body
+    const { address, email, name, phone, keyPix, phoneSecondary, typePix } =
+      request.body
 
     const createSupplierService = container.resolve(CreateSupplierService)
 
     const supplier = await createSupplierService.execute({
-      name,
+      address,
       email,
+      name,
       phone,
-      address
+      keyPix,
+      phoneSecondary,
+      typePix
     })
 
     return response.status(201).json(supplier)

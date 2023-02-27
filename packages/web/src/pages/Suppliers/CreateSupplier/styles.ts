@@ -48,3 +48,41 @@ export const Content = styled.section`
     padding: 0 1.5rem;
   }
 `
+
+export const WrapperPix = styled.div`
+  display: flex;
+  margin-top: 0.5rem;
+  gap: 0.3rem;
+
+  > div:first-child {
+    width: 40%;
+  }
+
+  > div:last-child {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    > div:first-child {
+      width: 45%;
+    }
+
+    > div:last-child {
+      width: 55%;
+    }
+  }
+
+  @media (max-width: 425px) {
+    flex-direction: column;
+    gap: 0;
+
+    > div:first-child {
+      width: 100%;
+      padding-bottom: 0;
+    }
+    > div:last-child {
+      margin-top: 0.5rem;
+      width: 100%;
+    }
+  }
+`

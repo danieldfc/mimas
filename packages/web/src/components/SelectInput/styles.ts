@@ -15,7 +15,6 @@ export const Container = styled.div.attrs({
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  height: 3.5rem;
 
   ${props =>
     props.isErrored &&
@@ -70,7 +69,7 @@ export const Content = styled.div`
 `
 
 export const Error = styled(Tooltip)`
-  height: 20px;
+  height: 1.1rem;
   margin: 0 0.5rem;
 
   svg {

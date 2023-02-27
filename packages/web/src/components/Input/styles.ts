@@ -19,6 +19,8 @@ export const Container = styled.div.attrs({
   display: flex;
   align-items: center;
   color: var(--gray-color);
+  height: 3rem;
+
   & + div {
     margin-top: 8px;
   }
