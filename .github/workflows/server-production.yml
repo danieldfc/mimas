@@ -1,11 +1,10 @@
 name: CI Production
 
 on:
-  pull_request:
-    branches:
-      - main
-    # paths:
-    #   - 'packages/server/**'
+  push:
+    branches: [ main ]
+    paths:
+      - 'packages/server/**'
 
 jobs:
   deploy:
@@ -23,28 +22,32 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Build
-        run: yarn --cwd packages/server build
-
-      - name: Run Tests
+      - name: Run tests
         run: yarn --cwd packages/server test
 
-      - name: Copy build to Digital Ocean
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "packages/server/*"
-          target: "www/mimas/packages/server"
+      - name: Run build
+        run: yarn --cwd packages/server build
 
-      - name: Restart Server
+      - name: Copy code to Digital Ocean
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          source: "packages/server/*"
-          target: "~/www/mimas/packages/server"
+          source: "packages/server/*,!node_modules"
+          target: "www/mimas"
+
+      - name: Run production scripts
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/www/mimas
+            yarn
+            cd ./packages/server
+            ./node_modules/.bin/typeorm migration:run
+            pm2 restart costura-api
