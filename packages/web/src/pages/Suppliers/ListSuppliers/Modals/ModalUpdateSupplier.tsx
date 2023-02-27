@@ -170,7 +170,7 @@ export function ModalUpdateSupplier({
         <Input
           icon={FaRegAddressCard}
           name="address"
-          placeholder="Endereço"
+          placeholder="Endereço (opcional)"
           defaultValue={supplierSelected?.address}
         />
         <WrapperPix>

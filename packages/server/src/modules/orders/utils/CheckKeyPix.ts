@@ -3,7 +3,9 @@ import { CheckPhone } from '@shared/utils/CheckPhone'
 import { TypePix } from '../infra/typeorm/entities/Supplier'
 
 export class CheckKeyPix {
-  public isValid(type: TypePix, key: string) {
+  public isValid(type?: TypePix, key?: string) {
+    if (!type || !key) return false
+
     if (type === TypePix.CPF_CNPJ) return this.isValidCpfCnpj(key)
     if (type === TypePix.PHONE) return this.isValidPhone(key)
     if (type === TypePix.EMAIL) return this.isValidEmail(key)
