@@ -9,12 +9,22 @@ import React, {
 } from 'react'
 import { Product } from '../interfaces/Product'
 
+export enum TypePix {
+  CPF_CNPJ = 'cpf_cnpj',
+  PHONE = 'phone',
+  EMAIL = 'email',
+  RANDOM = 'random'
+}
+
 export type Supplier = {
   id: string
   name: string
   email: string
   address: string
   phone: string
+  phoneSecondary: string | null
+  typePix: TypePix | null
+  keyPix: string | null
   products: Product[]
 }
 
@@ -40,19 +50,27 @@ const SupplierProvider: React.FC = ({ children }) => {
   const addSupplier = useCallback(
     async ({
       name,
-      phone,
       email,
+      phone,
       address,
+      phoneSecondary,
+      keyPix,
+      typePix,
       products = []
     }: Omit<Supplier, 'id'>) => {
-      const supplier = {
+      const response = await api.post('/suppliers', {
         name,
-        phone,
         email,
-        address
-      }
+        phone,
+        address,
+        phoneSecondary,
+        keyPix,
+        typePix
+      })
 
-      const response = await api.post('/suppliers', supplier)
+      if (!response) {
+        throw new Error('Erro no cadastro de um novo fornecedor')
+      }
 
       setSuppliers(oldSuppliers => [
         ...oldSuppliers,
@@ -63,18 +81,15 @@ const SupplierProvider: React.FC = ({ children }) => {
   )
 
   const updateSupplier = useCallback(
-    async (id: string, { name, phone, email, address }: Partial<Supplier>) => {
+    async (id: string, supplier: Partial<Supplier>) => {
       const supplierIndex = suppliers.findIndex(s => s.id === id)
       if (supplierIndex < 0) return
 
-      const supplier = {
-        name,
-        phone,
-        email,
-        address
-      }
-
       const response = await api.put(`/suppliers/${id}`, supplier)
+
+      if (!response) {
+        throw new Error('Erro ao atualizar o fornecedor')
+      }
 
       setSuppliers(suppliers.map(sup => (sup.id === id ? response.data : sup)))
 
@@ -90,7 +105,11 @@ const SupplierProvider: React.FC = ({ children }) => {
       const supplierIndex = suppliers.findIndex(s => s.id === id)
       if (supplierIndex < 0) return
 
-      await api.delete(`/suppliers/${id}`)
+      const response = await api.delete(`/suppliers/${id}`)
+
+      if (!response) {
+        throw new Error('Erro ao deletar o fornecedor')
+      }
 
       setSuppliers(oldSuppliers =>
         oldSuppliers.filter(supplier => supplier.id !== id)

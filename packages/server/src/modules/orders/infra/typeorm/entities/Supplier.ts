@@ -8,6 +8,13 @@ import {
 } from 'typeorm'
 import { Product } from './Product'
 
+export enum TypePix {
+  CPF_CNPJ = 'cpf_cnpj',
+  PHONE = 'phone',
+  EMAIL = 'email',
+  RANDOM = 'random'
+}
+
 @Entity('suppliers')
 export class Supplier {
   @PrimaryGeneratedColumn('uuid')
@@ -22,8 +29,28 @@ export class Supplier {
   @Column({ length: 25 })
   phone: string
 
+  @Column({
+    length: 25,
+    name: 'phone_secondary',
+    nullable: true,
+    type: 'varchar'
+  })
+  phoneSecondary: string
+
   @Column({ length: 255 })
   address: string
+
+  @Column({
+    type: 'enum',
+    enumName: 'suppliers_type_pix_enum',
+    default: 'random',
+    name: 'type_pix',
+    nullable: true
+  })
+  typePix: TypePix
+
+  @Column({ name: 'key_pix', length: 100, nullable: true })
+  keyPix: string
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date

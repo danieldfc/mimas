@@ -5,12 +5,26 @@ import ISuppliersRepository from '../ISuppliersRepository'
 export default class FakeSuppliersRepository implements ISuppliersRepository {
   private suppliers: Supplier[] = []
 
-  async create(data: ICreateSuppliersDTO): Promise<Supplier> {
+  async create({
+    address,
+    email,
+    name,
+    phone,
+    keyPix,
+    phoneSecondary,
+    typePix
+  }: ICreateSuppliersDTO): Promise<Supplier> {
     const supplier = new Supplier()
 
     Object.assign(supplier, {
-      ...data,
       id: this.suppliers.length + 1,
+      address,
+      email,
+      name,
+      phone,
+      keyPix,
+      phoneSecondary,
+      typePix,
       createdAt: new Date(),
       updatedAt: new Date()
     })

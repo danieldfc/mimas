@@ -3,6 +3,7 @@ import { inject, injectable } from 'tsyringe'
 import IUpdateSupplierDTO from '../dtos/IUpdateSuppliersDTO'
 import { Supplier } from '../infra/typeorm/entities/Supplier'
 import ISuppliersRepository from '../infra/typeorm/repositories/ISuppliersRepository'
+import { CheckKeyPix } from '../utils/CheckKeyPix'
 
 @injectable()
 export class UpdateSupplierService {
@@ -18,10 +19,36 @@ export class UpdateSupplierService {
       throw new AppError('Supplier not found')
     }
 
+    if (
+      this.verifyCheckPix(supplier, data) &&
+      !new CheckKeyPix().isValid(data.typePix, data.keyPix)
+    ) {
+      throw new AppError('Key pix invalid')
+    }
+
     Object.assign(supplier, { ...data })
 
     await this.suppliersRepository.save(supplier)
 
     return supplier
+  }
+
+  private verifyCheckPix(
+    supplier: Supplier,
+    data: IUpdateSupplierDTO
+  ): boolean {
+    if (data.keyPix && !data.typePix) {
+      return !!supplier.typePix
+    }
+
+    if (!data.keyPix && data.typePix) {
+      return !!supplier.keyPix
+    }
+
+    return (
+      ((data.keyPix && supplier.keyPix !== data.keyPix) ||
+        (data.typePix && supplier.typePix !== data.typePix)) ??
+      false
+    )
   }
 }

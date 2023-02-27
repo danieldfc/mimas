@@ -26,7 +26,12 @@ supplierRoute.post(
       name: Joi.string().required(),
       email: Joi.string().email().required(),
       phone: Joi.string().min(1).max(25),
-      address: Joi.string().allow('').max(255)
+      address: Joi.string().allow('').max(255),
+      phoneSecondary: Joi.string().max(25).allow(null),
+      typePix: Joi.string()
+        .valid('cpf_cnpj', 'random', 'email', 'phone')
+        .allow(null),
+      keyPix: Joi.string().max(100).allow(null)
     }
   }),
   createSupplierController.handle

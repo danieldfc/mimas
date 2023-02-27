@@ -1,6 +1,7 @@
 import { ProductType } from '../../../interfaces/Product'
+import { ItemSelect } from '../../../components/SelectInput'
 
-export const typeProducts = [
+export const typeProducts: ItemSelect[] = [
   {
     label: 'Metros',
     value: ProductType.METERS

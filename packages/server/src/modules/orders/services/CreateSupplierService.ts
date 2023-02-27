@@ -1,10 +1,11 @@
 import { AppError } from '@shared/errors/AppError'
 import { CheckEmail } from '@shared/utils'
-import { CheckFone } from '@shared/utils/CheckFone'
+import { CheckPhone } from '@shared/utils/CheckPhone'
 import { inject, injectable } from 'tsyringe'
 import ICreateSuppliersDTO from '../dtos/ICreateSuppliersDTO'
 import { Supplier } from '../infra/typeorm/entities/Supplier'
 import ISuppliersRepository from '../infra/typeorm/repositories/ISuppliersRepository'
+import { CheckKeyPix } from '../utils/CheckKeyPix'
 
 @injectable()
 export class CreateSupplierService {
@@ -14,16 +15,19 @@ export class CreateSupplierService {
   ) {}
 
   async execute({
-    email,
     address,
+    email,
     name,
-    phone
+    phone,
+    phoneSecondary,
+    keyPix,
+    typePix
   }: ICreateSuppliersDTO): Promise<Supplier> {
     if (!new CheckEmail(email).verify()) {
       throw new AppError('E-mail invalid')
     }
 
-    if (!new CheckFone(phone).verify()) {
+    if (!new CheckPhone(phone).verify()) {
       throw new AppError('Phone invalid')
     }
 
@@ -33,11 +37,22 @@ export class CreateSupplierService {
       throw new AppError('Supplier duplicated, register with another e-mail.')
     }
 
+    if ((typePix && !keyPix) || (!typePix && keyPix)) {
+      throw new AppError("Inform the supplier's pix key")
+    }
+
+    if (typePix && keyPix && !new CheckKeyPix().isValid(typePix, keyPix)) {
+      throw new AppError('Key pix invalid')
+    }
+
     return this.suppliersRepository.create({
       email,
       address,
       name,
-      phone
+      phone,
+      phoneSecondary,
+      keyPix,
+      typePix
     })
   }
 }

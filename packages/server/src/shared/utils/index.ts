@@ -1,1 +1,5 @@
 export * from './CheckEmail'
+export * from './CheckPhone'
+export * from './CheckCpfCnpj'
+export * from './RemovePropertyObjectUndefinedOrNull'
+export * from './StringUtil'

@@ -75,9 +75,7 @@ export const SelectSupplier = styled.ul`
 export const WrapperFormButton = styled.div`
   display: flex;
 
-  button + button {
-    margin-left: 1rem;
-  }
+  gap: 0.5rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -90,6 +88,63 @@ export const WrapperFormButton = styled.div`
 
     button + button {
       margin: 0.5rem 0 0 0;
+    }
+  }
+
+  @media (max-width: 425px) {
+    margin-top: 0.5rem;
+  }
+`
+
+export const WrapperPix = styled.div`
+  display: flex;
+  margin-top: 0.5rem;
+  gap: 0.3rem;
+
+  > div:first-child {
+    width: 40%;
+  }
+
+  > div:last-child {
+    width: 60%;
+  }
+
+  @media (max-width: 1280px) {
+    > div:first-child {
+      font-size: 0.8rem;
+      width: 50%;
+    }
+
+    > div:last-child {
+      width: 50%;
+
+      input {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    > div:first-child {
+      width: 50%;
+    }
+
+    > div:last-child {
+      width: 50%;
+    }
+  }
+
+  @media (max-width: 425px) {
+    flex-direction: column;
+    gap: 0;
+
+    > div:first-child {
+      width: 100%;
+      padding-bottom: 0;
+    }
+    > div:last-child {
+      margin-top: 0.5rem;
+      width: 100%;
     }
   }
 `
