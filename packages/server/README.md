@@ -28,3 +28,4 @@ Para controle de clientes do sistema
 Para controle de notificações do sistema
 
 - Acionado quando é criado um novo pedido
+- Acionado para verificar pedidos do dia
