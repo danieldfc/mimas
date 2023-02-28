@@ -30,6 +30,22 @@ body {
   background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
   color: var(--white-color);
   -webkit-font-smoothing: antialiased;
+  scrollbar-width: auto;
+  scrollbar-color: var(--lighten-color) none;
+
+  &::-webkit-scrollbar {
+    width: 0.65rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--lighten-color);
+    border: none;
+    border-radius: 2rem;
+  }
 }
 
 body, button, input {
@@ -67,5 +83,19 @@ a {
 
 ul {
   list-style: none;
+
+  &::-webkit-scrollbar {
+    width: 0.65rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--lighten-color);
+    border: none;
+    border-radius: 2rem;
+  }
 }
 `
