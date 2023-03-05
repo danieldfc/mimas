@@ -75,6 +75,8 @@ export class CreateOrderService {
     const productsVerified = await this.getProducts(metadado)
     const priceProductsTotal = this.getPriceTotalProducts(productsVerified)
 
+    await this.updateMaximumAmountProducts(productsVerified)
+
     const order = await this.ordersRepository.create({
       title,
       description,
@@ -142,6 +144,22 @@ export class CreateOrderService {
     return products.reduce(
       (acc, product) => acc + product.price * product.qtd,
       0
+    )
+  }
+
+  private async updateMaximumAmountProducts(
+    products: IProductMerged[]
+  ): Promise<void> {
+    await Promise.all(
+      products.map(async p => {
+        const product = await this.productsRepository.findById(p.id)
+
+        if (product) {
+          product.maximumAmount -= p.qtd
+          if (product.maximumAmount < 0) product.maximumAmount = 0
+          await this.productsRepository.save(product)
+        }
+      })
     )
   }
 }

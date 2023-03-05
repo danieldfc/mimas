@@ -52,14 +52,11 @@ export default function ListNotifications() {
       <Content>
         {notifications.length ? (
           notifications.map(n => (
-            <NotificationItem
-              key={n.id}
-              isReaded={n.isReaded}
-              href={`/notifications/${n.id}`}
-            >
+            <NotificationItem key={n.id} isReaded={n.isReaded}>
               <div>
                 <h3>
-                  {n.title} {n.url && <a href={n.url}>- Acesse o link</a>}
+                  <a href={`/notifications/${n.id}`}>{n.title}</a>{' '}
+                  {n.url && <a href={n.url}>- Acesse o link</a>}
                 </h3>
                 <p>{n.description}</p>
               </div>

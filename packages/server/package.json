@@ -18,9 +18,7 @@
     "schema:sync": "npx tsnd -r tsconfig-paths/register ../../node_modules/typeorm/cli.js schema:sync",
     "test": "cross-env NODE_ENV=test npx jest --no-cache",
     "test:dev": "cross-env NODE_ENV=test npx jest --no-cache --watchAll",
-    "test:coverage": "cross-env NODE_ENV=test npx jest --no-cache --coverage",
-    "vercel-build": "yarn build && yarn typeorm migration:run && yarn seed:run",
-    "prepare": "yarn build"
+    "test:coverage": "cross-env NODE_ENV=test npx jest --no-cache --coverage"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

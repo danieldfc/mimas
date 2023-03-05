@@ -10,9 +10,9 @@ export const Container = styled.ul`
   li + li {
     margin-bottom: 20px;
   }
+`
 
-  h3 {
-    margin-bottom: 1rem;
-    color: var(--dark-color);
-  }
+export const Title = styled.h3`
+  margin-bottom: 1rem;
+  color: var(--dark-color);
 `

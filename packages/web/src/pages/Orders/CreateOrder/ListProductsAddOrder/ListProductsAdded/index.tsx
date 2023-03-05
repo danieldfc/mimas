@@ -1,5 +1,5 @@
 import React from 'react'
-import { Product } from '../../interfaces/Product'
+import { Product } from '../../../../../interfaces/Product'
 
 import { Container } from './styles'
 
@@ -13,7 +13,11 @@ export default function ListProductsAdded({
 }: ListProductsAddedProps) {
   return (
     <Container {...rest}>
-      {product.title} - Preço ({product.price}) - QTD ({product.qtd})
+      <h3>{product.title}</h3>
+      <p>
+        <strong>Preço ({product.price})</strong>
+        <strong>QTD ({product.qtd})</strong>
+      </p>
     </Container>
   )
 }
