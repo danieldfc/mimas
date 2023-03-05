@@ -35,6 +35,7 @@ interface SupplierProviderData {
   updateSupplier(id: string, supplier: Partial<Supplier>): Promise<void>
   deleteSupplier(id: string): Promise<void>
   selectSupplierId(id?: string): void
+  updateSupplierAmountProducts(products: Product[]): void
 }
 
 const SupplierContext = createContext<SupplierProviderData>(
@@ -100,6 +101,35 @@ const SupplierProvider: React.FC = ({ children }) => {
     [suppliers, supplierSelected]
   )
 
+  const updateSupplierAmountProducts = useCallback(
+    (products: Product[]) => {
+      setSuppliers(oldSuppliers =>
+        oldSuppliers.map(supplier => {
+          const product = products.find(p => p.supplierId === supplier.id)
+
+          if (product) {
+            const productSupplierIndex = supplier.products.findIndex(
+              p => p.id === product.id
+            )
+            if (productSupplierIndex >= 0) {
+              supplier.products[productSupplierIndex].maximumAmount -=
+                product.qtd
+              if (supplierSelected?.id === supplier.id) {
+                setSupplierSelected({
+                  ...supplierSelected,
+                  products: supplier.products
+                })
+              }
+            }
+          }
+
+          return supplier
+        })
+      )
+    },
+    [supplierSelected]
+  )
+
   const deleteSupplier = useCallback(
     async (id: string) => {
       const supplierIndex = suppliers.findIndex(s => s.id === id)
@@ -144,7 +174,8 @@ const SupplierProvider: React.FC = ({ children }) => {
         updateSupplier,
         deleteSupplier,
         selectSupplierId,
-        supplierSelected
+        supplierSelected,
+        updateSupplierAmountProducts
       }}
     >
       {children}
@@ -156,7 +187,7 @@ function useSupplier(): SupplierProviderData {
   const context = useContext(SupplierContext)
 
   if (!context) {
-    throw new Error('useToast must be used within a SupplierProvider')
+    throw new Error('useSupplier must be used within a SupplierProvider')
   }
 
   return context

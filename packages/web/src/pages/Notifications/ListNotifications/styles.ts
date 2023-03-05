@@ -47,7 +47,7 @@ const notificationTypeRead = {
   `
 }
 
-export const NotificationItem = styled.a<NotificationItemProps>`
+export const NotificationItem = styled.aside<NotificationItemProps>`
   background: var(--white-color);
   color: var(--secondary-color);
   padding: 1rem;

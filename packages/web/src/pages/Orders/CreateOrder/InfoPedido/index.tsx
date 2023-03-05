@@ -21,6 +21,7 @@ import { useToast } from '../../../../hooks/toast'
 import { useClient } from '../../../../hooks/client'
 import { FormHandles } from '@unform/core'
 import { Container, WrapperDate } from './styles'
+import { useSupplier } from '../../../../hooks/supplier'
 
 type IFormDataOrder = {
   title: string
@@ -48,6 +49,7 @@ export default function InfoPedido({
   formRef
 }: Props) {
   const { clients } = useClient()
+  const { updateSupplierAmountProducts } = useSupplier()
   const history = useHistory()
   const { addToast } = useToast()
 
@@ -63,7 +65,10 @@ export default function InfoPedido({
       try {
         formRef.current?.setErrors({})
 
-        const produtos = products
+        const produtos: Array<{
+          productId: string
+          qtd: number
+        }> = products
           .filter(p => p.add === true)
           .reduce((acc: any, item: Product) => {
             return [
@@ -134,10 +139,10 @@ export default function InfoPedido({
         await api.post('/orders', order)
 
         history.push('/dashboard')
+        updateSupplierAmountProducts(products.filter(p => p.add === true))
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)
-          console.log(errors)
 
           formRef.current?.setErrors(errors)
 
@@ -151,7 +156,14 @@ export default function InfoPedido({
         })
       }
     },
-    [clientsId, addToast, history, products, formRef]
+    [
+      clientsId,
+      addToast,
+      history,
+      products,
+      formRef,
+      updateSupplierAmountProducts
+    ]
   )
 
   return (
