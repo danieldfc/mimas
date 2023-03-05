@@ -17,7 +17,7 @@ const environments = {
     entitiesDir: 'src/modules/**/entities',
     migrationsDir: 'src/shared/infra/typeorm/migrations',
   },
-  ssl: !!parseInt(process.env.DB_SSL || '0'),
+  ssl: !!parseInt(process.env.DB_SSL || '0')
   // logging: true
 }
 

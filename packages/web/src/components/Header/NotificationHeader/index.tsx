@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { MdOutlineNotificationsNone } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import { useNotification } from '../../../hooks/notification'
+import { padStart } from '../../../utils/formatDate'
 import {
   ButtonIcon,
   Container,
@@ -24,9 +25,13 @@ export default function NotificationHeader({
   const parseData = useCallback((date: string) => {
     const [data, horario] = date.split('T')
     const [ano, mes, dia] = data.split('-')
-    const [hora, minuto] = horario.split(':')
+    const [, minuto] = horario.split(':')
 
-    return `${dia}/${mes}/${ano} ${hora}:${minuto}`
+    return `${dia}/${mes}/${ano} ${padStart(
+      String(new Date(date).getHours()),
+      2,
+      '0'
+    )}:${minuto}`
   }, [])
 
   const checkeNotifications = useCallback(() => {

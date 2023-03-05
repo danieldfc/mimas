@@ -28,7 +28,7 @@ export const ModalContainer = styled(Modal)`
   }
 `
 
-export const ModalContent = styled.div`
+export const ModalContent = styled.aside`
   width: 50%;
   height: auto;
   background-color: var(--white-color);
