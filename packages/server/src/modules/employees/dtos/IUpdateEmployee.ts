@@ -1,11 +1,9 @@
 import { TypePix } from '@shared/utils'
 
-export default interface IUpdateSupplierDTO {
+export interface IUpdateEmployeeDTO {
   name?: string
   email?: string
   phone?: string
-  address?: string
-  phoneSecondary?: string
   typePix?: TypePix
   keyPix?: string
 }

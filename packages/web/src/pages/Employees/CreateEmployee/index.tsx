@@ -1,7 +1,6 @@
-import { FormHandles } from '@unform/core'
+import { FormHandles, FormHelpers } from '@unform/core'
 import { Form } from '@unform/web'
 import React, { useCallback, useRef, useState } from 'react'
-import { FaRegAddressCard } from 'react-icons/fa'
 import { FiArrowLeft, FiMail, FiPhone } from 'react-icons/fi'
 import { GoPerson } from 'react-icons/go'
 import { MdVpnKey } from 'react-icons/md'
@@ -11,64 +10,61 @@ import Button from '../../../components/Button'
 import { Header } from '../../../components/Header'
 import Input from '../../../components/Input'
 import SelectInput from '../../../components/SelectInput'
-import { useSupplier } from '../../../hooks/supplier'
-import { useToast } from '../../../hooks/toast'
 import { TypePix } from '../../../utils/enum'
 import getValidationErrors from '../../../utils/getValidationError'
-import removeEmptyFields from '../../../utils/removeEmptyFields'
 import { typesPix } from '../../../utils/typesPix'
 import { Container, Content, HeaderWrapper, WrapperPix } from './styles'
+import { useEmployee } from '../../../hooks/employee'
+import { useToast } from '../../../hooks/toast'
+import removeEmptyFields from '../../../utils/removeEmptyFields'
 
-interface IFormDataSupplier {
+interface IFormDataEmployee {
   name: string
+  email?: string
   phone: string
-  email: string
-  address: string
-  phoneSecondary: string | null
-  typePix: TypePix | null
-  keyPix: string | null
+  keyPix: string
+  typePix: TypePix
 }
 
-export function CreateSupplier() {
-  const [selectTypePix, setSelectTypePix] = useState<TypePix | null>(null)
+export default function CreateEmployee() {
   const formRef = useRef<FormHandles>(null)
-  const { addSupplier } = useSupplier()
-  const history = useHistory()
+  const [selectTypePix, setSelectTypePix] = useState<TypePix | null>(null)
+
+  const { addEmployee } = useEmployee()
   const { addToast } = useToast()
+  const history = useHistory()
 
   const handleSubmit = useCallback(
-    async (data: IFormDataSupplier) => {
-      const fields = removeEmptyFields<IFormDataSupplier>(data)
+    async (data: IFormDataEmployee, { reset }: FormHelpers) => {
+      const fields = removeEmptyFields<IFormDataEmployee>({
+        ...data,
+        typePix: selectTypePix
+      })
       try {
         formRef.current?.setErrors({})
 
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome obrigatório'),
-          email: Yup.string()
-            .email('Digite um e-mail válido')
-            .required('E-mail obrigatório'),
+          email: Yup.string().email('Digite um e-mail válido'),
           phone: Yup.string().required('Telefone obrigatório'),
-          address: Yup.string().nullable(),
-          phoneSecondary: Yup.string().nullable(),
           typePix: Yup.mixed<TypePix>()
             .oneOf(Object.values(TypePix))
-            .nullable(),
-          keyPix: Yup.string().nullable()
+            .required('Tipo de PIX obrigatório'),
+          keyPix: Yup.string().required('Chave PIX obrigatória')
         })
         await schema.validate(fields, { abortEarly: false })
 
-        await addSupplier({
+        await addEmployee({
           email: fields.email ?? '',
           name: fields.name ?? '',
           phone: fields.phone ?? '',
-          address: fields.address ?? '',
-          keyPix: fields.keyPix ?? null,
-          phoneSecondary: fields.phoneSecondary ?? null,
-          typePix: selectTypePix,
-          products: []
+          keyPix: fields.keyPix ?? '',
+          typePix: selectTypePix as TypePix
         })
 
-        history.push('/suppliers')
+        history.push('/employees')
+
+        reset()
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)
@@ -85,7 +81,7 @@ export function CreateSupplier() {
         })
       }
     },
-    [addToast, history, addSupplier, selectTypePix]
+    [addToast, addEmployee, history, selectTypePix]
   )
 
   return (
@@ -93,9 +89,8 @@ export function CreateSupplier() {
       <Header />
 
       <HeaderWrapper>
-        <h3>Cadastrar novo fornecedor</h3>
-
-        <Link to="/suppliers">
+        <h3>Cadastrar prestador de serviço</h3>
+        <Link to="/employees">
           <FiArrowLeft />
           Voltar
         </Link>
@@ -104,27 +99,16 @@ export function CreateSupplier() {
       <Content>
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input icon={GoPerson} name="name" placeholder="Nome" />
-          <Input icon={FiMail} name="email" placeholder="E-mail" />
+          <Input icon={FiMail} name="email" placeholder="E-mail (opcional)" />
           <Input
             icon={FiPhone}
             name="phone"
             placeholder="Telefone"
             type="tel"
           />
-          <Input
-            icon={FiPhone}
-            name="phoneSecondary"
-            placeholder="Telefone secundário (opcional)"
-            type="tel"
-          />
-          <Input
-            icon={FaRegAddressCard}
-            name="address"
-            placeholder="Endereço (opcional)"
-          />
           <WrapperPix>
             <SelectInput
-              placeholder="Selecione o tipo de pix (opcional)"
+              placeholder="Selecione o tipo de PIX"
               onChange={(newValue: any) =>
                 setSelectTypePix(newValue?.value ?? null)
               }
@@ -137,14 +121,10 @@ export function CreateSupplier() {
               hasLabel={false}
               value={typesPix.find(t => t.value === selectTypePix)}
             />
-            <Input
-              icon={MdVpnKey}
-              name="keyPix"
-              placeholder="Chave pix (opcional)"
-            />
+            <Input icon={MdVpnKey} name="keyPix" placeholder="Chave PIX" />
           </WrapperPix>
           <Button type="submit" label="little">
-            Cadastrar
+            Criar prestador de serviço
           </Button>
         </Form>
       </Content>

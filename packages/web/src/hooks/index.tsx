@@ -6,6 +6,7 @@ import { ClientProvider } from './client'
 import { SupplierProvider } from './supplier'
 import { ToastProvider } from './toast'
 import { NotificationProvider } from './notification'
+import { EmployeeProvider } from './employee'
 
 type AppProviderProps = {
   children: any
@@ -18,7 +19,9 @@ export default function AppProvider({ children }: AppProviderProps) {
         <ToastProvider>
           <ClientProvider>
             <SupplierProvider>
-              <NotificationProvider>{children}</NotificationProvider>
+              <NotificationProvider>
+                <EmployeeProvider>{children}</EmployeeProvider>
+              </NotificationProvider>
             </SupplierProvider>
           </ClientProvider>
         </ToastProvider>

@@ -1,6 +1,5 @@
-import { CheckCpfCnpj, CheckEmail } from '@shared/utils'
+import { CheckCpfCnpj, CheckEmail, TypePix } from '@shared/utils'
 import { CheckPhone } from '@shared/utils/CheckPhone'
-import { TypePix } from '../infra/typeorm/entities/Supplier'
 
 export class CheckKeyPix {
   public isValid(type?: TypePix, key?: string) {

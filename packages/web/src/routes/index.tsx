@@ -15,6 +15,9 @@ import Profile from '../pages/Profile'
 import { ShowClient } from '../pages/Clients/ShowClient'
 import ListNotifications from '../pages/Notifications/ListNotifications'
 import ShowNotification from '../pages/Notifications/ShowNotification'
+import ListEmployees from '../pages/Employees/ListEmployees'
+import CreateEmployee from '../pages/Employees/CreateEmployee'
+import ShowEmployee from '../pages/Employees/ShowEmployee'
 
 const Routes: React.FC = () => (
   <Switch>
@@ -31,6 +34,10 @@ const Routes: React.FC = () => (
 
     <Route path="/suppliers" component={Suppliers} isPrivate />
     <Route path="/create-supplier" component={CreateSupplier} isPrivate />
+
+    <Route path="/employees" exact component={ListEmployees} isPrivate />
+    <Route path="/employees/:id" component={ShowEmployee} isPrivate />
+    <Route path="/create-employee" component={CreateEmployee} isPrivate />
 
     <Route
       path="/notifications"

@@ -1,5 +1,5 @@
 import { AppError } from '@shared/errors/AppError'
-import { TypePix } from '../infra/typeorm/entities/Supplier'
+import { TypePix } from '@shared/utils'
 import FakeSuppliersRepository from '../infra/typeorm/repositories/fakes/FakeSuppliersRepository'
 import { UpdateSupplierService } from './UpdateSupplierService'
 
