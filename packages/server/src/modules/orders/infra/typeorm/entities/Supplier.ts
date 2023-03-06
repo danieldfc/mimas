@@ -1,3 +1,4 @@
+import { TypePix } from '@shared/utils'
 import {
   Column,
   CreateDateColumn,
@@ -7,13 +8,6 @@ import {
   UpdateDateColumn
 } from 'typeorm'
 import { Product } from './Product'
-
-export enum TypePix {
-  CPF_CNPJ = 'cpf_cnpj',
-  PHONE = 'phone',
-  EMAIL = 'email',
-  RANDOM = 'random'
-}
 
 @Entity('suppliers')
 export class Supplier {

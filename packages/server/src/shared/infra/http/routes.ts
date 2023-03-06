@@ -10,6 +10,7 @@ import { passwordRouter } from '@modules/users/infra/http/routes/password.routes
 import { profileRouter } from '@modules/users/infra/http/routes/profile.routes'
 import { refreshTokensRouter } from '@modules/users/infra/http/routes/refresh-token.routes'
 import { notificationRouter } from '@modules/notifications/infra/http/routes/notification.routes'
+import { employeeRoutes } from '@modules/employees/infra/http/routes/employee.routes'
 
 const routes = Router()
 
@@ -23,5 +24,6 @@ routes.use('/clients', clientRoutes)
 routes.use('/suppliers', supplierRoute)
 routes.use('/password', passwordRouter)
 routes.use('/profile', profileRouter)
+routes.use('/employees', employeeRoutes)
 
 export { routes }

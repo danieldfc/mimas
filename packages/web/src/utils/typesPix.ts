@@ -1,5 +1,5 @@
-import { ItemSelect } from '../../../components/SelectInput'
-import { TypePix } from '../../../hooks/supplier'
+import { ItemSelect } from '../components/SelectInput'
+import { TypePix } from '../utils/enum'
 
 export const typesPix: ItemSelect[] = [
   {

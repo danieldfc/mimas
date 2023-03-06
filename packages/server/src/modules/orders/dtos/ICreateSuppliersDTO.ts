@@ -1,4 +1,4 @@
-import { TypePix } from '../infra/typeorm/entities/Supplier'
+import { TypePix } from '@shared/utils'
 
 export default interface ICreateSuppliersDTO {
   name: string

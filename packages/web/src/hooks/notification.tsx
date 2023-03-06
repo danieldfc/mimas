@@ -34,8 +34,11 @@ const NotificationProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     async function getNotifications() {
-      await api.get('/orders/notifications/today')
+      const todayResponse = await api.get('/orders/notifications/today')
       const response = await api.get('/notifications')
+      if (!response || !todayResponse) {
+        throw new Error('Erro ao buscar as notificações')
+      }
       setNotifications([...response.data.notifications])
       return response.data.notifications as Notification[]
     }
@@ -43,7 +46,11 @@ const NotificationProvider: React.FC = ({ children }) => {
   }, [])
 
   const readAll = useCallback(async () => {
-    await api.put('/notifications')
+    const response = await api.put('/notifications')
+
+    if (!response) {
+      throw new Error('Erro ao buscar ao ler todas as notificações')
+    }
 
     setNotifications(oldNotifications => {
       oldNotifications.forEach(oldNotification => {
@@ -60,7 +67,11 @@ const NotificationProvider: React.FC = ({ children }) => {
       )
       if (notificationIndex < 0) return
 
-      await api.patch(`/notifications/${id}`)
+      const response = await api.patch(`/notifications/${id}`)
+
+      if (!response) {
+        throw new Error('Erro ao ler a notificação')
+      }
 
       setNotifications(oldNotifications => {
         oldNotifications[notificationIndex] = {
@@ -85,7 +96,9 @@ function useNotification(): NotificationProviderData {
   const context = useContext(NotificationContext)
 
   if (!context) {
-    throw new Error('useToast must be used within a NotificationProvider')
+    throw new Error(
+      'useNotification must be used within a NotificationProvider'
+    )
   }
 
   return context

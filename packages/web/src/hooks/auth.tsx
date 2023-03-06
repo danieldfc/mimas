@@ -91,6 +91,10 @@ function AuthProvider({ children }: AuthProviderProps) {
         password
       })
 
+      if (!response) {
+        throw new Error('Erro ao criar a sessão do usuário')
+      }
+
       const { token, user, refreshToken } = response.data
 
       setCookie(`${GO_COSTURA}.token`, token, {
