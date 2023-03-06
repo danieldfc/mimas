@@ -7,7 +7,7 @@ import { GoPerson } from 'react-icons/go'
 import Button from '../../../../components/Button'
 import Input from '../../../../components/Input'
 import ModalRender from '../../../../components/Modal'
-import { TypePix, useSupplier } from '../../../../hooks/supplier'
+import { useSupplier } from '../../../../hooks/supplier'
 import { useToast } from '../../../../hooks/toast'
 import getValidationErrors from '../../../../utils/getValidationError'
 import removeEmptyFields from '../../../../utils/removeEmptyFields'
@@ -16,7 +16,8 @@ import { WrapperFormButton, WrapperPix } from '../styles'
 import * as Yup from 'yup'
 import SelectInput from '../../../../components/SelectInput'
 import { MdVpnKey } from 'react-icons/md'
-import { typesPix } from '../../CreateSupplier/util'
+import { TypePix } from '../../../../utils/enum'
+import { typesPix } from '../../../../utils/typesPix'
 
 type IFormSupplier = {
   name: string

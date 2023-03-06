@@ -41,6 +41,10 @@ const ClientProvider: React.FC = ({ children }) => {
 
       const response = await api.post('/clients', client)
 
+      if (!response) {
+        throw new Error('Erro ao criar um cliente')
+      }
+
       setClients(oldClients => [...oldClients, response.data.client])
     },
     []
@@ -60,6 +64,10 @@ const ClientProvider: React.FC = ({ children }) => {
 
       const response = await api.put(`/clients/${id}`, client)
 
+      if (!response) {
+        throw new Error('Erro ao atualizar o cliente')
+      }
+
       setClients(oldClients => {
         oldClients[clientIndex] = {
           ...oldClients[clientIndex],
@@ -77,7 +85,11 @@ const ClientProvider: React.FC = ({ children }) => {
       const clientIndex = clients.findIndex(cli => cli.id === id)
       if (clientIndex < 0) return
 
-      await api.delete(`/clients/${id}`)
+      const response = await api.delete(`/clients/${id}`)
+
+      if (!response) {
+        throw new Error('Erro ao deletar o cliente')
+      }
 
       setClients(cli => cli.filter(c => c.id !== id))
     },
@@ -106,7 +118,7 @@ function useClient(): ClientProviderData {
   const context = useContext(ClientContaxt)
 
   if (!context) {
-    throw new Error('useToast must be used within a ClientProvider')
+    throw new Error('useClient must be used within a ClientProvider')
   }
 
   return context

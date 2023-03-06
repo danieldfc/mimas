@@ -8,13 +8,7 @@ import React, {
   useState
 } from 'react'
 import { Product } from '../interfaces/Product'
-
-export enum TypePix {
-  CPF_CNPJ = 'cpf_cnpj',
-  PHONE = 'phone',
-  EMAIL = 'email',
-  RANDOM = 'random'
-}
+import { TypePix } from '../utils/enum'
 
 export type Supplier = {
   id: string
