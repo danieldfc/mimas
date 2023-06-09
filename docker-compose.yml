@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   costura-postgres:
-    image: bitnami/postgresql:latest
+    image: postgres:16beta1-alpine3.18
     container_name: costura-postgres
     restart: always
     ports:
