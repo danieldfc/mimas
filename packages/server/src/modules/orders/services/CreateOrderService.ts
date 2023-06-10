@@ -132,7 +132,7 @@ export class CreateOrderService {
           id: product.id,
           title: product.title,
           description: product.description,
-          price: parseInt(product.price.replace('$', '')),
+          price: parseFloat(product.price.replace('$', '')),
           qtd: productFound.qtd
         })
       }
