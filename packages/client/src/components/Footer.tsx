@@ -3,11 +3,13 @@ import { Instagram, Facebook, Linkedin } from 'lucide-react'
 import whatsappIcon from '@/assets/whatsapp.svg'
 import Image from 'next/image'
 
-type IFooterProps = {}
+type IFooterProps = {
+  className: string;
+}
 
 export default function Footer(_props: IFooterProps) {
   return (
-    <footer className="mb-12 border-t border-white">
+    <footer className={`pb-10 border-white`}>
       <div className="flex my-12 gap-12">
         <a href="#" className="hover:font-bold">CONTACT</a>
         <a href="#" className="hover:font-bold">TERMS OF SERVICES</a>
