@@ -33,6 +33,10 @@ export type IFormProduct = {
   supplierId: string
 }
 
+type ResetForm = {
+  reset: () => void
+}
+
 export default function ModalCreateProduct({
   modalIsOpen,
   setModalIsOpen,
@@ -47,7 +51,7 @@ export default function ModalCreateProduct({
   const formRef = useRef<FormHandles>(null)
 
   const handleSubmit = useCallback(
-    async (data: IFormProduct, { reset }) => {
+    async (data: IFormProduct, { reset }: ResetForm) => {
       try {
         if (supplierSelected) {
           formRef.current?.setErrors({})

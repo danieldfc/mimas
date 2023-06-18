@@ -32,7 +32,7 @@ export default function Profile() {
   const { addToast } = useToast()
 
   const handleSubmit = useCallback(
-    async data => {
+    async (data: IFormDataProfile) => {
       const fields = removeEmptyFields<IFormDataProfile>(data)
       try {
         formRef.current?.setErrors({})
