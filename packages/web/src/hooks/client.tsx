@@ -27,7 +27,11 @@ const ClientContaxt = createContext<ClientProviderData>(
   {} as ClientProviderData
 )
 
-const ClientProvider: React.FC = ({ children }) => {
+interface ClientProviderProps {
+  children: React.ReactNode
+}
+
+const ClientProvider: React.FC<ClientProviderProps> = ({ children }) => {
   const [clients, setClients] = useState<Client[]>([])
 
   const addClient = useCallback(

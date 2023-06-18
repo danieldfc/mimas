@@ -36,7 +36,11 @@ const SupplierContext = createContext<SupplierProviderData>(
   {} as SupplierProviderData
 )
 
-const SupplierProvider: React.FC = ({ children }) => {
+interface SupplierProviderProps {
+  children: React.ReactNode
+}
+
+const SupplierProvider: React.FC<SupplierProviderProps> = ({ children }) => {
   const [suppliers, setSuppliers] = useState<Supplier[]>([])
   const [supplierSelected, setSupplierSelected] = useState<
     Supplier | undefined

@@ -29,7 +29,13 @@ const NotificationContext = createContext<NotificationProviderData>(
   {} as NotificationProviderData
 )
 
-const NotificationProvider: React.FC = ({ children }) => {
+interface NotificationProviderProps {
+  children: React.ReactNode
+}
+
+const NotificationProvider: React.FC<NotificationProviderProps> = ({
+  children
+}) => {
   const [notifications, setNotifications] = useState<Notification[]>([])
 
   useEffect(() => {

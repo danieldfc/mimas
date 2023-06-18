@@ -29,7 +29,11 @@ const EmployeeContaxt = createContext<EmployeeProviderData>(
   {} as EmployeeProviderData
 )
 
-const EmployeeProvider: React.FC = ({ children }) => {
+interface EmployeeProviderProps {
+  children: React.ReactNode
+}
+
+const EmployeeProvider: React.FC<EmployeeProviderProps> = ({ children }) => {
   const [employees, setEmployees] = useState<Employee[]>([])
 
   const addEmployee = useCallback(
