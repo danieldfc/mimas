@@ -6,7 +6,6 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    "plugin:jsx-a11y/recommended",
     'standard',
     'plugin:import/errors',
     'plugin:react/recommended',
@@ -21,8 +20,9 @@ module.exports = {
     ecmaVersion: 11,
     sourceType: 'module'
   },
-  plugins: ['react', 'react-hooks', '@typescript-eslint', 'jsx-a11y', 'import','prettier', 'unused-imports'],
+  plugins: ['react', 'react-hooks', '@typescript-eslint', 'import','prettier', 'unused-imports'],
   rules: {
+    "react/react-in-jsx-scope": "off",
     '@typescript-eslint/no-use-before-define': 'off', // Allows us to hoist variables and functions which I am a fan of, functions not variables that is.
     '@typescript-eslint/no-explicit-any': 'off', // Too strict for my case, sometimes I need an any type
     '@typescript-eslint/member-delimiter-style': ['error', { // Prevents us from using any delimiter for interface properties.

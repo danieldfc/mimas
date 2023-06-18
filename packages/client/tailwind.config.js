@@ -13,4 +13,11 @@ module.exports = {
       '110': '1.10',
     }
   },
+  variants: {
+    extend: {
+      display: ['group-focus'],
+      opacity: ['group-focus'],
+      inset: ['group-focus'],
+    }
+  }
 }
