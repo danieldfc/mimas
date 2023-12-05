@@ -7,7 +7,7 @@
 
 ## :boom: Technologys
 
-O projeto foi desenvolvido com as tecnologias mas usadas no mercado: 
+O projeto foi desenvolvido com as tecnologias mais usadas no mercado: 
 
 - [Node.js](https://nodejs.org/en)
 - [React.js](https://react.dev/)
