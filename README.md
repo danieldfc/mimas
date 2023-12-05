@@ -1,23 +1,19 @@
-# Projeto costura
+# :rocket: Mimas
 
-## Estoque
+<h4 align="center">
+  :satisfied: Projeto criado para gerenciamento de um ateliê
+</h4>
+<br>
 
-tipo do produto
-quantidade
-cores
-marcas
+## :boom: Technologys
 
-## Fornecedores
+O projeto foi desenvolvido com as tecnologias mas usadas no mercado: 
 
-nome
-endereço
-telefone
-email
-pix
+- [Node.js](https://nodejs.org/en)
+- [React.js](https://react.dev/)
 
-## Prestador de serviço
+## 💻 Project
 
-nome
-telefone
-email
-pix
+O projeto tem como objetivo a costureira conseguir ter o mínimo de gerenciamento dos seus serviços e produtos.
+
+> Created by Daniel Felizardo :purple_heart::rocket:
